@@ -1,15 +1,15 @@
 <?php
 require_once ("connect-database.php");
 
-if (isset ($_POST['txt_item_name']) && isset ($_POST['txt_item_number']) && ($_POST['txt_item_type_make']) && ($_POST['txt_item_description']) && isset ($_POST['txt_opening_stock']) && isset ($_POST['txt_reorder_level'])) {
-	$loc_item_name = mysqli_real_escape_string ($conn, trim ($_POST['txt_item_name']));
-	$loc_item_number = mysqli_real_escape_string ($conn, trim ($_POST['txt_item_number']));
-	$loc_item_type_make = mysqli_real_escape_string ($conn, trim ($_POST['txt_item_type_make']));
-	$loc_item_description = mysqli_real_escape_string ($conn, trim ($_POST['txt_item_description']));
-	$loc_opening_stock = mysqli_real_escape_string ($conn, trim ($_POST['txt_opening_stock']));
-	$loc_reorder_level = mysqli_real_escape_string ($conn, trim ($_POST['txt_reoder_level']));
+if (isset ($_POST['tx_item_name']) && isset ($_POST['tx_item_number']) && ($_POST['tx_item_make']) && ($_POST['tx_item_model']) && ($_POST['tx_item_description']) && isset ($_POST['tx_opening_stock'])) {
+	$lc_item_name = mysqli_real_escape_string ($conn, trim ($_POST['tx_item_name']));
+	$lc_item_number = mysqli_real_escape_string ($conn, trim ($_POST['tx_item_number']));
+	$lc_item_make = mysqli_real_escape_string ($conn, trim ($_POST['tx_item_make']));
+	$lc_item_model = mysqli_real_escape_string ($conn, trim ($_POST['tx_item_model']));
+	$lc_item_description = mysqli_real_escape_string ($conn, trim ($_POST['tx_item_description']));
+	$lc_opening_stock = mysqli_real_escape_string ($conn, trim ($_POST['tx_opening_stock']));
 	
-	$result = mysqli_query ($conn, "INSERT INTO tbl_item_details VALUES (NULL, '".$loc_item_name."', '".$loc_item_number."', '".$loc_item_type_make."', '".$loc_item_description."', ".$loc_opening_stock.", ".$loc_reorder_level.");");
+	$result = mysqli_query ($conn, "INSERT INTO tbl_item_details VALUES (NULL, '".$lc_item_name."', '".$lc_item_number."', '".$lc_item_make."', '".$lc_item_model."', '".$lc_item_description."', ".$lc_opening_stock.");");
 	if ($result)
 		echo (json_encode (array ('success' => "New Item Created Successfully.")));
 	else
