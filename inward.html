@@ -68,7 +68,7 @@ desired effect
   <header class="main-header">
 
     <!-- Logo -->
-    <a href="index2.html" class="logo">
+    <a href="index.html" class="logo">
       <!-- mini logo for sidebar mini 50x50 pixels -->
       <span class="logo-mini"><img src="assets/img/imd_logoc.gif" ></span>
       <!-- logo for regular state and mobile devices -->
@@ -183,10 +183,7 @@ desired effect
           <!-- User Account Menu -->
           <li class="dropdown user user-menu">
             <!-- Menu Toggle Button -->
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-              
-              <span class="hidden-xs">IMD</span>
-            </a>
+            <button class="btn btn-warning">Log Out</button>
            <!-- <ul class="dropdown-menu">
                The user image in the menu 
               <li class="user-header">
@@ -223,10 +220,10 @@ desired effect
               </li>
             </ul>
           </li>-->
-          <!-- Control Sidebar Toggle Button -->
+          <!-- Control Sidebar Toggle Button 
           <li>
             <a href="#" data-toggle="control-sidebar"><i class="fa fa-gears"></i></a>
-          </li>
+          </li>-->
         </ul>
       </div>
     </nav>
@@ -336,7 +333,7 @@ desired effect
                   <div class="col-md-4">
                    <div class="form-group">
                   <label>Stations Name</label>
-                         <select class="form-control select2" style="width: 100%;">
+                         <select id="s2-stations" class="form-control select2" style="width: 100%;">
                   
                   
                 </select>
@@ -369,11 +366,46 @@ desired effect
             </form>
           </div>
           <!-- /.box -->
-         
-
-
+     <div class="col-md-6">
+          <div class="box">
+            <div class="box-header with-border">
+              <h3 class="box-title">Item List</h3>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body">
+              <table class="table table-bordered">
+                <tr>
+                  <th style="width: 10px">#</th>
+                  <th>Item name</th>
+                  <th>Quantity</th>
+                  <th>Price</th>
+                </tr>
+                <tr>
+                  <td>1.</td>
+                  <td>------</td>
+                     <td>------</td> 
+                    <td>------</td>
+                  
+                   
+                  
+                </tr>
+                <tr>
+                  <td>2.</td>
+                   <td>------</td>
+                     <td>------</td> 
+                    <td>------</td>
+                </tr>
+                
+              </table>
+                <br>
+                <button class="btn btn-primary" >Add Item</button>
+            </div>
+          <!-- /.box -->
+         </div>
+        </div>
     </section>
     </div>
+    
     <!-- /.content -->
   
   <!-- /.content-wrapper -->
@@ -491,10 +523,23 @@ desired effect
 <!-- page script -->
 <script>
   $(function () {
+     
     
          $('.select2').select2({
           placeholder:'select an option'
       })
+      $.ajax ({
+            type: 'POST',
+            url: 'assets/php/read-stations.php',
+            success: function (result) {
+                var result_object = JSON.parse (result);
+                console.log(result_object);
+                for(var i=0;i<result_object.count;i++){
+                var newStation = new Option(result_object.stations[i],result_object.stations[i], true, true);
+    // Append it to the select
+    $("#s2-stations").append(newStation).trigger('change');}
+            }
+        });
        $('#datepicker').datepicker({
       autoclose: true
     })
