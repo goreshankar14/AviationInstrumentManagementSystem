@@ -336,7 +336,7 @@ desired effect
                   <div class="col-md-4">
                    <div class="form-group">
                   <label>Stations Name</label>
-                         <select class="form-control select2" style="width: 100%;">
+                         <select id="s2-stations" class="form-control select2" style="width: 100%;">
                   
                   
                 </select>
@@ -369,11 +369,46 @@ desired effect
             </form>
           </div>
           <!-- /.box -->
-         
-
-
+     <div class="col-md-6">
+          <div class="box">
+            <div class="box-header with-border">
+              <h3 class="box-title">Item List</h3>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body">
+              <table class="table table-bordered">
+                <tr>
+                  <th style="width: 10px">#</th>
+                  <th>Item name</th>
+                  <th>Quantity</th>
+                  <th>Price</th>
+                </tr>
+                <tr>
+                  <td>1.</td>
+                  <td>------</td>
+                     <td>------</td> 
+                    <td>------</td>
+                  
+                   
+                  
+                </tr>
+                <tr>
+                  <td>2.</td>
+                   <td>------</td>
+                     <td>------</td> 
+                    <td>------</td>
+                </tr>
+                
+              </table>
+                <br>
+                <button class="btn btn-primary" >Add Item</button>
+            </div>
+          <!-- /.box -->
+         </div>
+        </div>
     </section>
     </div>
+    
     <!-- /.content -->
   
   <!-- /.content-wrapper -->
@@ -491,10 +526,23 @@ desired effect
 <!-- page script -->
 <script>
   $(function () {
+       
     
          $('.select2').select2({
           placeholder:'select an option'
       })
+      $.ajax ({
+            type: 'POST',
+            url: 'assets/php/read-stations.php',
+            success: function (result) {
+                var result_object = JSON.parse (result);
+                console.log(result_object);
+                for(var i=0;i<result_object.count;i++){
+                var newStation = new Option(result_object.stations[i],result_object.stations[i], true, true);
+    // Append it to the select
+    $("#s2-stations").append(newStation).trigger('change');}
+            }
+        });
        $('#datepicker').datepicker({
       autoclose: true
     })
