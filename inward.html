@@ -366,42 +366,33 @@ desired effect
             </form>
           </div>
           <!-- /.box -->
-     <div class="col-md-6">
+     <div class="row">
+        <div class="col-md-6">
           <div class="box">
             <div class="box-header with-border">
-              <h3 class="box-title">Item List</h3>
+              <h3 class="box-title">Outward Table</h3>
             </div>
             <!-- /.box-header -->
             <div class="box-body">
-              <table class="table table-bordered">
+              <table id="InwardTable" class="table table-bordered">
                 <tr>
-                  <th style="width: 10px">#</th>
-                  <th>Item name</th>
-                  <th>Quantity</th>
-                  <th>Price</th>
-                </tr>
-                <tr>
-                  <td>1.</td>
-                  <td>------</td>
-                     <td>------</td> 
-                    <td>------</td>
                   
-                   
-                  
+                  <th id="itemName">Item Name</th>
+                  <th id="quantity">Quantity</th>
+                  <th id="rate">Rate</th>
+                    <th id="delete">ACTION</th>
                 </tr>
-                <tr>
-                  <td>2.</td>
-                   <td>------</td>
-                     <td>------</td> 
-                    <td>------</td>
-                </tr>
-                
+               
+               
               </table>
                 <br>
-                <button class="btn btn-primary" >Add Item</button>
+                <br>
+                <button  class="btn btn-primary" id="add">ADD ITEM</button>
             </div>
-          <!-- /.box -->
-         </div>
+            <!-- /.box-body -->
+           
+            </div>
+          </div>
         </div>
     </section>
     </div>
@@ -543,6 +534,18 @@ desired effect
        $('#datepicker').datepicker({
       autoclose: true
     })
+       $("#add").click(function(){
+         
+            var markup = "<tr><td><select class='form-control select 2'></select></td><td><input type='text'></td><td><input type='text'></td><td><button class='btn btn-danger delete-row'><i class='fa fa-times'></i></button></td></tr>";
+            $("table tbody").append(markup);
+            // Find and remove selected table rows
+        $(".delete-row").click(function(){
+            
+                    $(this).parents("tr").remove();
+                
+          
+        });
+        });
   })
 </script>
 
