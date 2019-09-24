@@ -374,11 +374,11 @@ desired effect
               </div>
             </form>
           </div>
-             <div class="row">
+            <div class="row">
         <div class="col-md-6">
           <div class="box">
             <div class="box-header with-border">
-              <h3 class="box-title">Inward Table</h3>
+              <h3 class="box-title">Item Tyep</h3>
             </div>
             <!-- /.box-header -->
             <div class="box-body">
@@ -394,7 +394,7 @@ desired effect
               </table>
                 <br>
                 <br>
-                <button  class="btn btn-primary" id="add">ADD ITEM TYPE</button>
+                <button  class="btn btn-primary" id="add">ADD ITEM</button>
             </div>
             <!-- /.box-body -->
            
@@ -604,15 +604,15 @@ desired effect
       'info'        : true,
       'autoWidth'   : false
     })
-<<<<<<< HEAD
+
         $('#datepicker').datepicker({
       autoclose: true
     })
-=======
-       $("#add").click(function(){
+
+    $("#add").click(function(){
          
             var markup = "<tr><td><input type='text'></td><td><button class='btn btn-danger delete-row'><i class='fa fa-times'></i></button></td></tr>";
-            $("table tbody").append(markup);
+            $("#InwardTable").append(markup);
             // Find and remove selected table rows
         $(".delete-row").click(function(){
             
@@ -621,8 +621,8 @@ desired effect
           
         });
         });
->>>>>>> 0c99c08f1ac12c72ff6b9388299b2beb98c92549
   })
+  
 </script>
 </body>
 </html>
