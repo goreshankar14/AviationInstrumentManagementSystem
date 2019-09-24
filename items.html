@@ -609,9 +609,9 @@ desired effect
       autoclose: true
     })
 =======
-       $("#add").click(function(){
+         $("#add").click(function(){
          
-            var markup = "<tr><td><input type='text'></td><td><button class='btn btn-danger delete-row'><i class='fa fa-times'></i></button></td></tr>";
+            var markup = "<tr><td><input type='text' class='form-control '></td><td><button class='btn btn-danger delete-row'><i class='fa fa-times'></i></button></td></tr>";
             $("table tbody").append(markup);
             // Find and remove selected table rows
         $(".delete-row").click(function(){
@@ -621,7 +621,7 @@ desired effect
           
         });
         });
->>>>>>> 0c99c08f1ac12c72ff6b9388299b2beb98c92549
+
   })
 </script>
 </body>
