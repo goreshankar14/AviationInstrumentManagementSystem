@@ -10,27 +10,25 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <title>AdminLTE 2 | Starter</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <!-- Bootstrap 3.3.7 -->
   <link rel="stylesheet" href="assets/bower_components/bootstrap/dist/css/bootstrap.min.css">
+     <!-- Select2 -->
+  <link rel="stylesheet" href="assets/bower_components/select2/dist/css/select2.min.css">
+   
   <!-- Font Awesome -->
   <link rel="stylesheet" href="assets/bower_components/font-awesome/css/font-awesome.min.css">
   <!-- Ionicons -->
+    
   <link rel="stylesheet" href="assets/bower_components/Ionicons/css/ionicons.min.css">
+     <!-- bootstrap datepicker -->
+  <link rel="stylesheet" href="assets/bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css">
+
   <!-- Theme style -->
   <link rel="stylesheet" href="assets/css/AdminLTE.min.css">
   <!-- AdminLTE Skins. We have chosen the skin-blue for this starter
         page. However, you can choose any other skin. Make sure you
         apply the skin class to the body tag so the changes take effect. -->
   <link rel="stylesheet" href="assets/css/skins/skin-blue.min.css">
-    <!-- Bootstrap 3.3.7 -->
-  <link rel="stylesheet" href="assets/bower_components/bootstrap/dist/css/bootstrap.min.css">
-    <!--Select2-->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.10/css/select2.min.css" rel="stylesheet" />
-<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.10/js/select2.min.js"></script>
-  <link rel="stylesheet" href="assets/bower_components/select2/dist/css/select2.min.css">
-  <!-- Font Awesome -->
-  <link rel="stylesheet" href="assets/bower_components/font-awesome/css/font-awesome.min.css">
-  <!-- Ionicons -->
-  <link rel="stylesheet" href="assets/bower_components/Ionicons/css/ionicons.min.css">
 
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -41,10 +39,10 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
   <!-- Google Font -->
   <link rel="stylesheet"
+        
         href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
     
 </head>
-
 <!--
 BODY TAG OPTIONS:
 =================
@@ -67,11 +65,9 @@ desired effect
 -->
 <body class="hold-transition skin-blue sidebar-mini">
 <div class="wrapper">
-    
-    
 
   <!-- Main Header -->
-<header class="main-header">
+  <header class="main-header">
 
     <!-- Logo -->
     <a href="index.html" class="logo">
@@ -189,7 +185,7 @@ desired effect
           <!-- User Account Menu -->
           <li class="dropdown user user-menu">
             <!-- Menu Toggle Button -->
-            <button style="margin-top:10px;margin-right:10px"  class="btn btn-warning">Log Out</button>
+              <button style="margin-top:10px;margin-right:10px"  class="btn btn-warning">Log Out</button>
            <!-- <ul class="dropdown-menu">
                The user image in the menu 
               <li class="user-header">
@@ -235,8 +231,7 @@ desired effect
     </nav>
   </header>
      
-     
-     
+  <!-- Left side column. contains the logo and sidebar -->
   <!-- Left side column. contains the logo and sidebar -->
   <aside class="main-sidebar">
 
@@ -271,10 +266,11 @@ desired effect
       <ul class="sidebar-menu" data-widget="tree">
         <li class="header">Menu</li>
         <!-- Optionally, you can add icons to the links -->
-        <li class="active"><a href="stations.html"><i class="fa fa-link"></i> <span> Station</span></a></li>
-        <li><a href="items.html"><i class="fa fa-link"></i> <span> Item</span></a></li>
+          <li><a href="stations.html"><i class="fa fa-link"></i> <span> Station</span></a></li>
+       <li ><a href="items.html"><i class="fa fa-link"></i> <span> Item</span></a></li>
           <li><a href="inward.html"><i class="fa fa-link"></i> <span>Inward</span></a></li>
-          <li><a href="outward.html"><i class="fa fa-link"></i> <span> Outward</span></a></li>
+          <li class="active"><a href="outward.html"><i class="fa fa-link"></i> <span> Outward</span></a></li>
+          
         </ul>
       <!-- /.sidebar-menu -->
     </section>
@@ -286,11 +282,11 @@ desired effect
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Station Infromation
-        <small></small>
+        OUTWARD
+       
       </h1>
-    <ol class="breadcrumb">
-        <li><a href="#"><i class="fa fa-dashboard"></i> Station</a></li>
+      <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Outward</a></li>
         <li class="active">HOME</li>
       </ol>
     </section>
@@ -303,7 +299,7 @@ desired effect
         -------------------------->
             <div class="box box-primary">
             <div class="box-header with-border">
-              <h3 class="box-title">Add New Station</h3>
+              <h3 class="box-title">Outward Details</h3>
             </div>
             <!-- /.box-header -->
             <!-- form start -->
@@ -311,188 +307,119 @@ desired effect
               <div class="box-body">
                   <div class="col-md-4">
                 <div class="form-group">
-                  <label>RMC</label>
-                 <!-- <input type="text" class="form-control"  placeholder="Enter RMC">-->
-                    <select class="form-control select2" id="s2-rmc" name="RMC">
-                        <option value=""></option>
-                        <option value="Kolkata">Kolkata</option>
-                        <option value="Mumbai">Mumbai</option>
-                        <option value="Chennai">Chennai</option>
-                        <option value="Guwahati">Guwahati</option>
-                        <option value="Nagpur">Nagpur</option>
-                        <option value="New Delhi">New Delhi</option>
-                        </select>
+                  <label>Outward Number</label>
+                  <input type="text" class="form-control"  placeholder="Enter Outward Number">
                 </div>
                   </div>
-                 <div class="col-md-4">
-                <div class="form-group">
-                  <label >Station ID</label>
-                 <!-- <input type="text" class="form-control"  placeholder="Enter Station ID">-->
-                    <select class="form-control select2" id="s2-icao" name="ICAO">
-                    
-                    </select>
-                </div>
-                      </div>
+              
                       <div class="col-md-4">
                    <div class="form-group">
-                  <label >Station Name</label>
-              <!--    <input type="text" class="form-control"  placeholder="Enter Station Name">-->
-                       <select class="form-control select2" id="s2-stationName">
-                       
-                       </select>
-                </div>
+                  <label >Shipment Mode</label>
+                         <select class="form-control select2" style="width: 100%;">
+                  <option selected="selected"></option>
+                  <option>By Hand</option>
+                  <option>By Post</option>
+                  
+                </select>
+                  
                      </div>
-                 <div class="col-md-4">
-                 <div class="form-group">
-                  <label >Station Type</label>
-                  <input type="text" class="form-control"  placeholder="Enter Station Type">
-                </div>
-                          </div>
-                      <div class="col-md-4">
+                  </div>
+                  <div class="col-md-4">
                    <div class="form-group">
-                  <label >Name of Incharge</label>
-                  <input type="text" class="form-control"  placeholder="Enter incharge name">
+                  <label>Stations Name</label>
+                         <select class="form-control select2" style="width: 100%;">
+                  
+                  
+                </select>
+                  
                 </div>
                            </div>
-                           <div class="col-md-4">
-                   <div class="form-group">
-                  <label >Station Email Id</label><br>
-                  <input type="email" class="form-control"  placeholder="Enter Station Email ID">
-                </div>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="form-group">
-                                        
-                                    <label>State</label>
-                                    <select class="form-control select2" id="s2-state" name="State" >
-                                        
-                                     
-                                    </select>
+               
+                   
+                      <div class="col-md-4">
+                    <div class="form-group">
+                        <br>
+                        <br>
+                <label>Date</label>
+                   <div class="input-group date">
+                  <div class="input-group-addon">
+                    <i class="fa fa-calendar"></i>
                   </div>
-                  </div>
-                
-                
-            
-                                     
-                                     <div class="col-md-4">
-                   <div class="form-group">
-                  <label >Phone Number</label>
-                  <input type="text" class="form-control"  placeholder="Enter Phone Number">
+                  <input type="text" class="form-control pull-right" id="datepicker">
                 </div>
-                                          </div>
-                                          <div class="col-md-4">
-                   <div class="form-group">
-                  <label >Mobile Number</label>
-                  <input type="text" class="form-control"  placeholder="Mobile Number">
-                </div>
-                  </div>
-                 <div class="col-md-4">
-                   <div class="form-group">
-                  <label >Address</label>
-                  <textarea class="form-control"></textarea>
-                </div>
-                                                    </div>
+                <!-- /.input group -->
               </div>
+                          
+              </div>
+                     </div>
+                
               <!-- /.box-body -->
 
               <div class="box-footer">
                 <button type="submit" class="btn btn-primary">Submit</button>
               </div>
+               
             </form>
           </div>
           <!-- /.box -->
-         <div class="box">
-            <div class="box-header">
-              <h3 class="box-title">Data Table </h3>
+         
+    <div class="row">
+        <div class="col-md-6">
+          <div class="box">
+            <div class="box-header with-border">
+              <h3 class="box-title">Outward Table</h3>
             </div>
             <!-- /.box-header -->
             <div class="box-body">
-              <table id="example1" class="table table-bordered table-striped">
-                <thead>
+              <table id="outwardTable" class="table table-bordered">
                 <tr>
-                  <th>RMC</th>
-                  <th>Station ID</th>
-                  <th>Station Name</th>
-                  <th>Station Type</th>
-                    <th>Contact</th>
-                    <th>Action</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr>
-                  <td>Trident</td>
-                  <td>Internet
-                    Explorer 4.0
-                  </td>
-                  <td>Win 95+</td>
-                  <td> 4</td>
-                  <td>X</td>
-                    <td>
-                <button type="submit" class="btn btn-warning">Edit</button>
-              
-                    
-                <button type="submit" class="btn btn-danger">Delete</button>
-              
-                    </td>
-                </tr>
-                <tr>
-                  <td>Trident</td>
-                  <td>Internet
-                    Explorer 5.0
-                  </td>
-                  <td>Win 95+</td>
-                  <td>5</td>
-                  <td>C</td>
-                  <td>
-                <button type="submit" class="btn btn-warning">Edit</button>
-              
-                    
-                <button type="submit" class="btn btn-danger">Delete</button>
-              </td>
+                  
+                  <th id="itemName">Item Name</th>
+                  <th id="quantity">Quantity</th>
+                  <th id="rate">Rate</th>
+                    <th id="delete">ACTION</th>
                 </tr>
                
-                </tbody>
-                <tfoot>
-                <tr>
-                   <th>RMC</th>
-                  <th>Station ID</th>
-                  <th>Station Name</th>
-                  <th>Station Type</th>
-                    <th>Contact</th>
-                    <th>Action</th>
-                </tr>
-                </tfoot>
+               
               </table>
+                <br>
+                <br>
+                <button  class="btn btn-primary" id="add">ADD ITEM</button>
             </div>
             <!-- /.box-body -->
+           
+            </div>
           </div>
-          <!-- /.box -->
+        </div>
 
     </section>
+      
+    </div>
     <!-- /.content -->
-  </div>
+  
   <!-- /.content-wrapper -->
-
+   
   <!-- Main Footer -->
-  <footer class="main-footer">
+              <footer class="main-footer">
     <!-- To the right -->
     <div class="pull-right hidden-xs">
-      Surface Instrumentation Department
+      Surface Instrument Department
     </div>
     <!-- Default to the left -->
-    <strong>Copyright &copy; 2019 <a href="#">IMD Pune</a>.</strong> All rights reserved.
+    <strong>Copyright &copy; 2016 <a href="#">IMD Pune</a>.</strong> All rights reserved.
   </footer>
+  
 
   <!-- Control Sidebar -->
-  <aside class="control-sidebar control-sidebar-dark">
-    <!-- Create the tabs -->
+  <!--<aside class="control-sidebar control-sidebar-dark">
+    <!-- Create the tabs 
     <ul class="nav nav-tabs nav-justified control-sidebar-tabs">
       <li class="active"><a href="#control-sidebar-home-tab" data-toggle="tab"><i class="fa fa-home"></i></a></li>
       <li><a href="#control-sidebar-settings-tab" data-toggle="tab"><i class="fa fa-gears"></i></a></li>
     </ul>
-    <!-- Tab panes -->
+    <!-- Tab panes 
     <div class="tab-content">
-      <!-- Home tab content -->
+      <!-- Home tab content 
       <div class="tab-pane active" id="control-sidebar-home-tab">
         <h3 class="control-sidebar-heading">Recent Activity</h3>
         <ul class="control-sidebar-menu">
@@ -508,7 +435,7 @@ desired effect
             </a>
           </li>
         </ul>
-        <!-- /.control-sidebar-menu -->
+        <!-- /.control-sidebar-menu 
 
         <h3 class="control-sidebar-heading">Tasks Progress</h3>
         <ul class="control-sidebar-menu">
@@ -527,14 +454,14 @@ desired effect
             </a>
           </li>
         </ul>
-        <!-- /.control-sidebar-menu -->
+        <!-- /.control-sidebar-menu 
 
       </div>
       <!-- /.tab-pane -->
-      <!-- Stats tab content -->
+      <!-- Stats tab content 
       <div class="tab-pane" id="control-sidebar-stats-tab">Stats Tab Content</div>
       <!-- /.tab-pane -->
-      <!-- Settings tab content -->
+      <!-- Settings tab content 
       <div class="tab-pane" id="control-sidebar-settings-tab">
         <form method="post">
           <h3 class="control-sidebar-heading">General Settings</h3>
@@ -549,112 +476,66 @@ desired effect
               Some information about this general settings option
             </p>
           </div>
-          <!-- /.form-group -->
+          <!-- /.form-group 
         </form>
       </div>
-      <!-- /.tab-pane -->
+      <!-- /.tab-pane 
     </div>
   </aside>
   <!-- /.control-sidebar -->
   <!-- Add the sidebar's background. This div must be placed
-  immediately after the control sidebar -->
-  <div class="control-sidebar-bg"></div>
+  immediately after the control sidebar 
+  <div class="control-sidebar-bg"></div>-->
 </div>
 <!-- ./wrapper -->
 
 <!-- REQUIRED JS SCRIPTS -->
-
 <!-- jQuery 3 -->
 <script src="assets/bower_components/jquery/dist/jquery.min.js"></script>
 <!-- Bootstrap 3.3.7 -->
 <script src="assets/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 <!-- AdminLTE App -->
 <script src="assets/js/adminlte.min.js"></script>
-
-<!-- Optionally, you can add Slimscroll and FastClick plugins.
-     Both of these plugins are recommended to enhance the
-     user experience. -->
-   
-<!-- DataTables -->
-<script src="assets/bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
-<script src="assets/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+    
+<!--<script src="assets/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
 <!-- SlimScroll -->
 <script src="assets/bower_components/jquery-slimscroll/jquery.slimscroll.min.js"></script>
 <!-- FastClick -->
 <script src="assets/bower_components/fastclick/lib/fastclick.js"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="assets/dist/js/demo.js"></script>
-     <!-- Select2 -->
+    <!--Select2 -->
     <script src="assets/bower_components/select2/dist/js/select2.full.min.js"></script>
+<!-- bootstrap datepicker -->
+<script src="assets/bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
 
 <!-- page script -->
-   
 <script>
   $(function () {
-    $('#example1').DataTable()
-    $('#example2').DataTable({
-      'paging'      : true,
-      'lengthChange': false,
-      'searching'   : false,
-      'ordering'    : true,
-      'info'        : true,
-      'autoWidth'   : false
+   
+         $('.select2').select2({
+          placeholder:'select an option'
+      })
+       $('#datepicker').datepicker({
+      autoclose: true
     })
-     $('#s2-rmc').select2({
-         placeholder: 'Select an Option'
-     });
-      $('#s2-state').select2({
-         placeholder: 'Select an Option',
-     });
-      
-      $('#s2-rmc').on('select2:select', function (e) {
-    var data = e.params.data;
-    console.log(data);
-          var lc_rmc = data.text;
-          $.ajax ({
-				type: 'POST',
-				url: 'assets/php/read-states.php',
-				data: {rmc: lc_rmc},
-				success: function (result) {
-					var result_object = JSON.parse (result);
-					console.log(result_object);
-                    for(var i=0;i<result_object.count;i++){
-                    var newState = new Option(result_object.states[i],result_object.states[i], true, true);
-        // Append it to the select
-        $("#s2-state").append(newState).trigger('change');}
-				}
-			});
+        $("#add").click(function(){
+         
+            var markup = "<tr><td><select class='form-control select 2'></select></td><td><input type='text'></td><td><input type='text'></td><td><button class='btn btn-danger delete-row'><i class='fa fa-times'></i></button></td></tr>";
+            $("table tbody").append(markup);
+            // Find and remove selected table rows
+        $(".delete-row").click(function(){
+            
+                    $(this).parents("tr").remove();
+                
           
-        /*  $.ajax ({
-				type: 'POST',
-				url: 'assets/php/read-icao.php',
-				data: {rmc: lc_rmc},
-				success: function (result) {
-					var result_object = JSON.parse (result);
-					console.log(result_object);
-                    for(var i=0;i<result_object.count;i++){
-                    var newState = new Option(result_object.states[i],result_object.states[i], true, true);
-        // Append it to the select
-        $("#s2-icao").append(newState).trigger('change');}
-				}
-			});
-           $.ajax ({
-				type: 'POST',
-				url: 'assets/php/read-stationName.php',
-				data: {rmc: lc_rmc},
-				success: function (result) {
-					var result_object = JSON.parse (result);
-					console.log(result_object);
-                    for(var i=0;i<result_object.count;i++){
-                    var newState = new Option(result_object.states[i],result_object.states[i], true, true);
-        // Append it to the select
-        $("#s2-stationName").append(newState).trigger('change');}
-				}
-			});
-        */
-           
-})
+        });
+        });
   })
 </script>
+
+<!-- Optionally, you can add Slimscroll and FastClick plugins.
+     Both of these plugins are recommended to enhance the
+     user experience. -->
 </body>
 </html>

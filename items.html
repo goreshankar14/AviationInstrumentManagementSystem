@@ -10,17 +10,25 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <title>AdminLTE 2 | Starter</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-  <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="assets/bower_components/bootstrap/dist/css/bootstrap.min.css">
   <!-- Font Awesome -->
-  <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="assets/bower_components/font-awesome/css/font-awesome.min.css">
   <!-- Ionicons -->
-  <link rel="stylesheet" href="bower_components/Ionicons/css/ionicons.min.css">
+  <link rel="stylesheet" href="assets/bower_components/Ionicons/css/ionicons.min.css">
+    <link rel="stylesheet" href="assets/bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css">
   <!-- Theme style -->
-  <link rel="stylesheet" href="dist/css/AdminLTE.min.css">
+  <link rel="stylesheet" href="assets/css/AdminLTE.min.css">
   <!-- AdminLTE Skins. We have chosen the skin-blue for this starter
         page. However, you can choose any other skin. Make sure you
         apply the skin class to the body tag so the changes take effect. -->
-  <link rel="stylesheet" href="dist/css/skins/skin-blue.min.css">
+  <link rel="stylesheet" href="assets/css/skins/skin-blue.min.css">
+    <!-- Bootstrap 3.3.7 -->
+  <link rel="stylesheet" href="assets/bower_components/bootstrap/dist/css/bootstrap.min.css">
+     
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="assets/bower_components/font-awesome/css/font-awesome.min.css">
+  <!-- Ionicons -->
+  <link rel="stylesheet" href="assets/bower_components/Ionicons/css/ionicons.min.css">
 
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -55,16 +63,18 @@ desired effect
 -->
 <body class="hold-transition skin-blue sidebar-mini">
 <div class="wrapper">
+    
+    
 
   <!-- Main Header -->
-  <header class="main-header">
+<header class="main-header">
 
     <!-- Logo -->
-    <a href="index2.html" class="logo">
+    <a href="index.html" class="logo">
       <!-- mini logo for sidebar mini 50x50 pixels -->
-      <span class="logo-mini"><b>A</b>LT</span>
+      <span class="logo-mini"><img src="assets/img/imd_logoc.gif" ></span>
       <!-- logo for regular state and mobile devices -->
-      <span class="logo-lg"><b>Admin</b>LTE</span>
+      <span class="logo-lg"><img src="assets/img/imd_logoc.gif" ></span>
     </a>
 
     <!-- Header Navbar -->
@@ -76,9 +86,9 @@ desired effect
       <!-- Navbar Right Menu -->
       <div class="navbar-custom-menu">
         <ul class="nav navbar-nav">
-          <!-- Messages: style can be found in dropdown.less-->
+          <!-- Messages: style can be found in dropdown.less
           <li class="dropdown messages-menu">
-            <!-- Menu toggle button -->
+            <!-- Menu toggle button
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
               <i class="fa fa-envelope-o"></i>
               <span class="label label-success">4</span>
@@ -86,58 +96,58 @@ desired effect
             <ul class="dropdown-menu">
               <li class="header">You have 4 messages</li>
               <li>
-                <!-- inner menu: contains the messages -->
+                <!-- inner menu: contains the messages 
                 <ul class="menu">
-                  <li><!-- start message -->
+                  <li><!-- start message
                     <a href="#">
                       <div class="pull-left">
-                        <!-- User Image -->
-                        <img src="dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+                        <!-- User Image
+                        <img src="assets/img/user2-160x160.jpg" class="img-circle" alt="User Image">
                       </div>
-                      <!-- Message title and timestamp -->
+                      <!-- Message title and timestamp
                       <h4>
                         Support Team
                         <small><i class="fa fa-clock-o"></i> 5 mins</small>
                       </h4>
-                      <!-- The message -->
+                      <!-- The message 
                       <p>Why not buy a new awesome theme?</p>
                     </a>
                   </li>
-                  <!-- end message -->
+                  <!-- end message
                 </ul>
-                <!-- /.menu -->
+                <!-- /.menu 
               </li>
               <li class="footer"><a href="#">See All Messages</a></li>
             </ul>
           </li>
           <!-- /.messages-menu -->
 
-          <!-- Notifications Menu -->
+          <!-- Notifications Menu -
           <li class="dropdown notifications-menu">
-            <!-- Menu toggle button -->
+            <!-- Menu toggle button 
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
               <i class="fa fa-bell-o"></i>
               <span class="label label-warning">10</span>
             </a>
-            <ul class="dropdown-menu">
+            <!--<ul class="dropdown-menu">
               <li class="header">You have 10 notifications</li>
               <li>
-                <!-- Inner Menu: contains the notifications -->
+                 Inner Menu: contains the notifications 
                 <ul class="menu">
-                  <li><!-- start notification -->
+                  <li>< start notification 
                     <a href="#">
                       <i class="fa fa-users text-aqua"></i> 5 new members joined today
                     </a>
                   </li>
-                  <!-- end notification -->
+                   end notification 
                 </ul>
               </li>
               <li class="footer"><a href="#">View all</a></li>
             </ul>
           </li>
-          <!-- Tasks Menu -->
+           Tasks Menu 
           <li class="dropdown tasks-menu">
-            <!-- Menu Toggle Button -->
+            <!-- Menu Toggle Button
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
               <i class="fa fa-flag-o"></i>
               <span class="label label-danger">9</span>
@@ -145,18 +155,18 @@ desired effect
             <ul class="dropdown-menu">
               <li class="header">You have 9 tasks</li>
               <li>
-                <!-- Inner menu: contains the tasks -->
+                <!-- Inner menu: contains the tasks
                 <ul class="menu">
-                  <li><!-- Task item -->
+                  <li><!-- Task item
                     <a href="#">
-                      <!-- Task title and progress text -->
+                      <!-- Task title and progress text 
                       <h3>
                         Design some buttons
                         <small class="pull-right">20%</small>
                       </h3>
-                      <!-- The progress bar -->
+                      <!-- The progress bar 
                       <div class="progress xs">
-                        <!-- Change the css width attribute to simulate progress -->
+                        <!-- Change the css width attribute to simulate progress
                         <div class="progress-bar progress-bar-aqua" style="width: 20%" role="progressbar"
                              aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">
                           <span class="sr-only">20% Complete</span>
@@ -164,7 +174,7 @@ desired effect
                       </div>
                     </a>
                   </li>
-                  <!-- end task item -->
+                  <!-- end task item
                 </ul>
               </li>
               <li class="footer">
@@ -175,23 +185,18 @@ desired effect
           <!-- User Account Menu -->
           <li class="dropdown user user-menu">
             <!-- Menu Toggle Button -->
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-              <!-- The user image in the navbar-->
-              <img src="dist/img/user2-160x160.jpg" class="user-image" alt="User Image">
-              <!-- hidden-xs hides the username on small devices so only the image appears. -->
-              <span class="hidden-xs">Alexander Pierce</span>
-            </a>
-            <ul class="dropdown-menu">
-              <!-- The user image in the menu -->
+            <button style="margin-top:10px;margin-right:10px"  class="btn btn-warning">Log Out</button>
+           <!-- <ul class="dropdown-menu">
+               The user image in the menu 
               <li class="user-header">
-                <img src="dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+                <img src="assets/img/user2-160x160.jpg" class="img-circle" alt="User Image">
 
                 <p>
                   Alexander Pierce - Web Developer
                   <small>Member since Nov. 2012</small>
                 </p>
-              </li>
-              <!-- Menu Body -->
+              </li>-->
+              <!-- Menu Body 
               <li class="user-body">
                 <div class="row">
                   <div class="col-xs-4 text-center">
@@ -203,11 +208,11 @@ desired effect
                   <div class="col-xs-4 text-center">
                     <a href="#">Friends</a>
                   </div>
-                </div>
+                </div>-->
                 <!-- /.row -->
               </li>
               <!-- Menu Footer-->
-              <li class="user-footer">
+              <!--<li class="user-footer">
                 <div class="pull-left">
                   <a href="#" class="btn btn-default btn-flat">Profile</a>
                 </div>
@@ -216,36 +221,38 @@ desired effect
                 </div>
               </li>
             </ul>
-          </li>
-          <!-- Control Sidebar Toggle Button -->
+          </li>-->
+          <!-- Control Sidebar Toggle Button 
           <li>
             <a href="#" data-toggle="control-sidebar"><i class="fa fa-gears"></i></a>
-          </li>
+          </li>-->
         </ul>
       </div>
     </nav>
   </header>
      
+     
   <!-- Left side column. contains the logo and sidebar -->
+ <!-- Left side column. contains the logo and sidebar -->
   <aside class="main-sidebar">
 
     <!-- sidebar: style can be found in sidebar.less -->
     <section class="sidebar">
 
       <!-- Sidebar user panel (optional) -->
-      <div class="user-panel">
-        <div class="pull-left image">
-          <img src="dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+    <!--  <div class="user-panel">
+      <!-- <div class="pull-left image">
+          <img src="assets/img/user2-160x160.jpg" class="img-circle" alt="User Image">
         </div>
         <div class="pull-left info">
           <p>Alexander Pierce</p>
           <!-- Status -->
-          <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
+         <!-- <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
         </div>
-      </div>
+      </div>-->
 
       <!-- search form (Optional) -->
-      <form action="#" method="get" class="sidebar-form">
+     <!-- <form action="#" method="get" class="sidebar-form">
         <div class="input-group">
           <input type="text" name="q" class="form-control" placeholder="Search...">
           <span class="input-group-btn">
@@ -253,27 +260,19 @@ desired effect
               </button>
             </span>
         </div>
-      </form>
+      </form>-->
       <!-- /.search form -->
 
       <!-- Sidebar Menu -->
       <ul class="sidebar-menu" data-widget="tree">
-        <li class="header">HEADER</li>
+        <li class="header">Menu</li>
         <!-- Optionally, you can add icons to the links -->
-        <li class="active"><a href="#"><i class="fa fa-link"></i> <span>Link</span></a></li>
-        <li><a href="#"><i class="fa fa-link"></i> <span>Another Link</span></a></li>
-        <li class="treeview">
-          <a href="#"><i class="fa fa-link"></i> <span>Multilevel</span>
-            <span class="pull-right-container">
-                <i class="fa fa-angle-left pull-right"></i>
-              </span>
-          </a>
-          <ul class="treeview-menu">
-            <li><a href="#">Link in level 2</a></li>
-            <li><a href="#">Link in level 2</a></li>
-          </ul>
-        </li>
-      </ul>
+           <li><a href="stations.html"><i class="fa fa-link"></i> <span> Station</span></a></li>
+       <li class="active"><a href="items.html"><i class="fa fa-link"></i> <span> Item</span></a></li>
+          <li><a href="inward.html"><i class="fa fa-link"></i> <span>Inward</span></a></li>
+          <li><a href="outward.html"><i class="fa fa-link"></i> <span> Outward</span></a></li>
+          
+        </ul>
       <!-- /.sidebar-menu -->
     </section>
     <!-- /.sidebar -->
@@ -284,12 +283,12 @@ desired effect
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Page Header
-        <small>Optional description</small>
+        Insert Item
+        
       </h1>
       <ol class="breadcrumb">
-        <li><a href="#"><i class="fa fa-dashboard"></i> Level</a></li>
-        <li class="active">Here</li>
+        <li><a href="#"><i class="fa fa-dashboard"></i> Items</a></li>
+        <li class="active">HOME</li>
       </ol>
     </section>
 
@@ -299,9 +298,9 @@ desired effect
       <!--------------------------
         | Your Page Content Here |
         -------------------------->
-            <div class="box box-primary">
+           <div class="box box-primary">
             <div class="box-header with-border">
-              <h3 class="box-title">Add New Station</h3>
+              <h3 class="box-title">Add New Item</h3>
             </div>
             <!-- /.box-header -->
             <!-- form start -->
@@ -324,25 +323,42 @@ desired effect
                   <label >Item Number</label>
                   <input type="text" class="form-control"  placeholder="Enter Item Number">
                 </div>
-                     </div>
+                     </div><br><br>
                  <div class="col-md-4">
                  <div class="form-group">
+                     <br><br>
                   <label >Manufacturer</label>
                   <input type="text" class="form-control"  placeholder="Enter Manufacturer Name">
                 </div>
                           </div>
                    <div class="col-md-4">
+                 <div class="form-group">
+                     <br><br>
+                  <label >Opening Stock Value</label>
+                  <input type="text" class="form-control"  placeholder="Enter Opening Stock Value">
+                </div>
+                          </div>
+                      <div class="col-md-4">
                    <div class="form-group">
+                       <br><br>
+                  <label >Opening Stock Date</label>
+                 <!-- <input type="text" class="form-control"  placeholder="Enter Opening Stock">-->
+                       <div class="input-group date">
+                  <div class="input-group-addon">
+                    <i class="fa fa-calendar"></i>
+                  </div>
+                  <input type="text" class="form-control pull-right" id="datepicker">
+                </div>
+                </div>
+                           </div>
+                   
+                  <div class="col-md-4">
+                   <div class="form-group">
+                       <br><br>
                   <label >Description</label>
                   <textarea class="form-control"></textarea>
                 </div>
                  </div>
-                      <div class="col-md-4">
-                   <div class="form-group">
-                  <label >Opening Stock</label>
-                  <input type="text" class="form-control"  placeholder="Enter Opening Stock">
-                </div>
-                           </div>
                           
               </div>
               <!-- /.box-body -->
@@ -351,6 +367,100 @@ desired effect
                 <button type="submit" class="btn btn-primary">Submit</button>
               </div>
             </form>
+          </div>
+            <div class="row">
+        <div class="col-md-6">
+          <div class="box">
+            <div class="box-header with-border">
+              <h3 class="box-title">Item Type</h3>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body">
+              <table id="InwardTable" class="table table-bordered">
+                <tr>
+                  
+                  <th id="itemName">Item Type</th>
+                  
+                    <th id="delete">ACTION</th>
+                </tr>
+               
+               
+              </table>
+                <br>
+                <br>
+                <button  class="btn btn-primary" id="add">ADD ITEM</button>
+            </div>
+            <!-- /.box-body -->
+           
+            </div>
+          </div>
+        </div>
+          <!-- /.box -->
+          <!-- /.box -->
+         <div class="box">
+            <div class="box-header">
+              <h3 class="box-title">Data Table </h3>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body">
+              <table id="example1" class="table table-bordered table-striped">
+                <thead>
+                <tr>
+                  <th>RMC</th>
+                  <th>Station ID</th>
+                  <th>Station Name</th>
+                  <th>Station Type</th>
+                    <th>Contact</th>
+                    <th>Action</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                  <td>Trident</td>
+                  <td>Internet
+                    Explorer 4.0
+                  </td>
+                  <td>Win 95+</td>
+                  <td> 4</td>
+                  <td>X</td>
+                    <td>
+                <button type="submit" class="btn btn-warning">Edit</button>
+              
+                    
+                <button type="submit" class="btn btn-danger">Delete</button>
+              
+                    </td>
+                </tr>
+                <tr>
+                  <td>Trident</td>
+                  <td>Internet
+                    Explorer 5.0
+                  </td>
+                  <td>Win 95+</td>
+                  <td>5</td>
+                  <td>C</td>
+                  <td>
+                <button type="submit" class="btn btn-warning">Edit</button>
+              
+                    
+                <button type="submit" class="btn btn-danger">Delete</button>
+              </td>
+                </tr>
+               
+                </tbody>
+                <tfoot>
+                <tr>
+                   <th>RMC</th>
+                  <th>Station ID</th>
+                  <th>Station Name</th>
+                  <th>Station Type</th>
+                    <th>Contact</th>
+                    <th>Action</th>
+                </tr>
+                </tfoot>
+              </table>
+            </div>
+            <!-- /.box-body -->
           </div>
           <!-- /.box -->
 
@@ -451,14 +561,64 @@ desired effect
 <!-- REQUIRED JS SCRIPTS -->
 
 <!-- jQuery 3 -->
-<script src="bower_components/jquery/dist/jquery.min.js"></script>
+<script src="assets/bower_components/jquery/dist/jquery.min.js"></script>
 <!-- Bootstrap 3.3.7 -->
-<script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="assets/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 <!-- AdminLTE App -->
-<script src="dist/js/adminlte.min.js"></script>
+<script src="assets/js/adminlte.min.js"></script>
 
 <!-- Optionally, you can add Slimscroll and FastClick plugins.
      Both of these plugins are recommended to enhance the
      user experience. -->
+   
+<!-- DataTables -->
+<script src="assets/bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
+<script src="assets/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+<!-- SlimScroll -->
+<script src="assets/bower_components/jquery-slimscroll/jquery.slimscroll.min.js"></script>
+<!-- FastClick -->
+<script src="assets/bower_components/fastclick/lib/fastclick.js"></script>
+<!-- AdminLTE for demo purposes -->
+<script src="assets/dist/js/demo.js">
+     <!--Select2 -->
+    <script src="assets/bower_components/select2/dist/js/select2.full.min.js"></script>
+<!-- bootstrap datepicker -->
+<script src="assets/bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
+</script>
+<!-- page script -->
+   
+<script>
+  $(function () {
+    $('#example1').DataTable()
+    $('#example2').DataTable({
+      'paging'      : true,
+      'lengthChange': false,
+      'searching'   : false,
+      'ordering'    : true,
+      'info'        : true,
+      'autoWidth'   : false
+    })
+
+        $('#datepicker').datepicker({
+      autoclose: true
+    })
+
+    $("#add").click(function(){
+         
+            var markup = "<tr><td><input type='text'></td><td><button class='btn btn-danger delete-row'><i class='fa fa-times'></i></button></td></tr>";
+            $("#InwardTable").append(markup);
+            // Find and remove selected table rows
+        $(".delete-row").click(function(){
+            
+                    $(this).parents("tr").remove();
+                
+          
+        });
+        
+        
+        });
+  })
+  
+</script>
 </body>
 </html>
