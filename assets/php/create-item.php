@@ -1,19 +1,27 @@
 <?php
+session_start ();
 require_once ("connect-database.php");
 
-if (isset ($_POST['tx_item_name']) && isset ($_POST['tx_item_number']) && ($_POST['tx_item_make']) && ($_POST['tx_item_model']) && ($_POST['tx_item_description']) && isset ($_POST['tx_opening_stock'])) {
-	$lc_item_name = mysqli_real_escape_string ($conn, trim ($_POST['tx_item_name']));
-	$lc_item_number = mysqli_real_escape_string ($conn, trim ($_POST['tx_item_number']));
-	$lc_item_make = mysqli_real_escape_string ($conn, trim ($_POST['tx_item_make']));
-	$lc_item_model = mysqli_real_escape_string ($conn, trim ($_POST['tx_item_model']));
-	$lc_item_description = mysqli_real_escape_string ($conn, trim ($_POST['tx_item_description']));
-	$lc_opening_stock = mysqli_real_escape_string ($conn, trim ($_POST['tx_opening_stock']));
+if (isset ($_SESSION['session_user_id']) && isset ($_POST['tx_name']) && isset ($_POST['tx_manufacturer']) && ($_POST['tx_description'])) {
+	$lc_name = mysqli_real_escape_string ($conn, trim ($_POST['tx_name']));
+	$lc_manufacturer = mysqli_real_escape_string ($conn, trim ($_POST['tx_manufacturer']));
+	$lc_description = mysqli_real_escape_string ($conn, trim ($_POST['tx_description']));
 	
-	$result = mysqli_query ($conn, "INSERT INTO tbl_item_details VALUES (NULL, '".$lc_item_name."', '".$lc_item_number."', '".$lc_item_make."', '".$lc_item_model."', '".$lc_item_description."', ".$lc_opening_stock.");");
-	if ($result)
-		echo (json_encode (array ('success' => "New Item Created Successfully.")));
-	else
-		echo (json_encode (array ('error' => "Something went wrong. Please, try again in a little bit.")));
+	$result = mysqli_query ($conn, "INSERT INTO tb_items VALUES (NULL, '".$lc_name."', '".$lc_manufacturer."', '".$lc_description."');");
+	if ($result) {
+		$lc_item_id = mysqli_insert_id ($conn);
+		$types = array ();
+		for ($i = 0; $i < count ($_POST['tx_type']); $i++) {
+			$lc_type = mysqli_real_escape_string ($conn, trim ($_POST['tx_type'][$i]));
+			$lc_opening_stock = mysqli_real_escape_string ($conn, trim ($_POST['tx_opening_stock'][$i]));
+			$lc_opening_stock_date = date ("Y-m-d", strtotime ($_POST['tx_opening_stock_date'][$i]));
+			
+			mysqli_query ($conn, "INSERT INTO tb_item_types VALUES (NULL, ".$lc_item_id.", '".$lc_type."', ".$lc_opening_stock.", '".$lc_opening_stock_date."');");
+			$types[] = array ('type' => $lc_type, 'opening_stock' => $lc_opening_stock, 'opening_stock_date' => $_POST['tx_opening_stock_date'][$i]);
+		}
+		echo (json_encode (array ('success' => "New Item Created Successfully.", 'item' => array ('item_id' => $lc_item_id, 'name' => $lc_name, 'manufacturer' => $lc_manufacturer, 'description' => $lc_description, 'types' => $types, 'types_count' => count ($types), 'action' => '<button class="btn btn-warning bt_edit btn-xs" data-item_id="'.$lc_item_id.'">Edit</button> <button class="btn btn-danger bt_delete btn-xs" data-item_id="'.$lc_item_id.'">Delete</button>'))));
+	} else
+		echo (json_encode (array ('error' => "Something went wrong. Please, try again in a little bit.2")));
 } else
-	echo (json_encode (array ('error' => "Something went wrong. Please, try again in a little bit.")));
+	echo (json_encode (array ('error' => "Something went wrong. Please, try again in a little bit.1")));
 ?>

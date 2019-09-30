@@ -69,7 +69,7 @@
 	$('document').ready (function () {
 		$.ajax ({
 			type: 'POST',
-			url: 'assets/php/session_user_id.php',
+			url: 'assets/php/session-user-id.php',
 			success: function (result) {
 				var result_object = JSON.parse (result);
 				if (result_object.target !== 'login.html')
@@ -118,7 +118,7 @@
 				data: data,
 				beforeSend: function () {
 					$('#bt_login').prop ("disabled", true);
-					$('#bt_login').html ("Processing... <i class='fa fa-spinner fa-spin'></i>");
+					$('#bt_login').html ("<i class='fa fa-spinner fa-spin'></i> Processing...");
 					$("#callout_block").fadeOut (1000, function () {
 						$("#callout_block").html ("");
 					});

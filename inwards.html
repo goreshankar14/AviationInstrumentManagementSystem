@@ -7,19 +7,20 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>Stations | IMD Aviation Inventory</title>
+        <title>Inwards | IMD Aviation Inventory</title>
         <!-- Tell the browser to be responsive to screen width -->
         <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-        <!-- Bootstrap 3.3.7 -->
         <link rel="stylesheet" href="assets/bower_components/bootstrap/dist/css/bootstrap.min.css">
         <!-- Font Awesome -->
         <link rel="stylesheet" href="assets/bower_components/font-awesome/css/font-awesome.min.css">
         <!-- Ionicons -->
         <link rel="stylesheet" href="assets/bower_components/Ionicons/css/ionicons.min.css">
-        <!-- DataTables -->
+		<!-- DataTables -->
         <link rel="stylesheet" href="assets/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css">
 		<!-- Select2 -->
   		<link rel="stylesheet" href="assets/bower_components/select2/dist/css/select2.min.css">
+		<!-- bootstrap datepicker -->
+		<link rel="stylesheet" href="assets/bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css">
         <!-- Theme style -->
         <link rel="stylesheet" href="assets/css/AdminLTE.min.css">
         <!-- AdminLTE Skins. We have chosen the skin-blue for this starter
@@ -60,9 +61,9 @@
         <div class="wrapper">
             <!-- Main Header -->
             <header class="main-header">
-                <a href="frontend1.html" class="logo">
-                <span class="logo-mini"><img src="assets/img/imd-logo.png" class="float-left" ></span>
-                <span class="logo-lg"><img src="assets/img/imd-logo.png" class="float-left"></span>
+                <a href="index.html" class="logo">
+					<span class="logo-mini"><img src="assets/img/imd-logo.png" class="float-left" ></span>
+					<span class="logo-lg"><img src="assets/img/imd-logo.png" class="float-left"></span>
                 </a>
                 <!-- Header Navbar -->
                 <nav class="navbar navbar-static-top" role="navigation">
@@ -109,118 +110,91 @@
             <div class="content-wrapper">
                 <!-- Content Header (Page header) -->
                 <section class="content-header">
-                    <h1>Stations
-                        <small>Create, Read, Update and Delete</small>
+                    <h1>Inwards
+                        <small>Create, Update, Read and Delete</small>
                     </h1>
                     <ol class="breadcrumb">
-                        <li><a href="dashboard.html"><i class="fa fa-dashboard"></i> Dashboard</a></li>
-                        <li class="active">Stations</li>
+                        <li><a href="#"><i class="fa fa-dashboard"></i> Dashboard</a></li>
+                        <li class="active">Inwards</li>
                     </ol>
                 </section>
                 <!-- Main content -->
                 <section class="content container-fluid">
-                    <div id="dv_form" class="box box-primary">
+                    <!--------------------------
+                        | Your Page Content Here |
+                        -------------------------->
+                    <div class="box box-primary" id="dv_form">
                         <div class="box-header with-border">
                             <h3 class="box-title">Form</h3>
                         </div>
                         <!-- /.box-header -->
-                        <div id="callout_block_form" class="col-md-12"></div>
+						<div id="callout_block_form" class="col-md-12"></div>
                         <!-- form start -->
-                        <form role="form" id="fm_station" method="post" action="">
+                        <form role="form" id="fm_item" method="post" action="">
                             <div class="box-body">
                                 <div class="col-md-4">
 									<div class="form-group">
 										<div class="select2-group">
-											<label>RMC</label>
-											<select class="form-control select2" id="s2_rmc" name="tx_rmc">
-												<option value=""></option>
-												<option value="Kolkata">Kolkata</option>
-												<option value="Mumbai">Mumbai</option>
-												<option value="Chennai">Chennai</option>
-												<option value="Guwahati">Guwahati</option>
-												<option value="Nagpur">Nagpur</option>
-												<option value="New Delhi">New Delhi</option>
-											</select>
-										</div>
-									</div>
-                                </div>
-								<div class="col-md-4">
-									<div class="form-group">
-										<div class="select2-group">
-											<label>State</label>
-											<select class="form-control select2" id="s2_state" name="tx_state">
+											<label>Station</label>
+											<select class="form-control select2" id="s2_station" name="station_id">
 											</select>
 										</div>
 									</div>
 								</div>
-								<div class="col-md-4">
-                                    <div class="form-group">
-										<div class="select2-group">
-											<label>Type</label>
-											<select class="form-control select2" id="s2_type" name="tx_type">
-												<option value=""></option>
-												<option value="AMO">AMO</option>
-												<option value="AMS">AMS</option>
-												<option value="MWO">MWO</option>
-												<option value="AMO/MWO">AMO/MWO</option>
-											</select>
-										</div>
-                                    </div>
-                                </div>
-								<div class="clearfix"></div>
                                 <div class="col-md-4">
                                     <div class="form-group">
-                                        <label >ICAO</label>
-                                        <input type="text" class="form-control" placeholder="Enter ICAO" name="tx_icao">
+                                        <label >Manufacturer</label>
+                                        <input type="text" class="form-control"  placeholder="Enter Manufacturer" name="tx_manufacturer">
                                     </div>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-group">
-                                        <label >Name</label>
-                                        <input type="text" class="form-control" placeholder="Enter Name" name="tx_name">
+                                        <label >Description</label>
+                                        <textarea class="form-control" name="tx_description"></textarea>
                                     </div>
                                 </div>
-								<div class="col-md-4">
-                                    <div class="form-group">
-                                        <label >Email ID</label><br>
-                                        <input type="email" class="form-control" placeholder="Enter Email ID" name="tx_email">
-                                    </div>
-                                </div>
-								<div class="clearfix"></div>
-								<div class="col-md-4">
-                                    <div class="form-group">
-                                        <label >Phone Number</label>
-                                        <input type="text" class="form-control" placeholder="Enter Phone Number" name="tx_phone">
-                                    </div>
-                                </div>
-								<div class="col-md-4">
-                                    <div class="form-group">
-                                        <label >Address</label>
-                                        <textarea class="form-control" name="tx_address"></textarea>
-                                    </div>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="form-group">
-                                        <label >Incharge Name</label>
-                                        <input type="text" class="form-control" placeholder="Enter Incharge Name" name="tx_incharge_name">
-                                    </div>
-                                </div>
-								<div class="clearfix"></div>
-								<div class="col-md-4">
-                                    <div class="form-group">
-                                        <label >Incharge Mobile Number</label>
-                                        <input type="text" class="form-control" placeholder="Enter Incharge Mobile Number" name="tx_incharge_mobile">
-                                    </div>
-                                </div>
+								<!-- Date -->  
+								<div class="col-md-12">
+									<table id="tb_item_types" class='table table-responsive'>
+										<thead>
+											<tr>
+												<th>Item Types</th>
+												<th></th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr>
+												<td>
+													<input type='text' class='form-control' placeholder='Enter Type' name='tx_type[]' id="tx_type"/>
+												</td>
+												<td>
+													<input type='text' class='form-control' placeholder='Enter Opening Stock' name='tx_opening_stock[]' id="tx_opening_stock"/>
+												</td>
+												<td>
+													<div class="input-group date">
+														<div class="input-group-addon">
+															<i class="fa fa-calendar"></i>
+														</div>
+														<input type="text" class="form-control pull-right" name="tx_opening_stock_date[]" id="datepicker_1"/>
+													</div>
+													<!-- /.input group -->
+												</td>
+												<td></td>
+											</tr>
+										</tbody>
+									</table>
+									<button class="btn btn-primary" id="bt_add_type">Add Type</button>
+								</div>
                             </div>
                             <!-- /.box-body -->
                             <div class="box-footer">
-								<input type="hidden" name="station_id" value=""/>
-                                <button type="submit" class="pull-right btn btn-primary" id="bt_save">Save</button>
+								<input type="hidden" name="item_id" value=""/>
+                                <button id="bt_save" type="submit" class="btn btn-primary pull-right">Save</button>
                             </div>
                         </form>
                     </div>
                     <!-- /.box -->
+					<!-- /.box -->
                     <div class="box" id="dv_datatable">
                         <div class="box-header">
                             <h3 class="box-title">List</h3>
@@ -228,16 +202,14 @@
                         <!-- /.box-header -->
 						<div id="callout_block_datatable" class="col-md-12"></div>
                         <div class="box-body">
-                            <table id="dt_stations" class="table table-bordered table-striped">
+                            <table id="dt_items" class="table table-bordered table-striped">
                                 <thead>
                                     <tr>
                                         <th>#</th>
-                                        <th>RMC</th>
-                                        <th>State</th>
-                                        <th>Type</th>
-                                        <th>ICAO</th>
                                         <th>Name</th>
-                                        <th>Contact</th>
+                                        <th>Manufacturer</th>
+                                        <th>Description</th>
+                                        <th>Types</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
@@ -246,12 +218,10 @@
                                 <tfoot>
                                     <tr>
                                         <th>#</th>
-                                        <th>RMC</th>
-                                        <th>State</th>
-                                        <th>Type</th>
-                                        <th>ICAO</th>
                                         <th>Name</th>
-                                        <th>Contact</th>
+                                        <th>Manufacturer</th>
+                                        <th>Description</th>
+                                        <th>Types</th>
                                         <th>Action</th>
                                     </tr>
                                 </tfoot>
@@ -282,24 +252,23 @@
         <script src="assets/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 		<!-- Select2 -->
 		<script src="assets/bower_components/select2/dist/js/select2.full.min.js"></script>
-        <!-- DataTables -->
+		<!-- DataTables -->
         <script src="assets/bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
         <script src="assets/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
-        <!-- SlimScroll -->
-        <script src="assets/bower_components/jquery-slimscroll/jquery.slimscroll.min.js"></script>
-        <!-- FastClick -->
-        <script src="assets/bower_components/fastclick/lib/fastclick.js"></script>
+		<!-- bootstrap datepicker -->
+		<script src="assets/bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
+		<!-- SlimScroll -->
+		<script src="assets/bower_components/jquery-slimscroll/jquery.slimscroll.min.js"></script>
+		<!-- FastClick -->
+		<script src="assets/bower_components/fastclick/lib/fastclick.js"></script>
         <!-- AdminLTE App -->
         <script src="assets/js/adminlte.min.js"></script>
-        <!-- AdminLTE for demo purposes -->
-        <script src="assets/js/demo.js"></script>
-        <!-- jQuery Validate 1.16.0 -->
+		<!-- jQuery Validate 1.16.0 -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.16.0/jquery.validate.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.16.0/additional-methods.min.js"></script>
-        <!-- page script -->
-        <script>
-            $('document').ready (function () {
-            	$('#dt_stations').DataTable ();
+		<script>
+			$('document').ready (function () {
+				$('#dt_items').DataTable ();
             	$.ajax ({
             		type: 'POST',
             		url: 'assets/php/session-user-id.php',
@@ -307,10 +276,29 @@
             			var result_object = JSON.parse (result);
             			if (result_object.target === 'login.html')
             				window.location.href = result_object.target;
-            			read_stations (10);
+            			read_items (10);
             		}
             	}); 
-            	$('#fm_station').validate ({
+				$('#datepicker_1').datepicker ({
+					autoclose: true,
+					orientation: 'bottom'
+				});
+				var datepickers = 1;
+				$("#bt_add_type").click (function (e) {
+					e.preventDefault ();
+					datepickers++;
+					var markup = "<tr><td><input type='text' class='form-control' placeholder='Enter Type' name='tx_type[]'></td><td><input type='text' class='form-control' placeholder='Enter Opening Stock' name='tx_opening_stock[]'></td><td><div class='input-group date'><div class='input-group-addon'><i class='fa fa-calendar'></i></div><input type='text' class='form-control pull-right' name='tx_opening_stock_date[]' id='datepicker_" + datepickers + "'></div></td><td><button class='btn btn-danger btn-xs bt_delete_item_type'><i class='fa fa-times'></i></button></td></tr>";
+					$("#tb_item_types tbody").append (markup);
+					$('#datepicker_' + datepickers).datepicker ({
+						autoclose: true,
+						orientation: 'bottom'
+					});
+				});
+				$(document).on ("click", ".bt_delete_item_type", function (e) {
+					e.preventDefault ();
+					$(this).parents ("tr").remove ();
+				});
+				$('#fm_item').validate ({
             		highlight: function (element) {
             			$(element).closest('.form-group').addClass('has-error');
             		},
@@ -327,84 +315,30 @@
             			}
             		},
             		rules: {
-            			tx_rmc: {
-            				required: true
-            			},						
-            			tx_state: {
-            				required: true
-            			},						
-            			tx_type: {
-            				required: true
-            			},
-            			tx_icao: {
-            				required: true
-            			},
             			tx_name: {
             				required: true
-            			},
-						tx_email: {
+            			},						
+            			tx_manufacturer: {
             				required: true
             			},						
-            			tx_phone: {
-            				required: true
-            			},						
-            			tx_address: {
-            				required: true
-            			},
-            			tx_incharge_name: {
-            				required: true
-            			},            			
-            			tx_incharge_mobile: {
+            			tx_description: {
             				required: true
             			}
             		},
             		submitHandler: submit_form
             	});
             	function submit_form () {
-					if ($("input[name=station_id").val () == "") {
-						create_station ();
+					if ($("input[name=item_id").val () == "") {
+						create_item ();
 					} else {
-						update_station ();
+						update_item ();
 					}            		 
             	}
-            	
-            	function read_stations (rows) {
-            		$.ajax ({
-            			type: 'POST',
-            			url: 'assets/php/read-stations.php',
-            			data: {limit: rows},
-            			success: function (result) {
-            				var result_object = JSON.parse (result);
-            				if (typeof result_object.error === 'undefined') {
-            					console.log (result_object.stations);
-            					for (var i = 0; i < result_object.count; i++) {
-            						var station = result_object.stations[i];
-            						$('#dt_stations').DataTable ().row.add ([
-            							station.station_id,
-            							station.rmc,
-										station.state,
-										station.type,
-            							station.icao,
-            							station.name, 
-										"<table style='width: 300px;' class='table table-bordered table-sm table-responsive'><tbody><tr><th scope='row'>Station Email ID:</th><td>" + station.email + "</td></tr><tr><th scope='row'>Station Phone Number:</th><td>" + station.phone+"</td></tr><tr><th scope='row'>Station Address:</th><td>" + station.address + "</td></tr><tr><th scope='row'>Incharge Name:</th><td>" + station.incharge_name + "</td></tr><tr><th scope='row'>Incharge Mobile Number:</th><td>" + station.incharge_mobile + "</td></tr></tbody></table>",
-            							station.action
-            						]).draw (false);
-            						$('#dt_stations').DataTable ().order ([0, 'desc']).draw ();
-            					}
-            				} else {
-            					$("#callout_block_datatable").fadeIn (1000, function () {
-            						$("#callout_block_datatable").html ('<div class="callout callout-danger"><h4>Failed!</h4><p>' + result_object.error + '</p></div>');
-            					});
-            				}
-            			}
-            		});
-            	}
-				
-				function create_station () {
-					var data = $('#fm_station').serialize ();
+				function create_item () {
+					var data = $('#fm_item').serialize ();
 					$.ajax ({
 						type: 'POST',
-						url: 'assets/php/create-station.php',
+						url: 'assets/php/create-item.php',
 						data: data,
 						beforeSend: function () {
 							$('#bt_save').prop ("disabled", true);
@@ -423,19 +357,22 @@
 									$('html, body').animate ({
 										scrollTop: $("#dv_datatable").offset ().top
 									}, 500);									
-									console.log (result_object.station);
-									var station = result_object.station;
-									$('#dt_stations').DataTable ().row.add ([
-										station.station_id,
-            							station.rmc,
-										station.state,
-										station.type,
-            							station.icao,
-            							station.name, 
-										"<table style='width: 300px;' class='table table-bordered table-sm table-responsive'><tbody><tr><th scope='row'>Station Email ID:</th><td>" + station.email + "</td></tr><tr><th scope='row'>Station Phone Number:</th><td>" + station.phone+"</td></tr><tr><th scope='row'>Station Address:</th><td>" + station.address + "</td></tr><tr><th scope='row'>Incharge Name:</th><td>" + station.incharge_name + "</td></tr><tr><th scope='row'>Incharge Mobile Number:</th><td>" + station.incharge_mobile + "</td></tr></tbody></table>",
-            							station.action
+									console.log (result_object.item);
+									var item = result_object.item;
+									var markup = "<table style='width: 300px;' class='table table-bordered table-sm table-responsive'><thead><tr><th scope='col'>Type</th><th scope='col'>Opening Stock</th><th scope='col'>Date</th></tr></thead><tbody>";
+									for (var i = 0; i < item.types_count; i++) {
+										markup += "<tr><td>" + item.types[i].type + "</td><td>" + item.types[i].opening_stock + "</td><td>" + item.types[i].opening_stock_date + "</td></tr>";
+									}
+									markup += "</tbody></table>";
+									$('#dt_items').DataTable ().row.add ([
+										item.item_id,
+            							item.name,
+										item.manufacturer,
+										item.description,
+										markup,
+            							item.action
 									]).draw (false);
-									$('#dt_stations').DataTable ().order ([0, 'desc']).draw ();
+									$('#dt_items').DataTable ().order ([0, 'desc']).draw ();
 								});
 							} else {
 								$("#callout_block_form").fadeIn (1000, function () {
@@ -448,11 +385,11 @@
 					});
 				}
 				
-				function update_station () {
-					var data = $('#fm_station').serialize ();
+				function update_item () {
+					var data = $('#fm_item').serialize ();
 					$.ajax ({
 						type: 'POST',
-						url: 'assets/php/update-station.php',
+						url: 'assets/php/update-item.php',
 						data: data,
 						beforeSend: function () {
 							$('#bt_save').prop ("disabled", true);
@@ -468,21 +405,24 @@
 									$("#callout_block_datatable").html ('<div class="callout callout-success"><h4>Success!</h4><p>' + result_object.success + '</p></div>');
 									$('#bt_save').prop ("disabled", false);
 									$('#bt_save').html ("Save");
-									$('input[name=station_id]').val ("");
+									$('input[name=item_id]').val ("");
 									$('html, body').animate ({
 										scrollTop: $("#dv_datatable").offset ().top
 									}, 500);									
-									console.log (result_object.station);
-									var station = result_object.station;
-									$('#dt_stations').DataTable ().row ($(".bt_edit[data-station_id=" + station.station_id + "]").parents ('tr')).data ([
-										station.station_id,
-            							station.rmc,
-										station.state,
-										station.type,
-            							station.icao,
-            							station.name, 
-										"<table style='width: 300px;' class='table table-bordered table-sm table-responsive'><tbody><tr><th scope='row'>Station Email ID:</th><td>" + station.email + "</td></tr><tr><th scope='row'>Station Phone Number:</th><td>" + station.phone+"</td></tr><tr><th scope='row'>Station Address:</th><td>" + station.address + "</td></tr><tr><th scope='row'>Incharge Name:</th><td>" + station.incharge_name + "</td></tr><tr><th scope='row'>Incharge Mobile Number:</th><td>" + station.incharge_mobile + "</td></tr></tbody></table>",
-            							station.action
+									console.log (result_object.item);
+									var item = result_object.item;
+									var markup = "<table style='width: 300px;' class='table table-bordered table-sm table-responsive'><thead><tr><th scope='col'>Type</th><th scope='col'>Opening Stock</th><th scope='col'>Date</th></tr></thead><tbody>";
+									for (var i = 0; i < item.types_count; i++) {
+										markup += "<tr><td>" + item.types[i].type + "</td><td>" + item.types[i].opening_stock + "</td><td>" + item.types[i].opening_stock_date + "</td></tr>";
+									}
+									markup += "</tbody></table>";
+									$('#dt_items').DataTable ().row ($(".bt_edit[data-item_id=" + item.item_id + "]").parents ('tr')).data ([
+										item.item_id,
+            							item.name,
+										item.manufacturer,
+										item.description,
+										markup,
+            							item.action
 									]).draw (false);
 								});
 							} else {
@@ -490,7 +430,7 @@
 									$("#callout_block_datatable").html ('<div class="callout callout-danger"><h4>Failed!</h4><p>' + result_object.error + '</p></div>');
 									$('#bt_save').prop ("disabled", false);
 									$('#bt_save').html ("Save");
-									$('input[name=station_id]').val ("");
+									$('input[name=item_id]').val ("");
 									$('html, body').animate ({
 										scrollTop: $("#dv_datatable").offset ().top
 									}, 500);									
@@ -499,59 +439,70 @@
 						}
 					});
 				}
-				$('#s2_rmc').select2 ({
-					placeholder: 'Select RMC'
-				});
-				$('#s2_state').select2 ({
-					placeholder: 'Select State',
-				});
-				$('#s2_type').select2 ({
-					placeholder: 'Select Type',
-				});
-				$('#s2_rmc').on ('select2:select', function (e) {
-					var data = e.params.data;
-					console.log(data);
-					read_states (data.text);					
-				});
-				function read_states (lc_rmc) {
-					$('#s2_state').empty ();
-					$.ajax ({
-						type: 'POST',
-						url: 'assets/php/read-states.php',
-						data: {rmc: lc_rmc},
-						success: function (result) {
-							var result_object = JSON.parse (result);
-							console.log (result_object);
-							for (var i = 0; i < result_object.count; i++) {
-								var new_state = new Option (result_object.states[i], result_object.states[i], true, true);
-								$("#s2_state").append (new_state);
-							}
-						}
-					});
-				}
+				
+				function read_items (rows) {
+            		$.ajax ({
+            			type: 'POST',
+            			url: 'assets/php/read-items.php',
+            			data: {limit: rows},
+            			success: function (result) {
+            				var result_object = JSON.parse (result);
+            				if (typeof result_object.error === 'undefined') {
+            					console.log (result_object.items);
+            					for (var i = 0; i < result_object.count; i++) {
+            						var item = result_object.items[i];
+									var markup = "<table style='width: 300px;' class='table table-bordered table-sm table-responsive'><thead><tr><th scope='col'>Type</th><th scope='col'>Opening Stock</th><th scope='col'>Date</th></tr></thead><tbody>";
+									for (var j = 0; j < item.types_count; j++) {
+										markup += "<tr><td>" + item.types[j].type + "</td><td>" + item.types[j].opening_stock + "</td><td>" + item.types[j].opening_stock_date + "</td></tr>";
+									}
+									markup += "</tbody></table>";
+									$('#dt_items').DataTable ().row.add ([
+										item.item_id,
+            							item.name,
+										item.manufacturer,
+										item.description,
+										markup,
+            							item.action
+									]).draw (false);
+            					}
+            				} else {
+            					$("#callout_block_datatable").fadeIn (1000, function () {
+            						$("#callout_block_datatable").html ('<div class="callout callout-danger"><h4>Failed!</h4><p>' + result_object.error + '</p></div>');
+            					});
+            				}
+            			}
+            		});
+            	}
+				
 				$(document).on ("click", ".bt_edit", function (e) {
 					e.preventDefault ();
 					$.ajax ({
 						type: 'POST',
-						url: 'assets/php/read-stations.php',
-						data: {station_id: $(this).data ('station_id')},
+						url: 'assets/php/read-items.php',
+						data: {item_id: $(this).data ('item_id')},
 						success: function (result) {
 							var result_object = JSON.parse (result);
 							if (typeof result_object.error === 'undefined') {
-								console.log (result_object.stations);
-								var station = result_object.stations[0];
-								$("input[name='station_id']").val (station.station_id);
-								$("select[name=tx_rmc").val (station.rmc).trigger ("change");
-								read_states (station.rmc);
-								$("select[name=tx_state").val (station.state).trigger ("change");
-								$("select[name=tx_type").val (station.type)
-								$("input[name=tx_icao").val (station.icao);
-								$("input[name=tx_name").val (station.name);
-								$("input[name=tx_email").val (station.email);
-								$("input[name=tx_phone").val (station.phone);
-								$("textarea[name=tx_address").html (station.address);
-								$("input[name=tx_incharge_name").val (station.incharge_name);
-								$("input[name=tx_incharge_mobile").val (station.incharge_mobile);
+								console.log (result_object.items);
+								var item = result_object.items[0];
+								$("input[name='item_id']").val (item.item_id);
+								$("input[name=tx_name").val (item.name);
+								$("input[name=tx_manufacturer").val (item.manufacturer);
+								$("textarea[name=tx_description").html (item.description);								
+								$("#tx_type").val (item.types[0].type);
+								$("#tx_opening_stock").val (item.types[0].opening_stock);
+								$('#datepicker_1').datepicker ("update", new Date(item.types[0].opening_stock_date));
+								var datepickers = 1;
+								for (var i = 1; i < item.types_count; i++) {
+									datepickers++;
+									var markup = "<tr><td><input type='text' class='form-control' placeholder='Enter Type' name='tx_type[]' value='" + item.types[i].type + "'></td><td><input type='text' class='form-control' placeholder='Enter Opening Stock' name='tx_opening_stock[]' value='" + item.types[i].opening_stock + "'></td><td><div class='input-group date'><div class='input-group-addon'><i class='fa fa-calendar'></i></div><input type='text' class='form-control pull-right' name='tx_opening_stock_date[]' id='datepicker_" + datepickers + "'></div></td><td><button class='btn btn-danger btn-xs bt_delete_item_type'><i class='fa fa-times'></i></button></td></tr>";
+									$("#tb_item_types tbody").append (markup);
+									$('#datepicker_' + datepickers).datepicker ({
+										autoclose: true,
+										orientation: 'bottom'
+									});
+									$('#datepicker_' + datepickers).datepicker ("update", new Date(item.types[i].opening_stock_date));
+								}								
 								$('html, body').animate ({
 									scrollTop: $("#dv_form").offset ().top
 								}, 500);	
@@ -565,19 +516,19 @@
 				});
 				$(document).on ("click", ".bt_delete", function (e) {
 					e.preventDefault ();
-					var lc_station_id = $(this).data ('station_id');
-					if (confirm ("Do you really want to delete Station #" + lc_station_id + "?")) {
+					var lc_item_id = $(this).data ('item_id');
+					if (confirm ("Do you really want to delete Item #" + lc_item_id + "?")) {
 						$.ajax ({
 							type: 'POST',
-							url: 'assets/php/delete-station.php',
-							data: {station_id: lc_station_id},
+							url: 'assets/php/delete-item.php',
+							data: {item_id: lc_item_id},
 							success: function (result) {
 								var result_object = JSON.parse (result);
 								if (typeof result_object.error === 'undefined') {
 									$("#callout_block_datatable").fadeIn (1000, function () {
 										$("#callout_block_datatable").html ('<div class="callout callout-success"><h4>Success!</h4><p>' + result_object.success + '</p></div>');
-										console.log ($(".bt_delete[data-station_id=" + lc_station_id + "]").parents ('tr'));
-										$('#dt_stations').DataTable ().row ($(".bt_delete[data-station_id=" + lc_station_id + "]").parents ('tr')).remove ().draw ();
+										console.log ($(".bt_delete[data-item_id=" + lc_item_id + "]").parents ('tr'));
+										$('#dt_items').DataTable ().row ($(".bt_delete[data-item_id=" + lc_item_id + "]").parents ('tr')).remove ().draw ();
 									});
 								} else {
 									$("#callout_block_datatable").fadeIn (1000, function () {
@@ -588,7 +539,23 @@
 						});
 					}
 				});
+				$('#s2_station').select2 ({
+					placeholder: 'Select Station'
+				});
+				$.ajax ({
+					type: 'POST',
+					url: 'assets/php/read-stations.php',
+					success: function (result) {
+						var result_object = JSON.parse (result);
+						console.log (result_object);
+						for (var i = 0; i < result_object.count; i++) {
+							var new_station = new Option (result_object.stations[i].rmc + " - " + result_object.stations[i].icao + " - " + result_object.stations[i].name, result_object.stations[i].station_id, true, true);
+							$("#s2_station").append (new_station);
+						}
+						$("#s2_station").select2 ("val", "");
+					}
+				});
 			});
-        </script>
+		</script>
     </body>
 </html>
