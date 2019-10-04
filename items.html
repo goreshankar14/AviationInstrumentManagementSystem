@@ -17,8 +17,6 @@
         <link rel="stylesheet" href="assets/bower_components/Ionicons/css/ionicons.min.css">
 		<!-- DataTables -->
         <link rel="stylesheet" href="assets/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css">
-		<!-- bootstrap datepicker -->
-		<link rel="stylesheet" href="assets/bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css">
         <!-- Theme style -->
         <link rel="stylesheet" href="assets/css/AdminLTE.min.css">
         <!-- AdminLTE Skins. We have chosen the skin-blue for this starter
@@ -34,6 +32,39 @@
         <!-- Google Font -->
         <link rel="stylesheet"
             href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+		<style>
+			.table.mb-0 {
+				margin-bottom: 0 !important;
+			}
+			.table.mb-8 {
+				margin-bottom: 8px !important;
+			}
+			.table-minimal {
+				margin: 0;
+				width: 100%;
+			}
+			.table-minimal.mb-8 {
+				margin-bottom: 8px;
+			}
+			.table-minimal tbody tr td {
+				padding-bottom: 8px;
+				padding-right: 8px;
+			}			
+			.table-minimal tbody tr td:last-child {
+				padding-right: 0;
+			}			
+			.table-minimal tbody tr:last-child td {
+				padding-bottom: 0;
+			}
+			a.danger {
+				text-decoration: none;
+				color: rgb(215, 57, 37);
+			}
+			a.primary {
+				text-decoration: none;
+				color: rgb(54, 127, 169);
+			}
+		</style>
     </head>
     <!--
         BODY TAG OPTIONS:
@@ -126,59 +157,67 @@
                             <h3 class="box-title">Form</h3>
                         </div>
                         <!-- /.box-header -->
-						<div id="callout_block_form" class="col-md-12"></div>
                         <!-- form start -->
                         <form role="form" id="fm_item" method="post" action="">
                             <div class="box-body">
-                                <div class="col-md-4">
-                                    <div class="form-group">
-                                        <label>Name</label>
-                                        <input type="text" class="form-control"  placeholder="Enter Name" name="tx_name">
-                                    </div>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="form-group">
-                                        <label >Manufacturer</label>
-                                        <input type="text" class="form-control"  placeholder="Enter Manufacturer" name="tx_manufacturer">
-                                    </div>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="form-group">
-                                        <label >Description</label>
-                                        <textarea class="form-control" name="tx_description"></textarea>
-                                    </div>
-                                </div>
-								<!-- Date -->  
+								<div id="callout_block_form" class="col-md-12"></div>
 								<div class="col-md-12">
-									<table id="tb_item_types" class='table table-responsive'>
+									<table class='table mb-0 table-bordered'>
 										<thead>
 											<tr>
-												<th>Item Types</th>
-												<th></th>
+												<th scope="col">Name</th>
+												<th scope="col">Types</th>
+												<th scope="col">Specification</th>
 											</tr>
 										</thead>
 										<tbody>
 											<tr>
-												<td>
-													<input type='text' class='form-control' placeholder='Enter Type' name='tx_type[]' id="tx_type"/>
+												<td class="td-group">
+													<input type="text" class="form-control"  placeholder="Enter Name" name="tx_name">
 												</td>
 												<td>
-													<input type='text' class='form-control' placeholder='Enter Opening Stock' name='tx_opening_stock[]' id="tx_opening_stock"/>
+													<table class='table mb-8 table-bordered' id='tb_types'>
+														<thead>
+															<tr>
+																<th scope="col">Type</th>
+																<th scope="col">Manufactures</th>
+																<th scope="col">Action</th>
+															</tr>
+														</thead>
+														<tbody>
+															<tr>
+																<td>
+																	<input type='text' class='form-control' placeholder='Enter Type' name='tx_type[]' id="tx_type"/>
+																</td>	
+																<td>
+																	<table class='table-minimal mb-8'>
+																		<tbody>
+																			<tr>
+																				<td>
+																					<input type='text' class='form-control' placeholder='Enter Manufacturer' name='tx_manufacturer[0][]' id="tx_manufacturer"/>
+																				</td>
+																				<td>
+																					<a href="javascript:void(0)" class="danger"><i class="fa fa-times"></i></a>
+																				</td>
+																			</tr>
+																		</tbody>
+																	</table>
+																	<a href="javascript:void(0)" class="primary bt_add_type_manufacturer">Add another manufacturer</a>
+																</td>
+																<td class="text-center">
+																	<a href="javascript:void(0)" class="danger"><i class="fa fa-times"></i></a>
+																</td>
+															</tr>															
+														</tbody>
+													</table>
+													<a href="javascript:void(0)" class="primary" id="bt_add_type">Add another type</a>
+												</td>												
+												<td class="td-group">
+													<textarea class="form-control" name="tx_specification"></textarea>
 												</td>
-												<td>
-													<div class="input-group date">
-														<div class="input-group-addon">
-															<i class="fa fa-calendar"></i>
-														</div>
-														<input type="text" class="form-control pull-right" name="tx_opening_stock_date[]" id="datepicker_1"/>
-													</div>
-													<!-- /.input group -->
-												</td>
-												<td></td>
 											</tr>
 										</tbody>
-									</table>
-									<button class="btn btn-primary" id="bt_add_type">Add Type</button>
+									</table>									
 								</div>
                             </div>
                             <!-- /.box-body -->
@@ -195,16 +234,15 @@
                             <h3 class="box-title">List</h3>
                         </div>
                         <!-- /.box-header -->
-						<div id="callout_block_datatable" class="col-md-12"></div>
-                        <div class="box-body">
-                            <table id="dt_items" class="table table-bordered table-striped">
+						<div class="box-body">
+							<div id="callout_block_datatable" class="col-md-12"></div>
+                            <table id="dt_items" class="table table-bordered">
                                 <thead>
                                     <tr>
                                         <th>#</th>
                                         <th>Name</th>
-                                        <th>Manufacturer</th>
-                                        <th>Description</th>
                                         <th>Types</th>
+                                        <th>Specification</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
@@ -214,9 +252,8 @@
                                     <tr>
                                         <th>#</th>
                                         <th>Name</th>
-                                        <th>Manufacturer</th>
-                                        <th>Description</th>
                                         <th>Types</th>
+                                        <th>Specification</th>
                                         <th>Action</th>
                                     </tr>
                                 </tfoot>
@@ -248,8 +285,6 @@
 		<!-- DataTables -->
         <script src="assets/bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
         <script src="assets/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
-		<!-- bootstrap datepicker -->
-		<script src="assets/bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
 		<!-- SlimScroll -->
 		<script src="assets/bower_components/jquery-slimscroll/jquery.slimscroll.min.js"></script>
 		<!-- FastClick -->
@@ -261,7 +296,6 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.16.0/additional-methods.min.js"></script>
 		<script>
 			$('document').ready (function () {
-				$('#dt_items').DataTable ();
             	$.ajax ({
             		type: 'POST',
             		url: 'assets/php/session-user-id.php',
@@ -271,32 +305,97 @@
             				window.location.href = result_object.target;
             			read_items (10);
             		}
-            	}); 
-				$('#datepicker_1').datepicker ({
-					autoclose: true,
-					orientation: 'bottom'
-				});
-				var datepickers = 1;
+            	});
+				
+				$('#dt_items').DataTable ();
+				
 				$("#bt_add_type").click (function (e) {
 					e.preventDefault ();
-					datepickers++;
-					var markup = "<tr><td><input type='text' class='form-control' placeholder='Enter Type' name='tx_type[]'></td><td><input type='text' class='form-control' placeholder='Enter Opening Stock' name='tx_opening_stock[]'></td><td><div class='input-group date'><div class='input-group-addon'><i class='fa fa-calendar'></i></div><input type='text' class='form-control pull-right' name='tx_opening_stock_date[]' id='datepicker_" + datepickers + "'></div></td><td><button class='btn btn-danger btn-xs bt_delete_item_type'><i class='fa fa-times'></i></button></td></tr>";
-					$("#tb_item_types tbody").append (markup);
-					$('#datepicker_' + datepickers).datepicker ({
-						autoclose: true,
-						orientation: 'bottom'
+					var markup = "<tr><td><input type='text' class='form-control' placeholder='Enter Type' name='tx_type[]'/></td><td><table class='table-minimal mb-8'><tbody><tr><td><input type='text' class='form-control' placeholder='Enter Manufacturer' name='tx_manufacturer[][]'/></td><td><a href='javascript:void(0)' class='danger'><i class='fa fa-times'></i></a></td></tr></tbody></table><a href='javascript:void(0)' class='primary bt_add_type_manufacturer'>Add another manufacturer</a></td><td class='text-center'><a href='javascript:void(0)' class='danger bt_delete_t'><i class='fa fa-times'></i></a></td></tr>";
+					$("#tb_types > tbody").append (markup);
+				});
+				
+				$(document).on ("click", ".bt_add_type_manufacturer", function (e) {
+					e.preventDefault ();
+					var markup = "<tr><td><input type='text' class='form-control' placeholder='Enter Manufacturer' name='tx_manufacturer[][]'/></td><td><a href='javascript:void(0)' class='danger bt_delete_t'><i class='fa fa-times'></i></a></td></tr>";
+					$(this).closest ('td').find ('tbody').append (markup);
+				});
+				
+				$(document).on ("click", ".bt_delete_t", function (e) {
+					e.preventDefault ();
+					$(this).closest ("tr").remove ();
+				});
+				
+				$(document).on ("click", ".bt_edit", function (e) {
+					e.preventDefault ();
+					$.ajax ({
+						type: 'POST',
+						url: 'assets/php/read-items.php',
+						data: {item_id: $(this).data ('item_id')},
+						success: function (result) {
+							var result_object = JSON.parse (result);
+							if (typeof result_object.error === 'undefined') {
+								console.log (result_object.items);
+								var item = result_object.items[0];
+								$("input[name='item_id']").val (item.item_id);
+								$("input[name=tx_name").val (item.name);
+								$("textarea[name=tx_specification").html (item.specification);								
+								$("#tx_type").val (item.types[0].type);
+								$("#tx_manufacturer").val (item.types[0].manufacturers[0]);
+								
+								for (var i = 1; i < item.types_count; i++) {
+									var markup = "<tr><td><input type='text' class='form-control' placeholder='Enter Type' name='tx_type[]' value='"+item.types[i].type+"'/></td><td><table class='table-minimal mb-8'><tbody>";
+									markup += "<tr><td><input type='text' class='form-control' placeholder='Enter Manufacturer' name='tx_manufacturer["+i+"][]' value='"+item.types[i].manufacturers[0]+"'/></td><td><a href='javascript:void(0)' class='danger'><i class='fa fa-times'></i></a></td></tr>";
+									for (var j = 1; j < item.types[i].manufacturers_count; j++) {
+										markup += "<tr><td><input type='text' class='form-control' placeholder='Enter Manufacturer' name='tx_manufacturer["+i+"][]' value='"+item.types[i].manufacturers[j]+"'/></td><td><a href='javascript:void(0)' class='danger bt_delete_t'><i class='fa fa-times'></i></a></td></tr>";
+									}
+									markup += "</tbody></table><a href='javascript:void(0)' class='primary bt_add_type_manufacturer'>Add another manufacturer</a></td><td class='text-center'><a href='javascript:void(0)' class='danger bt_delete_t'><i class='fa fa-times'></i></a></td></tr>";
+									$("#tb_types > tbody").append (markup);
+								}								
+								$('html, body').animate ({
+									scrollTop: $("#dv_form").offset ().top
+								}, 500);	
+							} else {
+								$("#callout_block_datatable").fadeIn (1000, function () {
+									$("#callout_block_datatable").html ('<div class="callout callout-danger"><h4>Failed!</h4><p>' + result_object.error + '</p></div>');
+								});
+							}
+						}
 					});
 				});
-				$(document).on ("click", ".bt_delete_item_type", function (e) {
+				
+				$(document).on ("click", ".bt_delete", function (e) {
 					e.preventDefault ();
-					$(this).parents ("tr").remove ();
+					var lc_item_id = $(this).data ('item_id');
+					if (confirm ("Do you really want to delete Item #" + lc_item_id + "?")) {
+						$.ajax ({
+							type: 'POST',
+							url: 'assets/php/delete-item.php',
+							data: {item_id: lc_item_id},
+							success: function (result) {
+								var result_object = JSON.parse (result);
+								if (typeof result_object.error === 'undefined') {
+									$("#callout_block_datatable").fadeIn (1000, function () {
+										$("#callout_block_datatable").html ('<div class="callout callout-success"><h4>Success!</h4><p>' + result_object.success + '</p></div>');
+										console.log ($(".bt_delete[data-item_id=" + lc_item_id + "]").parents ('tr'));
+										$('#dt_items').DataTable ().row ($(".bt_delete[data-item_id=" + lc_item_id + "]").parents ('tr')).remove ().draw ();
+									});
+								} else {
+									$("#callout_block_datatable").fadeIn (1000, function () {
+										$("#callout_block_datatable").html ('<div class="callout callout-danger"><h4>Failed!</h4><p>' + result_object.error + '</p></div>');
+									});
+								}
+							}
+						});
+					}
 				});
+				
 				$('#fm_item').validate ({
             		highlight: function (element) {
-            			$(element).closest('.form-group').addClass('has-error');
+            			$(element).closest('.td-group').addClass('has-error');
             		},
             		unhighlight: function (element) {
-            			$(element).closest('.form-group').removeClass('has-error');
+            			$(element).closest('.td-group').removeClass('has-error');
             		},
             		errorElement: 'span',
             		errorClass: 'help-block',
@@ -311,22 +410,29 @@
             			tx_name: {
             				required: true
             			},						
-            			tx_manufacturer: {
-            				required: true
-            			},						
-            			tx_description: {
+            			tx_specification: {
             				required: true
             			}
             		},
             		submitHandler: submit_form
             	});
+				
             	function submit_form () {
+					var i = 0;
+					$("#tb_types > tbody > tr").each (function (n) {
+						$(this).find ("tbody > tr").each (function (n) {
+							$(this).find ("input").attr ("name", "tx_manufacturer["+i+"][]");
+						});
+						i++;
+					});
+					
 					if ($("input[name=item_id").val () == "") {
 						create_item ();
 					} else {
 						update_item ();
-					}            		 
+					}        		 
             	}
+				
 				function create_item () {
 					var data = $('#fm_item').serialize ();
 					$.ajax ({
@@ -352,20 +458,24 @@
 									}, 500);									
 									console.log (result_object.item);
 									var item = result_object.item;
-									var markup = "<table style='width: 300px;' class='table table-bordered table-sm table-responsive'><thead><tr><th scope='col'>Type</th><th scope='col'>Opening Stock</th><th scope='col'>Date</th></tr></thead><tbody>";
-									for (var i = 0; i < item.types_count; i++) {
-										markup += "<tr><td>" + item.types[i].type + "</td><td>" + item.types[i].opening_stock + "</td><td>" + item.types[i].opening_stock_date + "</td></tr>";
+									var markup = "<table class='table table-bordered'><thead><tr><th scope='col'>Type</th><th scope='col'>Manufacturers</th></tr></thead><tbody>";
+									for (var j = 0; j < item.types_count; j++) {
+										var type = item.types[j];
+										markup += "<tr><td>"+type.type+"</td><td><table><tbody>";
+										for (var k = 0; k < type.manufacturers_count; k++) {
+											var manufacturer = type.manufacturers[k];
+											markup += "<tr><td>"+manufacturer+"</td></tr>";
+										}
+										markup += "</tbody></table></td></tr>";
 									}
 									markup += "</tbody></table>";
 									$('#dt_items').DataTable ().row.add ([
 										item.item_id,
             							item.name,
-										item.manufacturer,
-										item.description,
+										item.specification,
 										markup,
             							item.action
 									]).draw (false);
-									$('#dt_items').DataTable ().order ([0, 'desc']).draw ();
 								});
 							} else {
 								$("#callout_block_form").fadeIn (1000, function () {
@@ -377,6 +487,46 @@
 						}
 					});
 				}
+				
+				function read_items (rows) {
+            		$.ajax ({
+            			type: 'POST',
+            			url: 'assets/php/read-items.php',
+            			data: {limit: rows},
+            			success: function (result) {
+            				var result_object = JSON.parse (result);
+            				if (typeof result_object.error === 'undefined') {
+            					console.log (result_object.items);
+            					for (var i = 0; i < result_object.count; i++) {
+            						var item = result_object.items[i];
+									var markup = "<table class='table table-bordered'><thead><tr><th scope='col'>Type</th><th scope='col'>Manufacturers</th></tr></thead><tbody>";
+									for (var j = 0; j < item.types_count; j++) {
+										var type = item.types[j];
+										markup += "<tr><td>"+type.type+"</td><td><table><tbody>";
+										for (var k = 0; k < type.manufacturers_count; k++) {
+											var manufacturer = type.manufacturers[k];
+											markup += "<tr><td>"+manufacturer+"</td></tr>";
+										}
+										markup += "</tbody></table></td></tr>";
+									}
+									markup += "</tbody></table>";
+									$('#dt_items').DataTable ().row.add ([
+										item.item_id,
+            							item.name,
+										item.specification,
+										markup,
+            							item.action
+									]).draw (false);
+									$('#dt_items').DataTable ().order ([0, 'desc']).draw ();
+            					}
+            				} else {
+            					$("#callout_block_datatable").fadeIn (1000, function () {
+            						$("#callout_block_datatable").html ('<div class="callout callout-danger"><h4>Failed!</h4><p>' + result_object.error + '</p></div>');
+            					});
+            				}
+            			}
+            		});
+            	}
 				
 				function update_item () {
 					var data = $('#fm_item').serialize ();
@@ -404,16 +554,21 @@
 									}, 500);									
 									console.log (result_object.item);
 									var item = result_object.item;
-									var markup = "<table style='width: 300px;' class='table table-bordered table-sm table-responsive'><thead><tr><th scope='col'>Type</th><th scope='col'>Opening Stock</th><th scope='col'>Date</th></tr></thead><tbody>";
-									for (var i = 0; i < item.types_count; i++) {
-										markup += "<tr><td>" + item.types[i].type + "</td><td>" + item.types[i].opening_stock + "</td><td>" + item.types[i].opening_stock_date + "</td></tr>";
+									var markup = "<table class='table table-bordered'><thead><tr><th scope='col'>Type</th><th scope='col'>Manufacturers</th></tr></thead><tbody>";
+									for (var j = 0; j < item.types_count; j++) {
+										var type = item.types[j];
+										markup += "<tr><td>"+type.type+"</td><td><table><tbody>";
+										for (var k = 0; k < type.manufacturers_count; k++) {
+											var manufacturer = type.manufacturers[k];
+											markup += "<tr><td>"+manufacturer+"</td></tr>";
+										}
+										markup += "</tbody></table></td></tr>";
 									}
 									markup += "</tbody></table>";
-									$('#dt_items').DataTable ().row ($(".bt_edit[data-item_id=" + item.item_id + "]").parents ('tr')).data ([
+									$('#dt_items').DataTable ().row.add ([
 										item.item_id,
             							item.name,
-										item.manufacturer,
-										item.description,
+										item.specification,
 										markup,
             							item.action
 									]).draw (false);
@@ -432,106 +587,6 @@
 						}
 					});
 				}
-				
-				function read_items (rows) {
-            		$.ajax ({
-            			type: 'POST',
-            			url: 'assets/php/read-items.php',
-            			data: {limit: rows},
-            			success: function (result) {
-            				var result_object = JSON.parse (result);
-            				if (typeof result_object.error === 'undefined') {
-            					console.log (result_object.items);
-            					for (var i = 0; i < result_object.count; i++) {
-            						var item = result_object.items[i];
-									var markup = "<table style='width: 300px;' class='table table-bordered table-sm table-responsive'><thead><tr><th scope='col'>Type</th><th scope='col'>Opening Stock</th><th scope='col'>Date</th></tr></thead><tbody>";
-									for (var j = 0; j < item.types_count; j++) {
-										markup += "<tr><td>" + item.types[j].type + "</td><td>" + item.types[j].opening_stock + "</td><td>" + item.types[j].opening_stock_date + "</td></tr>";
-									}
-									markup += "</tbody></table>";
-									$('#dt_items').DataTable ().row.add ([
-										item.item_id,
-            							item.name,
-										item.manufacturer,
-										item.description,
-										markup,
-            							item.action
-									]).draw (false);
-            					}
-            				} else {
-            					$("#callout_block_datatable").fadeIn (1000, function () {
-            						$("#callout_block_datatable").html ('<div class="callout callout-danger"><h4>Failed!</h4><p>' + result_object.error + '</p></div>');
-            					});
-            				}
-            			}
-            		});
-            	}
-				
-				$(document).on ("click", ".bt_edit", function (e) {
-					e.preventDefault ();
-					$.ajax ({
-						type: 'POST',
-						url: 'assets/php/read-items.php',
-						data: {item_id: $(this).data ('item_id')},
-						success: function (result) {
-							var result_object = JSON.parse (result);
-							if (typeof result_object.error === 'undefined') {
-								console.log (result_object.items);
-								var item = result_object.items[0];
-								$("input[name='item_id']").val (item.item_id);
-								$("input[name=tx_name").val (item.name);
-								$("input[name=tx_manufacturer").val (item.manufacturer);
-								$("textarea[name=tx_description").html (item.description);								
-								$("#tx_type").val (item.types[0].type);
-								$("#tx_opening_stock").val (item.types[0].opening_stock);
-								$('#datepicker_1').datepicker ("update", new Date(item.types[0].opening_stock_date));
-								var datepickers = 1;
-								for (var i = 1; i < item.types_count; i++) {
-									datepickers++;
-									var markup = "<tr><td><input type='text' class='form-control' placeholder='Enter Type' name='tx_type[]' value='" + item.types[i].type + "'></td><td><input type='text' class='form-control' placeholder='Enter Opening Stock' name='tx_opening_stock[]' value='" + item.types[i].opening_stock + "'></td><td><div class='input-group date'><div class='input-group-addon'><i class='fa fa-calendar'></i></div><input type='text' class='form-control pull-right' name='tx_opening_stock_date[]' id='datepicker_" + datepickers + "'></div></td><td><button class='btn btn-danger btn-xs bt_delete_item_type'><i class='fa fa-times'></i></button></td></tr>";
-									$("#tb_item_types tbody").append (markup);
-									$('#datepicker_' + datepickers).datepicker ({
-										autoclose: true,
-										orientation: 'bottom'
-									});
-									$('#datepicker_' + datepickers).datepicker ("update", new Date(item.types[i].opening_stock_date));
-								}								
-								$('html, body').animate ({
-									scrollTop: $("#dv_form").offset ().top
-								}, 500);	
-							} else {
-								$("#callout_block_datatable").fadeIn (1000, function () {
-									$("#callout_block_datatable").html ('<div class="callout callout-danger"><h4>Failed!</h4><p>' + result_object.error + '</p></div>');
-								});
-							}
-						}
-					});
-				});
-				$(document).on ("click", ".bt_delete", function (e) {
-					e.preventDefault ();
-					var lc_item_id = $(this).data ('item_id');
-					if (confirm ("Do you really want to delete Item #" + lc_item_id + "?")) {
-						$.ajax ({
-							type: 'POST',
-							url: 'assets/php/delete-item.php',
-							data: {item_id: lc_item_id},
-							success: function (result) {
-								var result_object = JSON.parse (result);
-								if (typeof result_object.error === 'undefined') {
-									$("#callout_block_datatable").fadeIn (1000, function () {
-										$("#callout_block_datatable").html ('<div class="callout callout-success"><h4>Success!</h4><p>' + result_object.success + '</p></div>');
-										console.log ($(".bt_delete[data-item_id=" + lc_item_id + "]").parents ('tr'));
-										$('#dt_items').DataTable ().row ($(".bt_delete[data-item_id=" + lc_item_id + "]").parents ('tr')).remove ().draw ();
-									});
-								} else {
-									$("#callout_block_datatable").fadeIn (1000, function () {
-										$("#callout_block_datatable").html ('<div class="callout callout-danger"><h4>Failed!</h4><p>' + result_object.error + '</p></div>');
-									});
-								}
-							}
-						});
-					}
-				});
 			});
 		</script>
     </body>

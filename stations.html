@@ -35,6 +35,15 @@
         <!-- Google Font -->
         <link rel="stylesheet"
             href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+		
+		<style>
+			.select2-container { 
+				width: 100% !important; 
+			}
+			.table.mb-0 {
+				margin-bottom: 0 !important;
+			}
+		</style>
     </head>
     <!--
         BODY TAG OPTIONS:
@@ -124,94 +133,100 @@
                             <h3 class="box-title">Form</h3>
                         </div>
                         <!-- /.box-header -->
-                        <div id="callout_block_form" class="col-md-12"></div>
                         <!-- form start -->
                         <form role="form" id="fm_station" method="post" action="">
                             <div class="box-body">
-                                <div class="col-md-4">
-									<div class="form-group">
-										<div class="select2-group">
-											<label>RMC</label>
-											<select class="form-control select2" id="s2_rmc" name="tx_rmc">
-												<option value=""></option>
-												<option value="Kolkata">Kolkata</option>
-												<option value="Mumbai">Mumbai</option>
-												<option value="Chennai">Chennai</option>
-												<option value="Guwahati">Guwahati</option>
-												<option value="Nagpur">Nagpur</option>
-												<option value="New Delhi">New Delhi</option>
-											</select>
-										</div>
-									</div>
-                                </div>
-								<div class="col-md-4">
-									<div class="form-group">
-										<div class="select2-group">
-											<label>State</label>
-											<select class="form-control select2" id="s2_state" name="tx_state">
-											</select>
-										</div>
-									</div>
+								<div id="callout_block_form" class="col-md-12"></div>
+								<div class="col-md-12">
+									<table class='table mb-0 table-bordered'>
+										<thead>
+											<tr>
+												<th scope="col">RMC</th>
+												<th scope="col">State</th>
+												<th scope="col">Type</th>
+												<th scope="col">ICAO</th>
+												<th scope="col">Name</th>
+												<th scope="col">Contact</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr>
+												<td class="td-group">
+													<div class="select2-group">
+														<select class="form-control select2" id="s2_rmc" name="tx_rmc">
+															<option value=""></option>
+															<option value="Kolkata">Kolkata</option>
+															<option value="Mumbai">Mumbai</option>
+															<option value="Chennai">Chennai</option>
+															<option value="Guwahati">Guwahati</option>
+															<option value="Nagpur">Nagpur</option>
+															<option value="New Delhi">New Delhi</option>
+														</select>
+													</div>
+												</td>
+												<td class="td-group">
+													<div class="select2-group">
+														<select class="form-control select2" id="s2_state" name="tx_state">
+														</select>
+													</div>
+												</td>
+												<td class="td-group">
+													<div class="select2-group">
+														<select class="form-control select2" id="s2_type" name="tx_type">
+															<option value=""></option>
+															<option value="AMO">AMO</option>
+															<option value="AMS">AMS</option>
+															<option value="MWO">MWO</option>
+															<option value="AMO/MWO">AMO/MWO</option>
+														</select>
+													</div>
+												</td>
+												<td class="td-group">
+													<input type="text" class="form-control" placeholder="Enter ICAO" name="tx_icao">
+												</td>
+												<td class="td-group">
+													<input type="text" class="form-control" placeholder="Enter Name" name="tx_name">
+												</td>												
+												<td class="td-group">
+													<table class='table mb-0 table-bordered'>
+														<tbody>
+															<tr>
+																<th scope="row">Email ID</th>
+																<td class="td-group">
+																	<input type="email" class="form-control" placeholder="Enter Email ID" name="tx_email">
+																</td>
+															</tr>
+															<tr>
+																<th scope="row">Phone Number</th>
+																<td class="td-group">
+																	<input type="text" class="form-control" placeholder="Enter Phone Number" name="tx_phone">
+																</td>
+															</tr>															
+															<tr>
+																<th scope="row">Address</th>
+																<td class="td-group">
+																	<textarea class="form-control" name="tx_address" placeholder="Enter Address"></textarea>
+																</td>
+															</tr>
+															<tr>
+																<th scope="row">Incharge Name</th>
+																<td class="td-group">
+																	<input type="text" class="form-control" placeholder="Enter Incharge Name" name="tx_incharge_name">
+																</td>
+															</tr>
+															<tr>
+																<th scope="row">Incharge Mobile Number</th>
+																<td class="td-group">
+																	<input type="text" class="form-control" placeholder="Enter Incharge Mobile Number" name="tx_incharge_mobile">
+																</td>
+															</tr>
+														</tbody>
+													</table>
+												</td>
+											</tr>
+										</tbody>
+									</table>
 								</div>
-								<div class="col-md-4">
-                                    <div class="form-group">
-										<div class="select2-group">
-											<label>Type</label>
-											<select class="form-control select2" id="s2_type" name="tx_type">
-												<option value=""></option>
-												<option value="AMO">AMO</option>
-												<option value="AMS">AMS</option>
-												<option value="MWO">MWO</option>
-												<option value="AMO/MWO">AMO/MWO</option>
-											</select>
-										</div>
-                                    </div>
-                                </div>
-								<div class="clearfix"></div>
-                                <div class="col-md-4">
-                                    <div class="form-group">
-                                        <label >ICAO</label>
-                                        <input type="text" class="form-control" placeholder="Enter ICAO" name="tx_icao">
-                                    </div>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="form-group">
-                                        <label >Name</label>
-                                        <input type="text" class="form-control" placeholder="Enter Name" name="tx_name">
-                                    </div>
-                                </div>
-								<div class="col-md-4">
-                                    <div class="form-group">
-                                        <label >Email ID</label><br>
-                                        <input type="email" class="form-control" placeholder="Enter Email ID" name="tx_email">
-                                    </div>
-                                </div>
-								<div class="clearfix"></div>
-								<div class="col-md-4">
-                                    <div class="form-group">
-                                        <label >Phone Number</label>
-                                        <input type="text" class="form-control" placeholder="Enter Phone Number" name="tx_phone">
-                                    </div>
-                                </div>
-								<div class="col-md-4">
-                                    <div class="form-group">
-                                        <label >Address</label>
-                                        <textarea class="form-control" name="tx_address"></textarea>
-                                    </div>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="form-group">
-                                        <label >Incharge Name</label>
-                                        <input type="text" class="form-control" placeholder="Enter Incharge Name" name="tx_incharge_name">
-                                    </div>
-                                </div>
-								<div class="clearfix"></div>
-								<div class="col-md-4">
-                                    <div class="form-group">
-                                        <label >Incharge Mobile Number</label>
-                                        <input type="text" class="form-control" placeholder="Enter Incharge Mobile Number" name="tx_incharge_mobile">
-                                    </div>
-                                </div>
                             </div>
                             <!-- /.box-body -->
                             <div class="box-footer">
@@ -226,9 +241,9 @@
                             <h3 class="box-title">List</h3>
                         </div>
                         <!-- /.box-header -->
-						<div id="callout_block_datatable" class="col-md-12"></div>
                         <div class="box-body">
-                            <table id="dt_stations" class="table table-bordered table-striped">
+							<div id="callout_block_datatable" class="col-md-12"></div>
+                            <table id="dt_stations" class="table table-bordered">
                                 <thead>
                                     <tr>
                                         <th>#</th>
@@ -299,8 +314,7 @@
         <!-- page script -->
         <script>
             $('document').ready (function () {
-            	$('#dt_stations').DataTable ();
-            	$.ajax ({
+				$.ajax ({
             		type: 'POST',
             		url: 'assets/php/session-user-id.php',
             		success: function (result) {
@@ -309,13 +323,95 @@
             				window.location.href = result_object.target;
             			read_stations (10);
             		}
-            	}); 
+            	});
+				
+            	$('#dt_stations').DataTable ();	
+				
+				$('#s2_rmc').select2 ({
+					placeholder: 'Select RMC'
+				});
+				
+				$('#s2_state').select2 ({
+					placeholder: 'Select State',
+				});
+				
+				$('#s2_type').select2 ({
+					placeholder: 'Select Type',
+				});
+				
+				$('#s2_rmc').on ('select2:select', function (e) {
+					var data = e.params.data;
+					console.log(data);
+					read_states (data.text);					
+				});
+				
+				$(document).on ("click", ".bt_edit", function (e) {
+					e.preventDefault ();
+					$.ajax ({
+						type: 'POST',
+						url: 'assets/php/read-stations.php',
+						data: {station_id: $(this).data ('station_id')},
+						success: function (result) {
+							var result_object = JSON.parse (result);
+							if (typeof result_object.error === 'undefined') {
+								console.log (result_object.stations);
+								var station = result_object.stations[0];
+								$("input[name='station_id']").val (station.station_id);
+								$("select[name=tx_rmc").val (station.rmc).trigger ("change");
+								read_states (station.rmc);
+								$("select[name=tx_state").val (station.state).trigger ("change");
+								$("select[name=tx_type").val (station.type)
+								$("input[name=tx_icao").val (station.icao);
+								$("input[name=tx_name").val (station.name);
+								$("input[name=tx_email").val (station.email);
+								$("input[name=tx_phone").val (station.phone);
+								$("textarea[name=tx_address").html (station.address);
+								$("input[name=tx_incharge_name").val (station.incharge_name);
+								$("input[name=tx_incharge_mobile").val (station.incharge_mobile);
+								$('html, body').animate ({
+									scrollTop: $("#dv_form").offset ().top
+								}, 500);	
+							} else {
+								$("#callout_block_datatable").fadeIn (1000, function () {
+									$("#callout_block_datatable").html ('<div class="callout callout-danger"><h4>Failed!</h4><p>' + result_object.error + '</p></div>');
+								});
+							}
+						}
+					});
+				});
+				
+				$(document).on ("click", ".bt_delete", function (e) {
+					e.preventDefault ();
+					var lc_station_id = $(this).data ('station_id');
+					if (confirm ("Do you really want to delete Station #" + lc_station_id + "?")) {
+						$.ajax ({
+							type: 'POST',
+							url: 'assets/php/delete-station.php',
+							data: {station_id: lc_station_id},
+							success: function (result) {
+								var result_object = JSON.parse (result);
+								if (typeof result_object.error === 'undefined') {
+									$("#callout_block_datatable").fadeIn (1000, function () {
+										$("#callout_block_datatable").html ('<div class="callout callout-success"><h4>Success!</h4><p>' + result_object.success + '</p></div>');
+										console.log ($(".bt_delete[data-station_id=" + lc_station_id + "]").parents ('tr'));
+										$('#dt_stations').DataTable ().row ($(".bt_delete[data-station_id=" + lc_station_id + "]").parents ('tr')).remove ().draw ();
+									});
+								} else {
+									$("#callout_block_datatable").fadeIn (1000, function () {
+										$("#callout_block_datatable").html ('<div class="callout callout-danger"><h4>Failed!</h4><p>' + result_object.error + '</p></div>');
+									});
+								}
+							}
+						});
+					}
+				});				
+            	 
             	$('#fm_station').validate ({
             		highlight: function (element) {
-            			$(element).closest('.form-group').addClass('has-error');
+            			$(element).closest('.td-group').addClass('has-error');
             		},
             		unhighlight: function (element) {
-            			$(element).closest('.form-group').removeClass('has-error');
+            			$(element).closest('.td-group').removeClass('has-error');
             		},
             		errorElement: 'span',
             		errorClass: 'help-block',
@@ -346,7 +442,8 @@
             				required: true
             			},						
             			tx_phone: {
-            				required: true
+            				required: true,
+							digits: true
             			},						
             			tx_address: {
             				required: true
@@ -355,50 +452,22 @@
             				required: true
             			},            			
             			tx_incharge_mobile: {
-            				required: true
+            				required: true,
+							digits: true,
+							minlength: 10,
+							maxlength: 10
             			}
             		},
             		submitHandler: submit_form
             	});
+				
             	function submit_form () {
 					if ($("input[name=station_id").val () == "") {
 						create_station ();
 					} else {
 						update_station ();
 					}            		 
-            	}
-            	
-            	function read_stations (rows) {
-            		$.ajax ({
-            			type: 'POST',
-            			url: 'assets/php/read-stations.php',
-            			data: {limit: rows},
-            			success: function (result) {
-            				var result_object = JSON.parse (result);
-            				if (typeof result_object.error === 'undefined') {
-            					console.log (result_object.stations);
-            					for (var i = 0; i < result_object.count; i++) {
-            						var station = result_object.stations[i];
-            						$('#dt_stations').DataTable ().row.add ([
-            							station.station_id,
-            							station.rmc,
-										station.state,
-										station.type,
-            							station.icao,
-            							station.name, 
-										"<table style='width: 300px;' class='table table-bordered table-sm table-responsive'><tbody><tr><th scope='row'>Station Email ID:</th><td>" + station.email + "</td></tr><tr><th scope='row'>Station Phone Number:</th><td>" + station.phone+"</td></tr><tr><th scope='row'>Station Address:</th><td>" + station.address + "</td></tr><tr><th scope='row'>Incharge Name:</th><td>" + station.incharge_name + "</td></tr><tr><th scope='row'>Incharge Mobile Number:</th><td>" + station.incharge_mobile + "</td></tr></tbody></table>",
-            							station.action
-            						]).draw (false);
-            						$('#dt_stations').DataTable ().order ([0, 'desc']).draw ();
-            					}
-            				} else {
-            					$("#callout_block_datatable").fadeIn (1000, function () {
-            						$("#callout_block_datatable").html ('<div class="callout callout-danger"><h4>Failed!</h4><p>' + result_object.error + '</p></div>');
-            					});
-            				}
-            			}
-            		});
-            	}
+            	}			
 				
 				function create_station () {
 					var data = $('#fm_station').serialize ();
@@ -432,7 +501,7 @@
 										station.type,
             							station.icao,
             							station.name, 
-										"<table style='width: 300px;' class='table table-bordered table-sm table-responsive'><tbody><tr><th scope='row'>Station Email ID:</th><td>" + station.email + "</td></tr><tr><th scope='row'>Station Phone Number:</th><td>" + station.phone+"</td></tr><tr><th scope='row'>Station Address:</th><td>" + station.address + "</td></tr><tr><th scope='row'>Incharge Name:</th><td>" + station.incharge_name + "</td></tr><tr><th scope='row'>Incharge Mobile Number:</th><td>" + station.incharge_mobile + "</td></tr></tbody></table>",
+										"<table class='table mb-0 table-bordered'><tbody><tr><th scope='row'>Email ID</th><td>" + station.email + "</td></tr><tr><th scope='row'>Phone Number</th><td>" + station.phone+"</td></tr><tr><th scope='row'>Address</th><td>" + station.address + "</td></tr><tr><th scope='row'>Incharge Name</th><td>" + station.incharge_name + "</td></tr><tr><th scope='row'>Incharge Mobile Number</th><td>" + station.incharge_mobile + "</td></tr></tbody></table>",
             							station.action
 									]).draw (false);
 									$('#dt_stations').DataTable ().order ([0, 'desc']).draw ();
@@ -443,6 +512,55 @@
 									$('#bt_save').prop ("disabled", false);
 									$('#bt_save').html ("Save");
 								});
+							}
+						}
+					});
+				}
+            	
+            	function read_stations (rows) {
+            		$.ajax ({
+            			type: 'POST',
+            			url: 'assets/php/read-stations.php',
+            			data: {limit: rows},
+            			success: function (result) {
+            				var result_object = JSON.parse (result);
+            				if (typeof result_object.error === 'undefined') {
+            					console.log (result_object.stations);
+            					for (var i = 0; i < result_object.count; i++) {
+            						var station = result_object.stations[i];
+            						$('#dt_stations').DataTable ().row.add ([
+            							station.station_id,
+            							station.rmc,
+										station.state,
+										station.type,
+            							station.icao,
+            							station.name, 
+										"<table class='table mb-0 table-bordered'><tbody><tr><th scope='row'>Email ID</th><td>" + station.email + "</td></tr><tr><th scope='row'>Phone Number</th><td>" + station.phone+"</td></tr><tr><th scope='row'>Address</th><td>" + station.address + "</td></tr><tr><th scope='row'>Incharge Name</th><td>" + station.incharge_name + "</td></tr><tr><th scope='row'>Incharge Mobile Number</th><td>" + station.incharge_mobile + "</td></tr></tbody></table>",
+            							station.action
+            						]).draw (false);
+            						$('#dt_stations').DataTable ().order ([0, 'desc']).draw ();
+            					}
+            				} else {
+            					$("#callout_block_datatable").fadeIn (1000, function () {
+            						$("#callout_block_datatable").html ('<div class="callout callout-danger"><h4>Failed!</h4><p>' + result_object.error + '</p></div>');
+            					});
+            				}
+            			}
+            		});
+            	}
+				
+				function read_states (lc_rmc) {
+					$('#s2_state').empty ();
+					$.ajax ({
+						type: 'POST',
+						url: 'assets/php/read-states.php',
+						data: {rmc: lc_rmc},
+						success: function (result) {
+							var result_object = JSON.parse (result);
+							console.log (result_object);
+							for (var i = 0; i < result_object.count; i++) {
+								var new_state = new Option (result_object.states[i], result_object.states[i], true, true);
+								$("#s2_state").append (new_state);
 							}
 						}
 					});
@@ -481,7 +599,7 @@
 										station.type,
             							station.icao,
             							station.name, 
-										"<table style='width: 300px;' class='table table-bordered table-sm table-responsive'><tbody><tr><th scope='row'>Station Email ID:</th><td>" + station.email + "</td></tr><tr><th scope='row'>Station Phone Number:</th><td>" + station.phone+"</td></tr><tr><th scope='row'>Station Address:</th><td>" + station.address + "</td></tr><tr><th scope='row'>Incharge Name:</th><td>" + station.incharge_name + "</td></tr><tr><th scope='row'>Incharge Mobile Number:</th><td>" + station.incharge_mobile + "</td></tr></tbody></table>",
+										"<table class='table mb-0 table-bordered'><tbody><tr><th scope='row'>Email ID</th><td>" + station.email + "</td></tr><tr><th scope='row'>Phone Number</th><td>" + station.phone+"</td></tr><tr><th scope='row'>Address</th><td>" + station.address + "</td></tr><tr><th scope='row'>Incharge Name:</th><td>" + station.incharge_name + "</td></tr><tr><th scope='row'>Incharge Mobile Number:</th><td>" + station.incharge_mobile + "</td></tr></tbody></table>",
             							station.action
 									]).draw (false);
 								});
@@ -499,95 +617,6 @@
 						}
 					});
 				}
-				$('#s2_rmc').select2 ({
-					placeholder: 'Select RMC'
-				});
-				$('#s2_state').select2 ({
-					placeholder: 'Select State',
-				});
-				$('#s2_type').select2 ({
-					placeholder: 'Select Type',
-				});
-				$('#s2_rmc').on ('select2:select', function (e) {
-					var data = e.params.data;
-					console.log(data);
-					read_states (data.text);					
-				});
-				function read_states (lc_rmc) {
-					$('#s2_state').empty ();
-					$.ajax ({
-						type: 'POST',
-						url: 'assets/php/read-states.php',
-						data: {rmc: lc_rmc},
-						success: function (result) {
-							var result_object = JSON.parse (result);
-							console.log (result_object);
-							for (var i = 0; i < result_object.count; i++) {
-								var new_state = new Option (result_object.states[i], result_object.states[i], true, true);
-								$("#s2_state").append (new_state);
-							}
-						}
-					});
-				}
-				$(document).on ("click", ".bt_edit", function (e) {
-					e.preventDefault ();
-					$.ajax ({
-						type: 'POST',
-						url: 'assets/php/read-stations.php',
-						data: {station_id: $(this).data ('station_id')},
-						success: function (result) {
-							var result_object = JSON.parse (result);
-							if (typeof result_object.error === 'undefined') {
-								console.log (result_object.stations);
-								var station = result_object.stations[0];
-								$("input[name='station_id']").val (station.station_id);
-								$("select[name=tx_rmc").val (station.rmc).trigger ("change");
-								read_states (station.rmc);
-								$("select[name=tx_state").val (station.state).trigger ("change");
-								$("select[name=tx_type").val (station.type)
-								$("input[name=tx_icao").val (station.icao);
-								$("input[name=tx_name").val (station.name);
-								$("input[name=tx_email").val (station.email);
-								$("input[name=tx_phone").val (station.phone);
-								$("textarea[name=tx_address").html (station.address);
-								$("input[name=tx_incharge_name").val (station.incharge_name);
-								$("input[name=tx_incharge_mobile").val (station.incharge_mobile);
-								$('html, body').animate ({
-									scrollTop: $("#dv_form").offset ().top
-								}, 500);	
-							} else {
-								$("#callout_block_datatable").fadeIn (1000, function () {
-									$("#callout_block_datatable").html ('<div class="callout callout-danger"><h4>Failed!</h4><p>' + result_object.error + '</p></div>');
-								});
-							}
-						}
-					});
-				});
-				$(document).on ("click", ".bt_delete", function (e) {
-					e.preventDefault ();
-					var lc_station_id = $(this).data ('station_id');
-					if (confirm ("Do you really want to delete Station #" + lc_station_id + "?")) {
-						$.ajax ({
-							type: 'POST',
-							url: 'assets/php/delete-station.php',
-							data: {station_id: lc_station_id},
-							success: function (result) {
-								var result_object = JSON.parse (result);
-								if (typeof result_object.error === 'undefined') {
-									$("#callout_block_datatable").fadeIn (1000, function () {
-										$("#callout_block_datatable").html ('<div class="callout callout-success"><h4>Success!</h4><p>' + result_object.success + '</p></div>');
-										console.log ($(".bt_delete[data-station_id=" + lc_station_id + "]").parents ('tr'));
-										$('#dt_stations').DataTable ().row ($(".bt_delete[data-station_id=" + lc_station_id + "]").parents ('tr')).remove ().draw ();
-									});
-								} else {
-									$("#callout_block_datatable").fadeIn (1000, function () {
-										$("#callout_block_datatable").html ('<div class="callout callout-danger"><h4>Failed!</h4><p>' + result_object.error + '</p></div>');
-									});
-								}
-							}
-						});
-					}
-				});
 			});
         </script>
     </body>
