@@ -2,15 +2,16 @@
 session_start ();
 require_once ("connect-database.php");
 
-if (isset ($_SESSION['session_user_id']) && isset ($_POST['tx_name']) && isset ($_POST['tx_manufacturer']) && ($_POST['tx_description']) && isset ($_POST['item_id'])) {
+if (isset ($_SESSION['session_user_id']) && isset ($_POST['tx_name']) && ($_POST['tx_specification']) && isset ($_POST['tx_manufacturer']) && isset ($_POST['tx_type']) && isset ($_POST['item_id'])) {
 	$lc_item_id = mysqli_real_escape_string ($conn, trim ($_POST['item_id']));
 	$lc_name = mysqli_real_escape_string ($conn, trim ($_POST['tx_name']));
-	$lc_manufacturer = mysqli_real_escape_string ($conn, trim ($_POST['tx_manufacturer']));
-	$lc_description = mysqli_real_escape_string ($conn, trim ($_POST['tx_description']));
+	$lc_specification = mysqli_real_escape_string ($conn, trim ($_POST['tx_specification']));
 	
-	$result = mysqli_query ($conn, "UPDATE tb_items SET fd_name = '".$lc_name."', fd_manufacturer = '".$lc_manufacturer."', fd_description = '".$lc_description."' WHERE fd_item_id = ".$lc_item_id.";");
+	$result = mysqli_query ($conn, "UPDATE tb_items SET fd_name = '".$lc_name."', fd_specification = '".$lc_specification."' WHERE fd_item_id = ".$lc_item_id.";");
 	
 	if ($result) {
+		mysqli_query ($conn, "DELETE FROM tb_item_type_manufacturers WHERE fd_item_type_id = ".$lc_item_id.";");
+		
 		mysqli_query ($conn, "DELETE FROM tb_item_types WHERE fd_item_id = ".$lc_item_id.";");
 		$types = array ();
 		for ($i = 0; $i < count ($_POST['tx_type']); $i++) {

@@ -40,26 +40,6 @@
 			.select2-container { 
 				width: 100% !important; 
 			}
-			.table.mb-0 {
-				margin-bottom: 0 !important;
-			}
-			.table-minimal {
-				margin: 0;
-				width: 100%;
-			}
-			.table-minimal.mb-8 {
-				margin-bottom: 8px;
-			}
-			.table-minimal tbody tr td {
-				padding-bottom: 8px;
-				padding-right: 8px;
-			}			
-			.table-minimal tbody tr td:last-child {
-				padding-right: 0;
-			}			
-			.table-minimal tbody tr:last-child td {
-				padding-bottom: 0;
-			}
 		</style>
     </head>
     <!--
@@ -157,110 +137,72 @@
                         <!-- form start -->
                         <form role="form" id="fm_inward" method="post" action="">
                             <div class="box-body">
+                                <div class="col-md-4">
+									<div class="form-group">
+										<div class="select2-group">
+											<label>Station</label>
+											<select class="form-control select2" id="s2_station" name="station_id">
+											</select>
+										</div>
+									</div>
+								</div>
+                                <div class="col-md-4">
+									<div class="form-group">
+										<label>Date</label>
+										<div class="input-group date">
+											<div class="input-group-addon">
+												<i class="fa fa-calendar"></i>
+											</div>
+											<input type="text" class="form-control pull-right" name="tx_date" id="datepicker"/>
+										</div>
+										<!-- /.input group -->
+									</div>
+                                </div>
+								<div class="col-md-4">
+									<div class="form-group">
+										<div class="select2-group">
+											<label>Shipment Mode</label>
+											<select class="form-control select2" id="s2_shipment_mode" name="tx_shipment_mode">
+												<option value=""></option>
+												<option value="By Hand">By Hand</option>
+												<option value="By Speed Post">By Speed Post</option>
+											</select>
+										</div>
+									</div>
+								</div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label >Remarks</label>
+                                        <textarea class="form-control" name="tx_remarks"></textarea>
+                                    </div>
+                                </div>								
 								<div class="col-md-12">
-									<table class='table table-bordered mb-0'>
+									<table id="tb_item_details" class='table table-responsive'>
 										<thead>
 											<tr>
-												<th>Date</th>
-												<th>From</th>
 												<th>Item</th>
 												<th>Quantity</th>
-												<th>Serial Numbers</th>
-												<th>Notes</th>
+												<th>Rate</th>
+												<th></th>
 											</tr>
 										</thead>
 										<tbody>
 											<tr>
-												<td class="td-group">
-													<div class="input-group date">
-														<div class="input-group-addon">
-															<i class="fa fa-calendar"></i>
-														</div>
-														<input type="text" class="form-control pull-right" name="tx_date" id="datepicker"/>
-													</div>
-													<!-- /.input group -->
-												</td>
-												<td class="td-group">
-													<input type="text" class="form-control" name="tx_from"/>
+												<td>
+													<select class="form-control select2" id="s2_item_type_1" name="item_type_id[]">
+													</select>
 												</td>
 												<td>
-													<table class='table mb-0 table-bordered'>
-														<tbody>
-															<tr>
-																<th scope="row">Name</th>
-																<td class="td-group">
-																	<div class="select2-group">
-																		<select class="form-control select2" id="s2_item"></select>
-																	</div>
-																</td>
-															</tr>
-															<tr>
-																<th scope="row">Type</th>
-																<td class="td-group">
-																	<div class="select2-group">
-																		<select class="form-control select2" id="s2_item_type"></select>
-																	</div>
-																</td>
-															</tr>															
-															<tr>
-																<th scope="row">Manufacturer</th>
-																<td class="td-group">
-																	<div class="select2-group">
-																		<select class="form-control select2" id="s2_item_type_manufacturer" name="item_type_manufacturer_id"></select>
-																	</div>
-																</td>
-															</tr>
-														</tbody>
-													</table>
-												</td>
-												<td class="td-group">
-													<input type="text" value="1" class="form-control pull-right" name="tx_quantity"/>
+													<input type='text' class='form-control' placeholder='Enter Quantity' name='tx_quantity[]' id="tx_quantity"/>
 												</td>
 												<td>
-													<table id="tb_serial_numbers" class="table-minimal">
-														<tbody>
-															<tr>
-																<td>
-																	<input type="hidden" name="serial_number_id[]" value=""/>
-																	<input type="text" class="form-control pull-right" name="tx_serial_number[]"/>
-																</td>
-															</tr>
-														</tbody>
-													</table>
+													<input type='text' class='form-control' placeholder='Enter Rate' name='tx_rate[]' id="tx_rate"/>
 												</td>
-												<td>
-													<table class='table mb-0 table-bordered'>
-														<tbody>
-															<tr>
-																<th scope="row">Rate</th>
-																<td class="td-group">
-																	<input type="text" value="0.0" class="form-control pull-right" name="tx_rate"/>
-																</td>
-															</tr>
-															<tr>
-																<th scope="row">Mode of Receiving</th>
-																<td class="td-group">
-																	<div class="select2-group">
-																		<select class="form-control select2" id="s2_mode_of_receiving" name="tx_mode_of_receiving">
-																			<option value=""></option>
-																			<option value="By Hand">By Hand</option>
-																			<option value="By Speed Post">By Speed Post</option>
-																		</select>
-																	</div>
-																</td>
-															</tr>															
-															<tr>
-																<th scope="row">Remarks</th>
-																<td class="td-group">
-																	<textarea class="form-control" name="tx_remarks"></textarea>
-																</td>
-															</tr>
-														</tbody>
-													</table>
-												</td>
+												<td></td>
 											</tr>
 										</tbody>
 									</table>
+									<button class="btn btn-primary" id="bt_add_item_detail">Add Item Detail</button>
 								</div>
                             </div>
                             <!-- /.box-body -->
@@ -279,17 +221,16 @@
                         <!-- /.box-header -->
 						<div id="callout_block_datatable" class="col-md-12"></div>
                         <div class="box-body">
-                            <table id="dt_inwards" class="table table-bordered">
+                            <table id="dt_inwards" class="table table-bordered table-striped">
                                 <thead>
                                     <tr>
                                         <th>#</th>
-										<th>Date</th>
-                                        <th>From</th>
-										<th>Item Received</th>
-										<th>Quantity</th>
-                                        <th>Serial Numbers</th>
-										<th>Notes</th>
-										<th>Action</th>
+                                        <th>Station</th>
+                                        <th>Date</th>
+                                        <th>Shipment Mode</th>
+										<th>Item Details</th>
+                                        <th>Remarks</th>
+                                        <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>					
@@ -297,13 +238,12 @@
                                 <tfoot>
                                     <tr>
                                         <th>#</th>
-										<th>Date</th>
-                                        <th>From</th>
-										<th>Item Received</th>
-										<th>Quantity</th>
-                                        <th>Serial Numbers</th>
-										<th>Notes</th>
-										<th>Action</th>
+                                        <th>Station</th>
+                                        <th>Date</th>
+                                        <th>Shipment Mode</th>
+										<th>Item Details</th>
+                                        <th>Remarks</th>
+                                        <th>Action</th>
                                     </tr>
                                 </tfoot>
                             </table>
@@ -367,54 +307,52 @@
 					orientation: 'bottom'
 				});
 				
-				$('#s2_mode_of_receiving').select2 ({
-					placeholder: 'Select'
+				$('#s2_station').select2 ({
+					placeholder: 'Select Station'
 				});
 				
-				$('#s2_item').select2 ({
-					placeholder: 'Select Item'
-				});
-				read_items ();
-				
-				$('#s2_item_type').select2 ({
-					placeholder: 'Select Type'
-				});	
-				
-				$('#s2_item_type_manufacturer').select2 ({
-					placeholder: 'Select Manufacturer'
-				});	
-				
-				$('#s2_item').on ('select2:select', function (e) {
-					var data = e.params.data;
-					console.log (data);
-					read_item_types (data.id);					
-				});
-				
-				$('#s2_item_type').on ('select2:select', function (e) {
-					var data = e.params.data;
-					console.log (data);
-					read_item_type_manufacturers (data.id);					
-				});
-				
-				$('input[name=tx_quantity]').change (function () {
-					var qty = $('input[name=tx_quantity]').val ();
-					var sr = $("#tb_serial_numbers tbody tr").length;
-					if (qty == 0)
-						return false;
-					if (qty > sr) {
-						for (var i = 1; i <= qty - sr; i++) {
-							$("#tb_serial_numbers tbody").append ('<tr> <td><input type="text" class="form-control pull-right" name="tx_serial_number[]"/></td></tr>');	
+				$.ajax ({
+					type: 'POST',
+					url: 'assets/php/read-stations.php',
+					success: function (result) {
+						var result_object = JSON.parse (result);
+						console.log (result_object);
+						for (var i = 0; i < result_object.count; i++) {
+							var new_station = new Option (result_object.stations[i].rmc + " - " + result_object.stations[i].icao + " - " + result_object.stations[i].name, result_object.stations[i].station_id, true, true);
+							$("#s2_station").append (new_station);
 						}
-					} else if (sr > qty) {
-						for (var i = 1; i <= sr - qty; i++) {
-							$("#tb_serial_numbers tbody tr:last").remove ();
-						}
+						$("#s2_station").select2 ("val", "");
 					}
 				});
 				
-				//read_item_types ('#s2_item_type_1');
+				$('#s2_shipment_mode').select2 ({
+					placeholder: 'Select Shipment Mode'
+				});
 				
-				/*$(document).on ("click", ".bt_edit", function (e) {
+				$('#s2_item_type_1').select2 ({
+					placeholder: 'Select Item'
+				});	
+				
+				read_item_types ('#s2_item_type_1');			
+				
+				$("#bt_add_item_detail").click (function (e) {
+					e.preventDefault ();
+					var item_details = $("#tb_item_details tbody tr").length;
+					item_details++;
+					var markup = "<tr><td><select class='form-control select2' id='s2_item_type_" + item_details + "' name='item_type_id[]'></select></td><td><input type='text' class='form-control' placeholder='Enter Quantity' name='tx_quantity[]' id='tx_quantity'/></td><td><input type='text' class='form-control' placeholder='Enter Rate' name='tx_rate[]' id='tx_rate'/></td><td></td><td><button class='btn btn-danger btn-xs bt_delete_item_detail'><i class='fa fa-times'></i></button></td></tr>";
+					$("#tb_item_details tbody").append (markup);
+					$('#s2_item_type_' + item_details).select2 ({
+						placeholder: 'Select Item'
+					});
+					read_item_types ('#s2_item_type_' + item_details);
+				});
+				
+				$(document).on ("click", ".bt_delete_item_detail", function (e) {
+					e.preventDefault ();
+					$(this).parents ("tr").remove ();
+				});
+				
+				$(document).on ("click", ".bt_edit", function (e) {
 					e.preventDefault ();
 					$.ajax ({
 						type: 'POST',
@@ -480,14 +418,14 @@
 							}
 						});
 					}
-				});*/
+				});
 				
 				$('#fm_inward').validate ({
             		highlight: function (element) {
-						$(element).closest('.td-group').addClass('has-error');
+            			$(element).closest('.form-group').addClass('has-error');
             		},
             		unhighlight: function (element) {
-            			$(element).closest('.td-group').removeClass('has-error');
+            			$(element).closest('.form-group').removeClass('has-error');
             		},
             		errorElement: 'span',
             		errorClass: 'help-block',
@@ -501,40 +439,18 @@
             			}
             		},
             		rules: {
-            			tx_date: {
+            			station_id: {
             				required: true
             			},						
-            			tx_from: {
+            			tx_date: {
             				required: true
             			},
-						tx_mode_of_receiving: {
-							required: true
-						},
-						item_id: {
-							required: true
-						},
-						item_type_id: {
-							required: true
-						},
-						item_type_manufacturer_id: {
-							required: true
-						},
-						tx_rate: {
-							required: true,
-							number: true,
-							min: 0.0
-						},
-						tx_quantity: {
-							required: true,
-							min: 1,
-							digits: true
-						},
-						tx_serial_number: {
+						tx_shipment_mode: {
 							required: true
 						},
 						tx_remarks: {
-							required: true
-						}
+            				required: true
+            			}
             		},
             		submitHandler: submit_form
             	});
@@ -572,26 +488,21 @@
 									}, 500);									
 									console.log (result_object.inward);
 									var inward = result_object.inward;
-									var markup = "<table class='table mb-0 table-bordered'><tbody><tr><th scope='row'>Name</th><td>"+inward.item+"</td></tr><tr><th scope='row'>Type</th><td>"+inward.item_type+"</td></tr><tr><th scope='row'>Manufacturer</th><td>"+inward.item_type_manufacturer+"</td></tr></tbody></table>";
-									
-									var markup2 = "<table class='table-minimal'><tbody>";
-									for (var i = 0; i < inward.serial_numbers_count; i++) {
-										markup2 += "<tr><td>"+inward.serial_numbers[i]+"</td></tr>";
+									var markup = "<table style='width: 300px;' class='table table-bordered table-sm table-responsive'><thead><tr><th scope='col'>Item</th><th scope='col'>Quantity</th><th scope='col'>Rate</th></tr></thead><tbody>";
+									for (var i = 0; i < inward.item_details_count; i++) {
+										markup += "<tr><td>" + inward.item_details[i].item_type_id + "</td><td>" + inward.item_details[i].quantity + "</td><td>" + inward.item_details[i].rate + "</td></tr>";
 									}
-									markup2 += "</tbody></table>";
-									
-									var markup3 = "<table class='table mb-0 table-bordered'><tbody><tr><th scope='row'>Rate</th><td>"+inward.rate+"</td></tr><tr><th scope='row'>Mode of Receiving</th><td>"+inward.mode_of_receiving+"</td></tr><tr><th scope='row'>Remarks</th><td>"+inward.remarks+"</td></tr></tbody></table>";
-									
+									markup += "</tbody></table>";
 									$('#dt_inwards').DataTable ().row.add ([
 										inward.inward_id,
+            							inward.station_id,
 										inward.date,
-										inward.from,
+										inward.shipment_mode,
 										markup,
-										inward.quantity,
-										markup2,
-										markup3,
+										inward.remarks,
             							inward.action
 									]).draw (false);
+									$('#dt_inwards').DataTable ().order ([0, 'desc']).draw ();
 								});
 							} else {
 								$("#callout_block_form").fadeIn (1000, function () {
@@ -671,27 +582,20 @@
             					console.log (result_object);
             					for (var i = 0; i < result_object.count; i++) {
             						var inward = result_object.inwards[i];
-									var markup = "<table class='table mb-0 table-bordered'><tbody><tr><th scope='row'>Name</th><td>"+inward.item+"</td></tr><tr><th scope='row'>Type</th><td>"+inward.item_type+"</td></tr><tr><th scope='row'>Manufacturer</th><td>"+inward.item_type_manufacturer+"</td></tr></tbody></table>";
-									
-									var markup2 = "<table class='table-minimal'><tbody>";
-									for (var j = 0; j < inward.serial_numbers_count; j++) {
-										markup2 += "<tr><td>"+inward.serial_numbers[j].serial_number+"</td></tr>";
+									var markup = "<table style='width: 300px;' class='table table-bordered table-sm table-responsive'><thead><tr><th scope='col'>Item</th><th scope='col'>Quantity</th><th scope='col'>Rate</th></tr></thead><tbody>";
+									for (var j = 0; j < inward.item_details_count; j++) {
+										markup += "<tr><td>" + inward.item_details[j].item_type_id + "</td><td>" + inward.item_details[j].quantity + "</td><td>" + inward.item_details[j].rate + "</td></tr>";
 									}
-									markup2 += "</tbody></table>";
-									
-									var markup3 = "<table class='table mb-0 table-bordered'><tbody><tr><th scope='row'>Rate</th><td>"+inward.rate+"</td></tr><tr><th scope='row'>Mode of Receiving</th><td>"+inward.mode_of_receiving+"</td></tr><tr><th scope='row'>Remarks</th><td>"+inward.remarks+"</td></tr></tbody></table>";
-									
+									markup += "</tbody></table>";
 									$('#dt_inwards').DataTable ().row.add ([
 										inward.inward_id,
+            							inward.station_id,
 										inward.date,
-										inward.from,
+										inward.shipment_mode,
 										markup,
-										inward.quantity,
-										markup2,
-										markup3,
+										inward.remarks,
             							inward.action
 									]).draw (false);
-									$('#dt_inwards').DataTable ().order ([0, 'desc']).draw ();
             					}
             				} else {
             					$("#callout_block_datatable").fadeIn (1000, function () {
@@ -702,52 +606,18 @@
             		});
             	}
 				
-				function read_items () {
-					$.ajax ({
-						type: 'POST',
-						url: 'assets/php/read-items.php',
-						success: function (result) {
-							var result_object = JSON.parse (result);
-							console.log (result_object);
-							for (var i = 0; i < result_object.count; i++) {
-								var new_item = new Option (result_object.items[i].name, result_object.items[i].item_id, true, true);
-								$('#s2_item').append (new_item);
-							}
-						}
-					});
-				}
-				
-				function read_item_types (item_id) {
-					$('#s2_item_type').empty ();
-					$('#s2_item_type_manufacturer').empty ();
+				function read_item_types (id) {
 					$.ajax ({
 						type: 'POST',
 						url: 'assets/php/read-item-types.php',
-						data:{item_id: item_id},
 						success: function (result) {
 							var result_object = JSON.parse (result);
 							console.log (result_object);
 							for (var i = 0; i < result_object.count; i++) {
-								var new_item_type = new Option (result_object.types[i].type, result_object.types[i].type_id, true, true);
-								$('#s2_item_type').append (new_item_type);
+								var new_item_type = new Option (result_object.item_types[i].name + " - " + result_object.item_types[i].type, result_object.item_types[i].item_type_id, true, true);
+								$(id).append (new_item_type);
 							}
-						}
-					});
-				}
-				
-				function read_item_type_manufacturers (type_id) {
-					$('#s2_item_type_manufacturer').empty ();
-					$.ajax ({
-						type: 'POST',
-						url: 'assets/php/read-item-type-manufacturers.php',
-						data:{type_id: type_id},
-						success: function (result) {
-							var result_object = JSON.parse (result);
-							console.log (result_object);
-							for (var i = 0; i < result_object.count; i++) {
-								var new_item_type_manufacturer = new Option (result_object.manufacturers[i].manufacturer, result_object.manufacturers[i].manufacturer_id, true, true);
-								$('#s2_item_type_manufacturer').append (new_item_type_manufacturer);
-							}
+							$(id).select2 ("val", "");
 						}
 					});
 				}
