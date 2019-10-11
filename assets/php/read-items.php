@@ -19,15 +19,16 @@ if (isset ($_SESSION['session_user_id'])) {
 		$item_types_result_set = mysqli_query ($conn, $item_types_query);
 		$types = array ();
 		while ($item_types_result_row = mysqli_fetch_array ($item_types_result_set)) {
-			$item_type_manufacturers_query = "SELECT * FROM tb_item_type_manufacturers WHERE fd_item_type_id = ".$item_types_result_row['fd_item_type_id'].";";
-			$item_type_manufacturers_result_set = mysqli_query ($conn, $item_type_manufacturers_query);
-			$manufacturers = array ();
-			while ($item_type_manufacturers_result_row = mysqli_fetch_array ($item_type_manufacturers_result_set)) {
-				$manufacturers[] = $item_type_manufacturers_result_row['fd_manufacturer'];
-			}
-			$types[] = array ('type' => $item_types_result_row['fd_type'], 'manufacturers' => $manufacturers, 'manufacturers_count' => count ($manufacturers));
+			$types[] = $item_types_result_row['fd_type'];
 		}
-		$response[] = array ('item_id' => $result_row['fd_item_id'], 'name' => $result_row['fd_name'], 'specification' => $result_row['fd_specification'], 'types' => $types, 'types_count' => count ($types), 'action' => '<button class="btn btn-warning bt_edit btn-xs" data-item_id="'.$result_row['fd_item_id'].'">Edit</button> <button class="btn btn-danger bt_delete btn-xs" data-item_id="'.$result_row['fd_item_id'].'">Delete</button>');	
+		
+		$item_manufacturers_query = "SELECT * FROM tb_item_manufacturers WHERE fd_item_id = ".$result_row['fd_item_id'].";";
+		$item_manufacturers_result_set = mysqli_query ($conn, $item_manufacturers_query);
+		$manufacturers = array ();
+		while ($item_manufacturers_result_row = mysqli_fetch_array ($item_manufacturers_result_set)) {
+			$manufacturers[] = $item_manufacturers_result_row['fd_manufacturer'];
+		}
+		$response[] = array ('item_id' => $result_row['fd_item_id'], 'name' => $result_row['fd_name'], 'specification' => $result_row['fd_specification'], 'types' => $types, 'types_count' => count ($types), 'manufacturers' => $manufacturers, 'manufacturers_count' => count ($manufacturers), 'action' => '<button class="btn btn-warning bt_edit btn-xs" data-item_id="'.$result_row['fd_item_id'].'">Edit</button> <button class="btn btn-danger bt_delete btn-xs" data-item_id="'.$result_row['fd_item_id'].'">Delete</button>');	
 	}
 	echo (json_encode (array ('items' => $response, 'count' => count ($response))));	
 } else

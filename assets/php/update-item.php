@@ -10,7 +10,7 @@ if (isset ($_SESSION['session_user_id']) && isset ($_POST['tx_name']) && ($_POST
 	$result = mysqli_query ($conn, "UPDATE tb_items SET fd_name = '".$lc_name."', fd_specification = '".$lc_specification."' WHERE fd_item_id = ".$lc_item_id.";");
 	
 	if ($result) {
-		mysqli_query ($conn, "DELETE FROM tb_item_type_manufacturers WHERE fd_item_type_id = ".$lc_item_id.";");
+		/*mysqli_query ($conn, "DELETE FROM tb_item_type_manufacturers WHERE fd_item_type_id = ".$lc_item_id.";");
 		
 		mysqli_query ($conn, "DELETE FROM tb_item_types WHERE fd_item_id = ".$lc_item_id.";");
 		$types = array ();
@@ -22,7 +22,8 @@ if (isset ($_SESSION['session_user_id']) && isset ($_POST['tx_name']) && ($_POST
 			mysqli_query ($conn, "INSERT INTO tb_item_types VALUES (NULL, ".$lc_item_id.", '".$lc_type."', ".$lc_opening_stock.", '".$lc_opening_stock_date."');");
 			$types[] = array ('type' => $lc_type, 'opening_stock' => $lc_opening_stock, 'opening_stock_date' => $_POST['tx_opening_stock_date'][$i]);
 		}
-		echo (json_encode (array ('success' => "Item #".$lc_item_id." Updated Successfully.", 'item' => array ('item_id' => $lc_item_id, 'name' => $lc_name, 'manufacturer' => $lc_manufacturer, 'description' => $lc_description, 'types' => $types, 'types_count' => count ($types), 'action' => '<button class="btn btn-warning bt_edit btn-xs" data-item_id="'.$lc_item_id.'">Edit</button> <button class="btn btn-danger bt_delete btn-xs" data-item_id="'.$lc_item_id.'">Delete</button>'))));
+		echo (json_encode (array ('success' => "Item #".$lc_item_id." Updated Successfully.", 'item' => array ('item_id' => $lc_item_id, 'name' => $lc_name, 'manufacturer' => $lc_manufacturer, 'description' => $lc_description, 'types' => $types, 'types_count' => count ($types), 'action' => '<button class="btn btn-warning bt_edit btn-xs" data-item_id="'.$lc_item_id.'">Edit</button> <button class="btn btn-danger bt_delete btn-xs" data-item_id="'.$lc_item_id.'">Delete</button>'))));*/
+		echo (json_encode (array ('success' => "Item #".$lc_item_id." Updated Successfully.")));
 	} else
 		echo (json_encode (array ('error' => "Something went wrong. Please, try again in a little bit.")));
 } else

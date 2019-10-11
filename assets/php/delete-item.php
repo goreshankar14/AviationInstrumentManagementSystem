@@ -4,8 +4,8 @@ require_once ("connect-database.php");
 
 if (isset ($_SESSION['session_user_id']) && isset ($_POST['item_id'])) {
 	$lc_item_id = mysqli_real_escape_string ($conn, trim ($_POST['item_id']));
-	$item_type_manufacturers_result = mysqli_query ($conn, "DELETE FROM tb_item_type_manufacturers WHERE fd_item_type_id IN (SELECT fd_item_type_id FROM tb_item_types WHERE fd_item_id = ".$lc_item_id.");");
-	if ($item_type_manufacturers_result) {
+	$item_manufacturers_result = mysqli_query ($conn, "DELETE FROM tb_item_manufacturers WHERE fd_item_id = ".$lc_item_id.");");
+	if ($item_manufacturers_result) {
 		$item_types_result = mysqli_query ($conn, "DELETE FROM tb_item_types WHERE fd_item_id = ".$lc_item_id.";");
 		if ($item_types_result) {
 			$result = mysqli_query ($conn, "DELETE FROM tb_items WHERE fd_item_id = ".$lc_item_id.";");

@@ -167,6 +167,7 @@
 											<tr>
 												<th scope="col">Name</th>
 												<th scope="col">Types</th>
+												<th scope="col">Manufacturers</th>
 												<th scope="col">Specification</th>
 											</tr>
 										</thead>
@@ -176,41 +177,19 @@
 													<input type="text" class="form-control"  placeholder="Enter Name" name="tx_name">
 												</td>
 												<td>
-													<table class='table mb-8 table-bordered' id='tb_types'>
-														<thead>
-															<tr>
-																<th scope="col">Type</th>
-																<th scope="col">Manufactures</th>
-																<th scope="col">Action</th>
-															</tr>
-														</thead>
-														<tbody>
-															<tr>
-																<td>
-																	<input type='text' class='form-control' placeholder='Enter Type' name='tx_type[]' id="tx_type"/>
-																</td>	
-																<td>
-																	<table class='table-minimal mb-8'>
-																		<tbody>
-																			<tr>
-																				<td>
-																					<input type='text' class='form-control' placeholder='Enter Manufacturer' name='tx_manufacturer[0][]' id="tx_manufacturer"/>
-																				</td>
-																				<td>
-																					<a href="javascript:void(0)" class="danger"><i class="fa fa-times"></i></a>
-																				</td>
-																			</tr>
-																		</tbody>
-																	</table>
-																	<a href="javascript:void(0)" class="primary bt_add_type_manufacturer">Add another manufacturer</a>
-																</td>
-																<td class="text-center">
-																	<a href="javascript:void(0)" class="danger"><i class="fa fa-times"></i></a>
-																</td>
-															</tr>															
+													<table class='table-minimal mb-8' id='tb_types'>
+														<tbody>															
 														</tbody>
 													</table>
-													<a href="javascript:void(0)" class="primary" id="bt_add_type">Add another type</a>
+													<a href="javascript:void(0)" class="primary" id="bt_add_type">Add type</a>
+												</td>
+												<td>
+													<table class='table-minimal mb-8' id='tb_manufacturers'>
+														<tbody>
+														</tbody>
+													</table>
+													<a href="javascript:void(0)" class="primary" id="bt_add_manufacturer">Add manufacturer</a>
+													
 												</td>												
 												<td class="td-group">
 													<textarea class="form-control" name="tx_specification"></textarea>
@@ -242,6 +221,7 @@
                                         <th>#</th>
                                         <th>Name</th>
                                         <th>Types</th>
+										<th>Manufacturers</th>
                                         <th>Specification</th>
                                         <th>Action</th>
                                     </tr>
@@ -253,6 +233,7 @@
                                         <th>#</th>
                                         <th>Name</th>
                                         <th>Types</th>
+										<th>Manufacturers</th>
                                         <th>Specification</th>
                                         <th>Action</th>
                                     </tr>
@@ -311,14 +292,14 @@
 				
 				$("#bt_add_type").click (function (e) {
 					e.preventDefault ();
-					var markup = "<tr><td><input type='text' class='form-control' placeholder='Enter Type' name='tx_type[]'/></td><td><table class='table-minimal mb-8'><tbody><tr><td><input type='text' class='form-control' placeholder='Enter Manufacturer' name='tx_manufacturer[][]'/></td><td><a href='javascript:void(0)' class='danger'><i class='fa fa-times'></i></a></td></tr></tbody></table><a href='javascript:void(0)' class='primary bt_add_type_manufacturer'>Add another manufacturer</a></td><td class='text-center'><a href='javascript:void(0)' class='danger bt_delete_t'><i class='fa fa-times'></i></a></td></tr>";
+					var markup = "<tr><td><input type='text' class='form-control' placeholder='Enter Type' name='tx_type[]'/></td><td class='text-center'><a href='javascript:void(0)' class='danger bt_delete_t'><i class='fa fa-times'></i></a></td></tr>";
 					$("#tb_types > tbody").append (markup);
 				});
 				
-				$(document).on ("click", ".bt_add_type_manufacturer", function (e) {
+				$("#bt_add_manufacturer").click (function (e) {
 					e.preventDefault ();
-					var markup = "<tr><td><input type='text' class='form-control' placeholder='Enter Manufacturer' name='tx_manufacturer[][]'/></td><td><a href='javascript:void(0)' class='danger bt_delete_t'><i class='fa fa-times'></i></a></td></tr>";
-					$(this).closest ('td').find ('tbody').append (markup);
+					var markup = "<tr><td><input type='text' class='form-control' placeholder='Enter Manufacturer' name='tx_manufacturer[]'/></td><td><a href='javascript:void(0)' class='danger bt_delete_t'><i class='fa fa-times'></i></a></td></tr>";
+					$("#tb_manufacturers > tbody").append (markup);
 				});
 				
 				$(document).on ("click", ".bt_delete_t", function (e) {
@@ -339,19 +320,17 @@
 								var item = result_object.items[0];
 								$("input[name='item_id']").val (item.item_id);
 								$("input[name=tx_name").val (item.name);
-								$("textarea[name=tx_specification").html (item.specification);								
-								$("#tx_type").val (item.types[0].type);
-								$("#tx_manufacturer").val (item.types[0].manufacturers[0]);
+								$("textarea[name=tx_specification").html (item.specification);
 								
-								for (var i = 1; i < item.types_count; i++) {
-									var markup = "<tr><td><input type='text' class='form-control' placeholder='Enter Type' name='tx_type[]' value='"+item.types[i].type+"'/></td><td><table class='table-minimal mb-8'><tbody>";
-									markup += "<tr><td><input type='text' class='form-control' placeholder='Enter Manufacturer' name='tx_manufacturer["+i+"][]' value='"+item.types[i].manufacturers[0]+"'/></td><td><a href='javascript:void(0)' class='danger'><i class='fa fa-times'></i></a></td></tr>";
-									for (var j = 1; j < item.types[i].manufacturers_count; j++) {
-										markup += "<tr><td><input type='text' class='form-control' placeholder='Enter Manufacturer' name='tx_manufacturer["+i+"][]' value='"+item.types[i].manufacturers[j]+"'/></td><td><a href='javascript:void(0)' class='danger bt_delete_t'><i class='fa fa-times'></i></a></td></tr>";
-									}
-									markup += "</tbody></table><a href='javascript:void(0)' class='primary bt_add_type_manufacturer'>Add another manufacturer</a></td><td class='text-center'><a href='javascript:void(0)' class='danger bt_delete_t'><i class='fa fa-times'></i></a></td></tr>";
+								for (var i = 0; i < item.types_count; i++) {
+									var markup = "<tr><td><input type='text' class='form-control' placeholder='Enter Type' name='tx_type[]' value='"+item.types[i]+"'/></td><td><a href='javascript:void(0)' class='danger bt_delete_t'><i class='fa fa-times'></i></a></td></tr>";
 									$("#tb_types > tbody").append (markup);
-								}								
+								}	
+								
+								for (var i = 0; i < item.manufacturers_count; i++) {
+									var markup2 = "<tr><td><input type='text' class='form-control' placeholder='Enter Manufacturer' name='tx_manufacturer[]' value='"+item.manufacturers[i]+"'/></td><td><a href='javascript:void(0)' class='danger bt_delete_t'><i class='fa fa-times'></i></a></td></tr>";
+									$("#tb_manufacturers > tbody").append (markup2);
+								}
 								$('html, body').animate ({
 									scrollTop: $("#dv_form").offset ().top
 								}, 500);	
@@ -417,15 +396,7 @@
             		submitHandler: submit_form
             	});
 				
-            	function submit_form () {
-					var i = 0;
-					$("#tb_types > tbody > tr").each (function (n) {
-						$(this).find ("tbody > tr").each (function (n) {
-							$(this).find ("input").attr ("name", "tx_manufacturer["+i+"][]");
-						});
-						i++;
-					});
-					
+            	function submit_form () {					
 					if ($("input[name=item_id").val () == "") {
 						create_item ();
 					} else {
@@ -458,22 +429,22 @@
 									}, 500);									
 									console.log (result_object.item);
 									var item = result_object.item;
-									var markup = "<table class='table table-bordered'><thead><tr><th scope='col'>Type</th><th scope='col'>Manufacturers</th></tr></thead><tbody>";
-									for (var j = 0; j < item.types_count; j++) {
-										var type = item.types[j];
-										markup += "<tr><td>"+type.type+"</td><td><table><tbody>";
-										for (var k = 0; k < type.manufacturers_count; k++) {
-											var manufacturer = type.manufacturers[k];
-											markup += "<tr><td>"+manufacturer+"</td></tr>";
-										}
-										markup += "</tbody></table></td></tr>";
+									var markup = "<table class='table table-bordered'><tbody>";
+									for (var i = 0; i < item.types_count; i++) {
+										markup += "<tr><td>"+item.types[i]+"</td></tr>";
 									}
 									markup += "</tbody></table>";
+									var markup2 = "<table class='table table-bordered'><tbody>";
+									for (var i = 0; i < item.manufacturers_count; i++) {
+										markup2 += "<tr><td>"+item.manufacturers[i]+"</td></tr>";
+									}
+									markup2 += "</tbody></table>";
 									$('#dt_items').DataTable ().row.add ([
 										item.item_id,
             							item.name,
-										item.specification,
 										markup,
+										markup2,
+										item.specification,
             							item.action
 									]).draw (false);
 								});
@@ -499,22 +470,22 @@
             					console.log (result_object.items);
             					for (var i = 0; i < result_object.count; i++) {
             						var item = result_object.items[i];
-									var markup = "<table class='table table-bordered'><thead><tr><th scope='col'>Type</th><th scope='col'>Manufacturers</th></tr></thead><tbody>";
+									var markup = "<table class='table table-bordered'><tbody>";
 									for (var j = 0; j < item.types_count; j++) {
-										var type = item.types[j];
-										markup += "<tr><td>"+type.type+"</td><td><table><tbody>";
-										for (var k = 0; k < type.manufacturers_count; k++) {
-											var manufacturer = type.manufacturers[k];
-											markup += "<tr><td>"+manufacturer+"</td></tr>";
-										}
-										markup += "</tbody></table></td></tr>";
+										markup += "<tr><td>"+item.types[j]+"</td></tr>";
 									}
 									markup += "</tbody></table>";
+									var markup2 = "<table class='table table-bordered'><tbody>";
+									for (var j = 0; j < item.manufacturers_count; j++) {
+										markup2 += "<tr><td>"+item.manufacturers[j]+"</td></tr>";
+									}
+									markup2 += "</tbody></table>";
 									$('#dt_items').DataTable ().row.add ([
 										item.item_id,
             							item.name,
-										item.specification,
 										markup,
+										markup2,
+										item.specification,
             							item.action
 									]).draw (false);
 									$('#dt_items').DataTable ().order ([0, 'desc']).draw ();
@@ -554,22 +525,22 @@
 									}, 500);									
 									console.log (result_object.item);
 									var item = result_object.item;
-									var markup = "<table class='table table-bordered'><thead><tr><th scope='col'>Type</th><th scope='col'>Manufacturers</th></tr></thead><tbody>";
-									for (var j = 0; j < item.types_count; j++) {
-										var type = item.types[j];
-										markup += "<tr><td>"+type.type+"</td><td><table><tbody>";
-										for (var k = 0; k < type.manufacturers_count; k++) {
-											var manufacturer = type.manufacturers[k];
-											markup += "<tr><td>"+manufacturer+"</td></tr>";
-										}
-										markup += "</tbody></table></td></tr>";
+									var markup = "<table class='table table-bordered'><tbody>";
+									for (var i = 0; i < item.types_count; i++) {
+										markup += "<tr><td>"+item.types[i]+"</td></tr>";
 									}
 									markup += "</tbody></table>";
-									$('#dt_items').DataTable ().row.add ([
+									var markup2 = "<table class='table table-bordered'><tbody>";
+									for (var i = 0; i < item.manufacturers_count; i++) {
+										markup2 += "<tr><td>"+item.manufacturers[i]+"</td></tr>";
+									}
+									markup2 += "</tbody></table>";
+									$('#dt_items').DataTable ().row ($(".bt_edit[data-item_id=" + item.item_id + "]").parents ('tr')).data ([
 										item.item_id,
             							item.name,
-										item.specification,
 										markup,
+										markup2,
+										item.specification,
             							item.action
 									]).draw (false);
 								});
