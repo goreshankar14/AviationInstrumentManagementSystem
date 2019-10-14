@@ -171,6 +171,7 @@
 												<td class="td-group">
 													<div class="select2-group">
 														<select class="form-control select2" id="s2_state" name="tx_state">
+															<option value=""></option>
 														</select>
 													</div>
 												</td>
@@ -205,8 +206,7 @@
 																<td class="td-group">
 																	<input type="text" class="form-control" placeholder="Enter Phone Number" name="tx_phone">
 																</td>
-															</tr>															
-															<tr>
+															</tr>													<tr>
 																<th scope="row">Address</th>
 																<td class="td-group">
 																	<textarea class="form-control" name="tx_address" placeholder="Enter Address"></textarea>
@@ -325,7 +325,7 @@
             			var result_object = JSON.parse (result);
             			if (result_object.target === 'login.html')
             				window.location.href = result_object.target;
-            			read_stations (10);
+            			read_stations ();
             		}
             	});
 				
@@ -360,18 +360,18 @@
 							if (typeof result_object.error === 'undefined') {
 								console.log (result_object.stations);
 								var station = result_object.stations[0];
-								$("input[name='station_id']").val (station.station_id);
-								$("select[name=tx_rmc").val (station.rmc).trigger ("change");
+								$("input[name=station_id]").val (station.station_id);
+								$("#s2_rmc").val (station.rmc).trigger ("change");
 								read_states (station.rmc);
-								$("select[name=tx_state").val (station.state).trigger ("change");
-								$("select[name=tx_type").val (station.type)
-								$("input[name=tx_icao").val (station.icao);
-								$("input[name=tx_name").val (station.name);
-								$("input[name=tx_email").val (station.email);
-								$("input[name=tx_phone").val (station.phone);
-								$("textarea[name=tx_address").html (station.address);
-								$("input[name=tx_incharge_name").val (station.incharge_name);
-								$("input[name=tx_incharge_mobile").val (station.incharge_mobile);
+								$("#s2_state").val (station.state).trigger ("change");
+								$("#s2_type").val (station.type).trigger ("change");
+								$("input[name=tx_icao]").val (station.icao);
+								$("input[name=tx_name]").val (station.name);
+								$("input[name=tx_email]").val (station.email);
+								$("input[name=tx_phone]").val (station.phone);
+								$("textarea[name=tx_address]").html (station.address);
+								$("input[name=tx_incharge_name]").val (station.incharge_name);
+								$("input[name=tx_incharge_mobile]").val (station.incharge_mobile);
 								$('html, body').animate ({
 									scrollTop: $("#dv_form").offset ().top
 								}, 500);	
@@ -427,46 +427,15 @@
             			}
             		},
             		rules: {
-            			tx_rmc: {
-            				required: true
-            			},						
-            			tx_state: {
-            				required: true
-            			},						
-            			tx_type: {
-            				required: true
-            			},
-            			tx_icao: {
-            				required: true
-            			},
             			tx_name: {
             				required: true
-            			},
-						tx_email: {
-            				required: true
-            			},						
-            			tx_phone: {
-            				required: true,
-							digits: true
-            			},						
-            			tx_address: {
-            				required: true
-            			},
-            			tx_incharge_name: {
-            				required: true
-            			},            			
-            			tx_incharge_mobile: {
-            				required: true,
-							digits: true,
-							minlength: 10,
-							maxlength: 10
             			}
             		},
             		submitHandler: submit_form
             	});
 				
             	function submit_form () {
-					if ($("input[name=station_id").val () == "") {
+					if ($("input[name=station_id]").val () == "") {
 						create_station ();
 					} else {
 						update_station ();
@@ -521,11 +490,10 @@
 					});
 				}
             	
-            	function read_stations (rows) {
+            	function read_stations () {
             		$.ajax ({
             			type: 'POST',
             			url: 'assets/php/read-stations.php',
-            			data: {limit: rows},
             			success: function (result) {
             				var result_object = JSON.parse (result);
             				if (typeof result_object.error === 'undefined') {
@@ -562,8 +530,9 @@
 						success: function (result) {
 							var result_object = JSON.parse (result);
 							console.log (result_object);
+							$("#s2_state").append (new Option ("", ""));
 							for (var i = 0; i < result_object.count; i++) {
-								var new_state = new Option (result_object.states[i], result_object.states[i], true, true);
+								var new_state = new Option (result_object.states[i], result_object.states[i]);
 								$("#s2_state").append (new_state);
 							}
 						}

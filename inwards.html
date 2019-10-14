@@ -166,7 +166,7 @@
 										<thead>
 											<tr>
 												<th>Date</th>
-												<th>From</th>
+												<th>Station</th>
 												<th>Item</th>
 												<th>Quantity</th>
 												<th>Serial Numbers</th>
@@ -185,7 +185,11 @@
 													<!-- /.input group -->
 												</td>
 												<td class="td-group">
-													<input type="text" class="form-control" name="tx_from"/>
+													<div class="select2-group">
+														<select class="form-control select2" id="s2_station" name="station_id">
+															<option value=""></option>
+														</select>
+													</div>
 												</td>
 												<td>
 													<table class='table mb-0 table-bordered'>
@@ -194,7 +198,9 @@
 																<th scope="row">Name</th>
 																<td class="td-group">
 																	<div class="select2-group">
-																		<select class="form-control select2" id="s2_item"  name="item_id"></select>
+																		<select class="form-control select2" id="s2_item" name="item_id">
+																			<option value=""></option>
+																		</select>
 																	</div>
 																</td>
 															</tr>
@@ -202,15 +208,19 @@
 																<th scope="row">Type</th>
 																<td class="td-group">
 																	<div class="select2-group">
-																		<select class="form-control select2" id="s2_item_type"  name="item_type_id"></select>
+																		<select class="form-control select2" id="s2_item_type"  name="item_type_id">
+																			<option value=""></option>
+																		</select>
 																	</div>
 																</td>
-															</tr>															
+															</tr>
 															<tr>
 																<th scope="row">Manufacturer</th>
 																<td class="td-group">
 																	<div class="select2-group">
-																		<select class="form-control select2" id="s2_item_manufacturer"  name="item_manufacturer_id"></select>
+																		<select class="form-control select2" id="s2_item_manufacturer" name="item_manufacturer_id">
+																			<option value=""></option>
+																		</select>
 																	</div>
 																</td>
 															</tr>
@@ -225,8 +235,7 @@
 														<tbody>
 															<tr>
 																<td>
-																	<input type="hidden" name="serial_number_id[]" value="" id="serial_number_id"/>
-																	<input type="text" class="form-control pull-right" name="tx_serial_number[]" id="tx_serial_number"/>
+																	<input type="text" class="form-control pull-right" name="tx_serial_number[]"/>
 																</td>
 															</tr>
 														</tbody>
@@ -249,14 +258,15 @@
 																			<option value=""></option>
 																			<option value="By Hand">By Hand</option>
 																			<option value="By Speed Post">By Speed Post</option>
+																			<option value="By Post">By Post</option>
 																		</select>
 																	</div>
 																</td>
-															</tr>															
+															</tr>
 															<tr>
 																<th scope="row">Remarks</th>
 																<td class="td-group">
-																	<textarea class="form-control" name="tx_remarks"></textarea>
+																	<textarea placeholder="Enter Remarks" class="form-control" name="tx_remarks"></textarea>
 																</td>
 															</tr>
 														</tbody>
@@ -288,7 +298,7 @@
                                     <tr>
                                         <th>#</th>
 										<th>Date</th>
-                                        <th>From</th>
+                                        <th>Station</th>
 										<th>Item Received</th>
 										<th>Quantity</th>
                                         <th>Serial Numbers</th>
@@ -302,7 +312,7 @@
                                     <tr>
                                         <th>#</th>
 										<th>Date</th>
-                                        <th>From</th>
+                                        <th>Station</th>
 										<th>Item Received</th>
 										<th>Quantity</th>
                                         <th>Serial Numbers</th>
@@ -360,7 +370,7 @@
             			var result_object = JSON.parse (result);
             			if (result_object.target === 'login.html')
             				window.location.href = result_object.target;
-            			read_inwards (10);
+            			read_inwards ();
             		}
             	});				
 				
@@ -369,6 +379,24 @@
 				$('#datepicker').datepicker ({
 					autoclose: true,
 					orientation: 'bottom'
+				});
+				
+				$('#s2_station').select2 ({
+					placeholder: 'Select Station'
+				});
+				
+				$.ajax ({
+					type: 'POST',
+					url: 'assets/php/read-stations.php',
+					success: function (result) {
+						var result_object = JSON.parse (result);
+						console.log (result_object);
+						$("#s2_station").append (new Option ("", ""));
+						for (var i = 0; i < result_object.count; i++) {
+							var new_station = new Option (result_object.stations[i].name, result_object.stations[i].station_id);
+							$("#s2_station").append (new_station);
+						}
+					}
 				});
 				
 				$('#s2_mode_of_receiving').select2 ({
@@ -391,13 +419,7 @@
 				$('#s2_item').on ('select2:select', function (e) {
 					var data = e.params.data;
 					console.log (data);
-					read_item_types (data.id);					
-				});
-				
-				$('#s2_item_type').on ('select2:select', function (e) {
-					var data = e.params.data;
-					console.log (data);
-					read_item_manufacturers (data.id);					
+					read_item_details (data.id);					
 				});
 				
 				$('input[name=tx_quantity]').change (function () {
@@ -407,7 +429,7 @@
 						return false;
 					if (qty > sr) {
 						for (var i = 1; i <= qty - sr; i++) {
-							$("#tb_serial_numbers tbody").append ('<tr><td><input type="hidden" name="serial_number_id[]" value="" id="serial_number_id"/><input type="text" class="form-control pull-right" name="tx_serial_number[]"/></td></tr>');	
+							$("#tb_serial_numbers tbody").append ('<tr><td><input type="text" class="form-control pull-right" name="tx_serial_number[]"/></td></tr>');	
 						}
 					} else if (sr > qty) {
 						for (var i = 1; i <= sr - qty; i++) {
@@ -428,19 +450,16 @@
 								console.log (result_object.inwards);
 								var inward = result_object.inwards[0];
 								$('#datepicker').datepicker ("update", new Date (inward.date));
-								$("input[name=tx_from]").val (inward.from);
+								$("#s2_station").val (inward.station_id).trigger ("change");
 								$("input[name=inward_id]").val (inward.inward_id);
 								$("#s2_item").val (inward.item_id).trigger ("change");
-								read_item_types (inward.item_id);
-								$("#s2_item_type").val (inward.item_type_id).trigger ("change");
-								read_item_manufacturers (inward.item_id)
-								$("#s2_item_manufacturer").val (inward.item_manufacturer_id).trigger ("change");
+								read_item_details (inward.item_id, inward.item_type_id, inward.item_manufacturer_id);
 								$("input[name=tx_quantity]").val (inward.quantity);
 								$("input[name=tx_rate]").val (inward.rate);
-								$("select[name=tx_mode_of_receiving]").val (inward.mode_of_receiving).trigger ("change");
+								$("#s2_mode_of_receiving").val (inward.mode_of_receiving).trigger ("change");
 								$("textarea[name=tx_remarks]").html (inward.remarks);
-								$("#tx_serial_number").val (inward.serial_numbers[0]);
-								for (var i = 1; i < inward.serial_numbers_count; i++) {
+								$("#tb_serial_numbers tbody").empty ();
+								for (var i = 0; i < inward.serial_numbers_count; i++) {
 									var markup = '<tr><td><input type="text" class="form-control pull-right" name="tx_serial_number[]" value="'+inward.serial_numbers[i]+'"/></td></tr>';
 									$("#tb_serial_numbers tbody").append (markup);
 								}						
@@ -504,12 +523,9 @@
             			tx_date: {
             				required: true
             			},						
-            			tx_from: {
+            			station_id: {
             				required: true
             			},
-						tx_mode_of_receiving: {
-							required: true
-						},
 						item_id: {
 							required: true
 						},
@@ -522,19 +538,13 @@
 							required: true,
 							min: 1,
 							digits: true
-						},
-						tx_serial_number: {
-							required: true
-						},
-						tx_remarks: {
-							required: true
 						}
             		},
             		submitHandler: submit_form
             	});
 				
             	function submit_form () {
-					if ($("input[name=inward_id").val () == "") {
+					if ($("input[name=inward_id]").val () == "") {
 						create_inward ();
 					} else {
 						update_inward ();
@@ -568,7 +578,7 @@
 									var inward = result_object.inward;
 									var markup = "<table class='table mb-0 table-bordered'><tbody><tr><th scope='row'>Name</th><td>"+inward.item+"</td></tr><tr><th scope='row'>Type</th><td>"+inward.item_type+"</td></tr><tr><th scope='row'>Manufacturer</th><td>"+inward.item_manufacturer+"</td></tr></tbody></table>";
 									
-									var markup2 = "<table class='table-minimal'><tbody>";
+									var markup2 = "<table class='table mb-0 table-bordered'><tbody>";
 									for (var i = 0; i < inward.serial_numbers_count; i++) {
 										markup2 += "<tr><td>"+inward.serial_numbers[i]+"</td></tr>";
 									}
@@ -579,7 +589,7 @@
 									$('#dt_inwards').DataTable ().row.add ([
 										inward.inward_id,
 										inward.date,
-										inward.from,
+										inward.station,
 										markup,
 										inward.quantity,
 										markup2,
@@ -626,7 +636,7 @@
 									var inward = result_object.inward;
 									var markup = "<table class='table mb-0 table-bordered'><tbody><tr><th scope='row'>Name</th><td>"+inward.item+"</td></tr><tr><th scope='row'>Type</th><td>"+inward.item_type+"</td></tr><tr><th scope='row'>Manufacturer</th><td>"+inward.item_manufacturer+"</td></tr></tbody></table>";
 									
-									var markup2 = "<table class='table-minimal'><tbody>";
+									var markup2 = "<table class='table mb-0 table-bordered'><tbody>";
 									for (var i = 0; i < inward.serial_numbers_count; i++) {
 										markup2 += "<tr><td>"+inward.serial_numbers[i]+"</td></tr>";
 									}
@@ -637,7 +647,7 @@
 									$('#dt_inwards').DataTable ().row ($(".bt_edit[data-inward_id=" + inward.inward_id + "]").parents ('tr')).data ([
 										inward.inward_id,
 										inward.date,
-										inward.from,
+										inward.station,
 										markup,
 										inward.quantity,
 										markup2,
@@ -660,11 +670,10 @@
 					});
 				}
 				
-				function read_inwards (rows) {
+				function read_inwards () {
             		$.ajax ({
             			type: 'POST',
             			url: 'assets/php/read-inwards.php',
-            			data: {limit: rows},
             			success: function (result) {
             				var result_object = JSON.parse (result);
             				if (typeof result_object.error === 'undefined') {
@@ -673,7 +682,7 @@
             						var inward = result_object.inwards[i];
 									var markup = "<table class='table mb-0 table-bordered'><tbody><tr><th scope='row'>Name</th><td>"+inward.item+"</td></tr><tr><th scope='row'>Type</th><td>"+inward.item_type+"</td></tr><tr><th scope='row'>Manufacturer</th><td>"+inward.item_manufacturer+"</td></tr></tbody></table>";
 									
-									var markup2 = "<table class='table-minimal'><tbody>";
+									var markup2 = "<table class='table mb-0 table-bordered'><tbody>";
 									for (var j = 0; j < inward.serial_numbers_count; j++) {
 										markup2 += "<tr><td>"+inward.serial_numbers[j]+"</td></tr>";
 									}
@@ -684,7 +693,7 @@
 									$('#dt_inwards').DataTable ().row.add ([
 										inward.inward_id,
 										inward.date,
-										inward.from,
+										inward.station,
 										markup,
 										inward.quantity,
 										markup2,
@@ -709,17 +718,20 @@
 						success: function (result) {
 							var result_object = JSON.parse (result);
 							console.log (result_object);
+							$("#s2_item").append (new Option ("", ""));
 							for (var i = 0; i < result_object.count; i++) {
-								var new_item = new Option (result_object.items[i].name, result_object.items[i].item_id, true, true);
+								var new_item = new Option (result_object.items[i].name, result_object.items[i].item_id);
 								$('#s2_item').append (new_item);
 							}
 						}
 					});
 				}
 				
-				function read_item_types (item_id) {
+				function read_item_details (item_id, item_type_id = 0, item_manufacturer_id = 0) {
 					$('#s2_item_type').empty ();
+					$("#s2_item_type").append (new Option ("", "", true, true));
 					$('#s2_item_manufacturer').empty ();
+					$("#s2_item_manufacturer").append (new Option ("", "", true, true));
 					$.ajax ({
 						type: 'POST',
 						url: 'assets/php/read-item-types.php',
@@ -728,15 +740,12 @@
 							var result_object = JSON.parse (result);
 							console.log (result_object);
 							for (var i = 0; i < result_object.count; i++) {
-								var new_item_type = new Option (result_object.types[i].type, result_object.types[i].type_id, true, true);
+								var new_item_type = new Option (result_object.types[i].type, result_object.types[i].type_id);
 								$('#s2_item_type').append (new_item_type);
 							}
+							$("#s2_item_type").val (item_type_id).trigger ("change");
 						}
 					});
-				}
-				
-				function read_item_manufacturers (item_id) {
-					$('#s2_item_manufacturer').empty ();
 					$.ajax ({
 						type: 'POST',
 						url: 'assets/php/read-item-manufacturers.php',
@@ -745,9 +754,10 @@
 							var result_object = JSON.parse (result);
 							console.log (result_object);
 							for (var i = 0; i < result_object.count; i++) {
-								var new_item_manufacturer = new Option (result_object.manufacturers[i].manufacturer, result_object.manufacturers[i].manufacturer_id, true, true);
+								var new_item_manufacturer = new Option (result_object.manufacturers[i].manufacturer, result_object.manufacturers[i].manufacturer_id);
 								$('#s2_item_manufacturer').append (new_item_manufacturer);
 							}
+							$("#s2_item_manufacturer").val (item_manufacturer_id).trigger ("change");
 						}
 					});
 				}

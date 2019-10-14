@@ -196,7 +196,7 @@
 													
 												</td>												
 												<td class="td-group">
-													<textarea class="form-control" name="tx_specification"></textarea>
+													<textarea placeholder="Enter Specification" class="form-control" name="tx_specification"></textarea>
 												</td>
 											</tr>
 										</tbody>
@@ -205,7 +205,7 @@
                             </div>
                             <!-- /.box-body -->
                             <div class="box-footer">
-								<input type="hidden" name="item_id" value=""/>
+								<input type="hidden" name="item_id" value="0"/>
                                 <button id="bt_save" type="submit" class="btn btn-primary pull-right">Save</button>
                             </div>
                         </form>
@@ -288,7 +288,7 @@
             			var result_object = JSON.parse (result);
             			if (result_object.target === 'login.html')
             				window.location.href = result_object.target;
-            			read_items (10);
+            			read_items ();
             		}
             	});
 				
@@ -296,13 +296,13 @@
 				
 				$("#bt_add_type").click (function (e) {
 					e.preventDefault ();
-					var markup = "<tr><td><input type='text' class='form-control' placeholder='Enter Type' name='tx_type[]'/></td><td class='text-center'><a href='javascript:void(0)' class='danger bt_delete_t'><i class='fa fa-times'></i></a></td></tr>";
+					var markup = "<tr><td><input type='hidden' name='item_type_id[]' value='0'/><input type='text' class='form-control' placeholder='Enter Type' name='tx_type[]'/></td><td class='text-center'><a href='javascript:void(0)' class='danger bt_delete_t'><i class='fa fa-times'></i></a></td></tr>";
 					$("#tb_types > tbody").append (markup);
 				});
 				
 				$("#bt_add_manufacturer").click (function (e) {
 					e.preventDefault ();
-					var markup = "<tr><td><input type='text' class='form-control' placeholder='Enter Manufacturer' name='tx_manufacturer[]'/></td><td><a href='javascript:void(0)' class='danger bt_delete_t'><i class='fa fa-times'></i></a></td></tr>";
+					var markup = "<tr><td><input type='hidden' name='item_manufacturer_id[]' value='0'/><input type='text' class='form-control' placeholder='Enter Manufacturer' name='tx_manufacturer[]'/></td><td><a href='javascript:void(0)' class='danger bt_delete_t'><i class='fa fa-times'></i></a></td></tr>";
 					$("#tb_manufacturers > tbody").append (markup);
 				});
 				
@@ -322,17 +322,17 @@
 							if (typeof result_object.error === 'undefined') {
 								console.log (result_object.items);
 								var item = result_object.items[0];
-								$("input[name='item_id']").val (item.item_id);
-								$("input[name=tx_name").val (item.name);
-								$("textarea[name=tx_specification").html (item.specification);
-								
+								$("input[name=item_id]").val (item.item_id);
+								$("input[name=tx_name]").val (item.name);
+								$("textarea[name=tx_specification]").html (item.specification);
+								$("#tb_types > tbody").empty ();
 								for (var i = 0; i < item.types_count; i++) {
-									var markup = "<tr><td><input type='text' class='form-control' placeholder='Enter Type' name='tx_type[]' value='"+item.types[i]+"'/></td><td><a href='javascript:void(0)' class='danger bt_delete_t'><i class='fa fa-times'></i></a></td></tr>";
+									var markup = "<tr><td><input type='hidden' name='item_type_id[]' value='"+item.types[i].item_type_id+"'/><input type='text' class='form-control' placeholder='Enter Type' name='tx_type[]' value='"+item.types[i].type+"'/></td><td><a href='javascript:void(0)' class='danger bt_delete_t'><i class='fa fa-times'></i></a></td></tr>";
 									$("#tb_types > tbody").append (markup);
 								}	
-								
+								$("#tb_manufacturers > tbody").empty ();
 								for (var i = 0; i < item.manufacturers_count; i++) {
-									var markup2 = "<tr><td><input type='text' class='form-control' placeholder='Enter Manufacturer' name='tx_manufacturer[]' value='"+item.manufacturers[i]+"'/></td><td><a href='javascript:void(0)' class='danger bt_delete_t'><i class='fa fa-times'></i></a></td></tr>";
+									var markup2 = "<tr><td><input type='hidden' name='item_manufacturer_id[]' value='"+item.manufacturers[i].item_manufacturer_id+"'/><input type='text' class='form-control' placeholder='Enter Manufacturer' name='tx_manufacturer[]' value='"+item.manufacturers[i].manufacturer+"'/></td><td><a href='javascript:void(0)' class='danger bt_delete_t'><i class='fa fa-times'></i></a></td></tr>";
 									$("#tb_manufacturers > tbody").append (markup2);
 								}
 								$('html, body').animate ({
@@ -392,16 +392,13 @@
             		rules: {
             			tx_name: {
             				required: true
-            			},						
-            			tx_specification: {
-            				required: true
             			}
             		},
             		submitHandler: submit_form
             	});
 				
             	function submit_form () {					
-					if ($("input[name=item_id").val () == "") {
+					if ($("input[name=item_id]").val () == "0") {
 						create_item ();
 					} else {
 						update_item ();
@@ -463,11 +460,10 @@
 					});
 				}
 				
-				function read_items (rows) {
+				function read_items () {
             		$.ajax ({
             			type: 'POST',
             			url: 'assets/php/read-items.php',
-            			data: {limit: rows},
             			success: function (result) {
             				var result_object = JSON.parse (result);
             				if (typeof result_object.error === 'undefined') {
@@ -476,12 +472,12 @@
             						var item = result_object.items[i];
 									var markup = "<table class='table table-bordered'><tbody>";
 									for (var j = 0; j < item.types_count; j++) {
-										markup += "<tr><td>"+item.types[j]+"</td></tr>";
+										markup += "<tr><td>"+item.types[j].type+"</td></tr>";
 									}
 									markup += "</tbody></table>";
 									var markup2 = "<table class='table table-bordered'><tbody>";
 									for (var j = 0; j < item.manufacturers_count; j++) {
-										markup2 += "<tr><td>"+item.manufacturers[j]+"</td></tr>";
+										markup2 += "<tr><td>"+item.manufacturers[j].manufacturer+"</td></tr>";
 									}
 									markup2 += "</tbody></table>";
 									$('#dt_items').DataTable ().row.add ([
@@ -523,7 +519,10 @@
 									$("#callout_block_datatable").html ('<div class="callout callout-success"><h4>Success!</h4><p>' + result_object.success + '</p></div>');
 									$('#bt_save').prop ("disabled", false);
 									$('#bt_save').html ("Save");
-									$('input[name=item_id]').val ("");
+									$('input[type=hidden]').each (function () {
+										alert ($(this).val ());
+										$(this).val ("0");
+									});
 									$('html, body').animate ({
 										scrollTop: $("#dv_datatable").offset ().top
 									}, 500);									
@@ -553,7 +552,10 @@
 									$("#callout_block_datatable").html ('<div class="callout callout-danger"><h4>Failed!</h4><p>' + result_object.error + '</p></div>');
 									$('#bt_save').prop ("disabled", false);
 									$('#bt_save').html ("Save");
-									$('input[name=item_id]').val ("");
+									$('input[type=hidden]').each (function () {
+										alert ($(this).val ());
+										$(this).val ("0");
+									});
 									$('html, body').animate ({
 										scrollTop: $("#dv_datatable").offset ().top
 									}, 500);									
