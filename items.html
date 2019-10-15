@@ -430,12 +430,12 @@
 									}, 500);									
 									console.log (result_object.item);
 									var item = result_object.item;
-									var markup = "<table class='table table-bordered'><tbody>";
+									var markup = "<table class='table table-bordered mb-0'><tbody>";
 									for (var i = 0; i < item.types_count; i++) {
 										markup += "<tr><td>"+item.types[i]+"</td></tr>";
 									}
 									markup += "</tbody></table>";
-									var markup2 = "<table class='table table-bordered'><tbody>";
+									var markup2 = "<table class='table table-bordered mb-0'><tbody>";
 									for (var i = 0; i < item.manufacturers_count; i++) {
 										markup2 += "<tr><td>"+item.manufacturers[i]+"</td></tr>";
 									}
@@ -470,12 +470,12 @@
             					console.log (result_object.items);
             					for (var i = 0; i < result_object.count; i++) {
             						var item = result_object.items[i];
-									var markup = "<table class='table table-bordered'><tbody>";
+									var markup = "<table class='table table-bordered mb-0'><tbody>";
 									for (var j = 0; j < item.types_count; j++) {
 										markup += "<tr><td>"+item.types[j].type+"</td></tr>";
 									}
 									markup += "</tbody></table>";
-									var markup2 = "<table class='table table-bordered'><tbody>";
+									var markup2 = "<table class='table table-bordered mb-0'><tbody>";
 									for (var j = 0; j < item.manufacturers_count; j++) {
 										markup2 += "<tr><td>"+item.manufacturers[j].manufacturer+"</td></tr>";
 									}
@@ -520,7 +520,6 @@
 									$('#bt_save').prop ("disabled", false);
 									$('#bt_save').html ("Save");
 									$('input[type=hidden]').each (function () {
-										alert ($(this).val ());
 										$(this).val ("0");
 									});
 									$('html, body').animate ({
@@ -528,12 +527,12 @@
 									}, 500);									
 									console.log (result_object.item);
 									var item = result_object.item;
-									var markup = "<table class='table table-bordered'><tbody>";
+									var markup = "<table class='table table-bordered mb-0'><tbody>";
 									for (var i = 0; i < item.types_count; i++) {
 										markup += "<tr><td>"+item.types[i]+"</td></tr>";
 									}
 									markup += "</tbody></table>";
-									var markup2 = "<table class='table table-bordered'><tbody>";
+									var markup2 = "<table class='table table-bordered mb-0'><tbody>";
 									for (var i = 0; i < item.manufacturers_count; i++) {
 										markup2 += "<tr><td>"+item.manufacturers[i]+"</td></tr>";
 									}
@@ -553,7 +552,6 @@
 									$('#bt_save').prop ("disabled", false);
 									$('#bt_save').html ("Save");
 									$('input[type=hidden]').each (function () {
-										alert ($(this).val ());
 										$(this).val ("0");
 									});
 									$('html, body').animate ({

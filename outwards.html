@@ -116,7 +116,7 @@
                         <li><a href="#"><i class="fa fa-bar-chart"></i> <span>Dashboard</span></a></li>
                         <li ><a href="stations.html"><i class="fa fa-plane"></i> <span>Stations</span></a></li>
                         <li><a href="items.html"><i class="fa fa-cart-plus"></i> <span>Items</span></a></li>
-                         <li class="active"><a href="inwards.html"><i class="fa fa-cloud-download"></i> <span>Outwards</span></a></li>
+                         <li class="active"><a href="inwards.html"><i class="fa fa-cloud-download"></i> <span>Inwards</span></a></li>
                         <li><a href="outwards.html"><i class="fa fa-cloud-upload"></i> <span>Outwards</span></a></li>
                         <li class="treeview">
                             <a href="report.html"><i class="fa fa-book"></i> <span>Reports</span>
@@ -159,7 +159,7 @@
                         <!-- /.box-header -->
 						<div id="callout_block_form" class="col-md-12"></div>
                         <!-- form start -->
-                        <form role="form" id="fm_inward" method="post" action="">
+                        <form role="form" id="fm_outward" method="post" action="">
                             <div class="box-body">
 								<div class="col-md-12">
 									<table class='table table-bordered mb-0'>
@@ -245,16 +245,10 @@
 													<table class='table mb-0 table-bordered'>
 														<tbody>
 															<tr>
-																<th scope="row">Rate</th>
-																<td class="td-group">
-																	<input type="text" value="0.0" class="form-control pull-right" name="tx_rate"/>
-																</td>
-															</tr>
-															<tr>
-																<th scope="row">Mode of Receiving</th>
+																<th scope="row">Mode of Dispatch</th>
 																<td class="td-group">
 																	<div class="select2-group">
-																		<select class="form-control select2" id="s2_mode_of_receiving" name="tx_mode_of_receiving">
+																		<select class="form-control select2" id="s2_mode_of_dispatch" name="tx_mode_of_dispatch">
 																			<option value=""></option>
 																			<option value="By Hand">By Hand</option>
 																			<option value="By Speed Post">By Speed Post</option>
@@ -279,7 +273,7 @@
                             </div>
                             <!-- /.box-body -->
                             <div class="box-footer">
-								<input type="hidden" name="inward_id" value=""/>
+								<input type="hidden" name="outward_id" value=""/>
                                 <button id="bt_save" type="submit" class="btn btn-primary pull-right">Save</button>
                             </div>
                         </form>
@@ -293,7 +287,7 @@
                         <!-- /.box-header -->
 						<div id="callout_block_datatable" class="col-md-12"></div>
                         <div class="box-body">
-                            <table id="dt_inwards" class="table table-bordered">
+                            <table id="dt_outwards" class="table table-bordered">
                                 <thead>
                                     <tr>
                                         <th>#</th>
@@ -370,11 +364,11 @@
             			var result_object = JSON.parse (result);
             			if (result_object.target === 'login.html')
             				window.location.href = result_object.target;
-            			read_inwards ();
+            			read_outwards ();
             		}
             	});				
 				
-				$('#dt_inwards').DataTable ();
+				$('#dt_outwards').DataTable ();
 				
 				$('#datepicker').datepicker ({
 					autoclose: true,
@@ -399,7 +393,7 @@
 					}
 				});
 				
-				$('#s2_mode_of_receiving').select2 ({
+				$('#s2_mode_of_dispatch').select2 ({
 					placeholder: 'Select'
 				});
 				
@@ -442,25 +436,24 @@
 					e.preventDefault ();
 					$.ajax ({
 						type: 'POST',
-						url: 'assets/php/read-inwards.php',
-						data: {inward_id: $(this).data ('inward_id')},
+						url: 'assets/php/read-outwards.php',
+						data: {outward_id: $(this).data ('outward_id')},
 						success: function (result) {
 							var result_object = JSON.parse (result);
 							if (typeof result_object.error === 'undefined') {
-								console.log (result_object.inwards);
-								var inward = result_object.inwards[0];
-								$('#datepicker').datepicker ("update", new Date (inward.date));
-								$("#s2_station").val (inward.station_id).trigger ("change");
-								$("input[name=inward_id]").val (inward.inward_id);
-								$("#s2_item").val (inward.item_id).trigger ("change");
-								read_item_details (inward.item_id, inward.item_type_id, inward.item_manufacturer_id);
-								$("input[name=tx_quantity]").val (inward.quantity);
-								$("input[name=tx_rate]").val (inward.rate);
-								$("#s2_mode_of_receiving").val (inward.mode_of_receiving).trigger ("change");
-								$("textarea[name=tx_remarks]").html (inward.remarks);
+								console.log (result_object.outwards);
+								var outward = result_object.outwards[0];
+								$('#datepicker').datepicker ("update", new Date (outward.date));
+								$("#s2_station").val (outward.station_id).trigger ("change");
+								$("input[name=outward_id]").val (outward.outward_id);
+								$("#s2_item").val (outward.item_id).trigger ("change");
+								read_item_details (outward.item_id, outward.item_type_id, outward.item_manufacturer_id);
+								$("input[name=tx_quantity]").val (outward.quantity);
+								$("#s2_mode_of_dispatch").val (outward.mode_of_dispatch).trigger ("change");
+								$("textarea[name=tx_remarks]").html (outward.remarks);
 								$("#tb_serial_numbers tbody").empty ();
-								for (var i = 0; i < inward.serial_numbers_count; i++) {
-									var markup = '<tr><td><input type="text" class="form-control pull-right" name="tx_serial_number[]" value="'+inward.serial_numbers[i]+'"/></td></tr>';
+								for (var i = 0; i < outward.serial_numbers_count; i++) {
+									var markup = '<tr><td><input type="text" class="form-control pull-right" name="tx_serial_number[]" value="'+outward.serial_numbers[i]+'"/></td></tr>';
 									$("#tb_serial_numbers tbody").append (markup);
 								}						
 								$('html, body').animate ({
@@ -477,19 +470,19 @@
 				
 				$(document).on ("click", ".bt_delete", function (e) {
 					e.preventDefault ();
-					var lc_inward_id = $(this).data ('inward_id');
-					if (confirm ("Do you really want to delete Inward #" + lc_inward_id + "?")) {
+					var lc_outward_id = $(this).data ('outward_id');
+					if (confirm ("Do you really want to delete Outward #" + lc_outward_id + "?")) {
 						$.ajax ({
 							type: 'POST',
-							url: 'assets/php/delete-inward.php',
-							data: {inward_id: lc_inward_id},
+							url: 'assets/php/delete-outward.php',
+							data: {outward_id: lc_outward_id},
 							success: function (result) {
 								var result_object = JSON.parse (result);
 								if (typeof result_object.error === 'undefined') {
 									$("#callout_block_datatable").fadeIn (1000, function () {
 										$("#callout_block_datatable").html ('<div class="callout callout-success"><h4>Success!</h4><p>' + result_object.success + '</p></div>');
-										console.log ($(".bt_delete[data-inward_id=" + lc_inward_id + "]").parents ('tr'));
-										$('#dt_inwards').DataTable ().row ($(".bt_delete[data-inward_id=" + lc_inward_id + "]").parents ('tr')).remove ().draw ();
+										console.log ($(".bt_delete[data-outward_id=" + lc_outward_id + "]").parents ('tr'));
+										$('#dt_outwards').DataTable ().row ($(".bt_delete[data-outward_id=" + lc_outward_id + "]").parents ('tr')).remove ().draw ();
 									});
 								} else {
 									$("#callout_block_datatable").fadeIn (1000, function () {
@@ -501,7 +494,7 @@
 					}
 				});
 				
-				$('#fm_inward').validate ({
+				$('#fm_outward').validate ({
             		highlight: function (element) {
 						$(element).closest('.td-group').addClass('has-error');
             		},
@@ -529,11 +522,6 @@
 						item_id: {
 							required: true
 						},
-						tx_rate: {
-							required: true,
-							number: true,
-							min: 0.0
-						},
 						tx_quantity: {
 							required: true,
 							min: 1,
@@ -544,18 +532,18 @@
             	});
 				
             	function submit_form () {
-					if ($("input[name=inward_id]").val () == "") {
-						create_inward ();
+					if ($("input[name=outward_id]").val () == "") {
+						create_outward ();
 					} else {
-						update_inward ();
+						update_outward ();
 					}            		 
             	}
 				
-				function create_inward () {
-					var data = $('#fm_inward').serialize ();
+				function create_outward () {
+					var data = $('#fm_outward').serialize ();
 					$.ajax ({
 						type: 'POST',
-						url: 'assets/php/create-inward.php',
+						url: 'assets/php/create-outward.php',
 						data: data,
 						beforeSend: function () {
 							$('#bt_save').prop ("disabled", true);
@@ -574,27 +562,27 @@
 									$('html, body').animate ({
 										scrollTop: $("#dv_datatable").offset ().top
 									}, 500);									
-									console.log (result_object.inward);
-									var inward = result_object.inward;
-									var markup = "<table class='table mb-0 table-bordered'><tbody><tr><th scope='row'>Name</th><td>"+inward.item+"</td></tr><tr><th scope='row'>Type</th><td>"+inward.item_type+"</td></tr><tr><th scope='row'>Manufacturer</th><td>"+inward.item_manufacturer+"</td></tr></tbody></table>";
+									console.log (result_object.outward);
+									var outward = result_object.outward;
+									var markup = "<table class='table mb-0 table-bordered'><tbody><tr><th scope='row'>Name</th><td>"+outward.item+"</td></tr><tr><th scope='row'>Type</th><td>"+outward.item_type+"</td></tr><tr><th scope='row'>Manufacturer</th><td>"+outward.item_manufacturer+"</td></tr></tbody></table>";
 									
 									var markup2 = "<table class='table mb-0 table-bordered'><tbody>";
-									for (var i = 0; i < inward.serial_numbers_count; i++) {
-										markup2 += "<tr><td>"+inward.serial_numbers[i]+"</td></tr>";
+									for (var i = 0; i < outward.serial_numbers_count; i++) {
+										markup2 += "<tr><td>"+outward.serial_numbers[i]+"</td></tr>";
 									}
 									markup2 += "</tbody></table>";
 									
-									var markup3 = "<table class='table mb-0 table-bordered'><tbody><tr><th scope='row'>Rate</th><td>"+inward.rate+"</td></tr><tr><th scope='row'>Mode of Receiving</th><td>"+inward.mode_of_receiving+"</td></tr><tr><th scope='row'>Remarks</th><td>"+inward.remarks+"</td></tr></tbody></table>";
+									var markup3 = "<table class='table mb-0 table-bordered'><tbody><tr><th scope='row'>Mode of Dispatch</th><td>"+outward.mode_of_dispatch+"</td></tr><tr><th scope='row'>Remarks</th><td>"+outward.remarks+"</td></tr></tbody></table>";
 									
-									$('#dt_inwards').DataTable ().row.add ([
-										inward.inward_id,
-										inward.date,
-										inward.station,
+									$('#dt_outwards').DataTable ().row.add ([
+										outward.outward_id,
+										outward.date,
+										outward.station,
 										markup,
-										inward.quantity,
+										outward.quantity,
 										markup2,
 										markup3,
-            							inward.action
+            							outward.action
 									]).draw (false);
 								});
 							} else {
@@ -608,11 +596,11 @@
 					});
 				}
 				
-				function update_inward () {
-					var data = $('#fm_inward').serialize ();
+				function update_outward () {
+					var data = $('#fm_outward').serialize ();
 					$.ajax ({
 						type: 'POST',
-						url: 'assets/php/update-inward.php',
+						url: 'assets/php/update-outward.php',
 						data: data,
 						beforeSend: function () {
 							$('#bt_save').prop ("disabled", true);
@@ -628,31 +616,31 @@
 									$("#callout_block_datatable").html ('<div class="callout callout-success"><h4>Success!</h4><p>' + result_object.success + '</p></div>');
 									$('#bt_save').prop ("disabled", false);
 									$('#bt_save').html ("Save");
-									$('input[name=inward_id]').val ("");
+									$('input[name=outward_id]').val ("");
 									$('html, body').animate ({
 										scrollTop: $("#dv_datatable").offset ().top
 									}, 500);									
-									console.log (result_object.inward);
-									var inward = result_object.inward;
-									var markup = "<table class='table mb-0 table-bordered'><tbody><tr><th scope='row'>Name</th><td>"+inward.item+"</td></tr><tr><th scope='row'>Type</th><td>"+inward.item_type+"</td></tr><tr><th scope='row'>Manufacturer</th><td>"+inward.item_manufacturer+"</td></tr></tbody></table>";
+									console.log (result_object.outward);
+									var outward = result_object.outward;
+									var markup = "<table class='table mb-0 table-bordered'><tbody><tr><th scope='row'>Name</th><td>"+outward.item+"</td></tr><tr><th scope='row'>Type</th><td>"+outward.item_type+"</td></tr><tr><th scope='row'>Manufacturer</th><td>"+outward.item_manufacturer+"</td></tr></tbody></table>";
 									
 									var markup2 = "<table class='table mb-0 table-bordered'><tbody>";
-									for (var i = 0; i < inward.serial_numbers_count; i++) {
-										markup2 += "<tr><td>"+inward.serial_numbers[i]+"</td></tr>";
+									for (var i = 0; i < outward.serial_numbers_count; i++) {
+										markup2 += "<tr><td>"+outward.serial_numbers[i]+"</td></tr>";
 									}
 									markup2 += "</tbody></table>";
 									
-									var markup3 = "<table class='table mb-0 table-bordered'><tbody><tr><th scope='row'>Rate</th><td>"+inward.rate+"</td></tr><tr><th scope='row'>Mode of Receiving</th><td>"+inward.mode_of_receiving+"</td></tr><tr><th scope='row'>Remarks</th><td>"+inward.remarks+"</td></tr></tbody></table>";
+									var markup3 = "<table class='table mb-0 table-bordered'><tbody><tr><th scope='row'>Mode of Dispatch</th><td>"+outward.mode_of_dispatch+"</td></tr><tr><th scope='row'>Remarks</th><td>"+outward.remarks+"</td></tr></tbody></table>";
 									
-									$('#dt_inwards').DataTable ().row ($(".bt_edit[data-inward_id=" + inward.inward_id + "]").parents ('tr')).data ([
-										inward.inward_id,
-										inward.date,
-										inward.station,
+									$('#dt_outwards').DataTable ().row ($(".bt_edit[data-outward_id=" + outward.outward_id + "]").parents ('tr')).data ([
+										outward.outward_id,
+										outward.date,
+										outward.station,
 										markup,
-										inward.quantity,
+										outward.quantity,
 										markup2,
 										markup3,
-            							inward.action
+            							outward.action
 									]).draw (false);
 								});
 							} else {
@@ -660,7 +648,7 @@
 									$("#callout_block_datatable").html ('<div class="callout callout-danger"><h4>Failed!</h4><p>' + result_object.error + '</p></div>');
 									$('#bt_save').prop ("disabled", false);
 									$('#bt_save').html ("Save");
-									$('input[name=inward_id]').val ("");
+									$('input[name=outward_id]').val ("");
 									$('html, body').animate ({
 										scrollTop: $("#dv_datatable").offset ().top
 									}, 500);									
@@ -670,37 +658,37 @@
 					});
 				}
 				
-				function read_inwards () {
+				function read_outwards () {
             		$.ajax ({
             			type: 'POST',
-            			url: 'assets/php/read-inwards.php',
+            			url: 'assets/php/read-outwards.php',
             			success: function (result) {
             				var result_object = JSON.parse (result);
             				if (typeof result_object.error === 'undefined') {
             					console.log (result_object);
             					for (var i = 0; i < result_object.count; i++) {
-            						var inward = result_object.inwards[i];
-									var markup = "<table class='table mb-0 table-bordered'><tbody><tr><th scope='row'>Name</th><td>"+inward.item+"</td></tr><tr><th scope='row'>Type</th><td>"+inward.item_type+"</td></tr><tr><th scope='row'>Manufacturer</th><td>"+inward.item_manufacturer+"</td></tr></tbody></table>";
+            						var outward = result_object.outwards[i];
+									var markup = "<table class='table mb-0 table-bordered'><tbody><tr><th scope='row'>Name</th><td>"+outward.item+"</td></tr><tr><th scope='row'>Type</th><td>"+outward.item_type+"</td></tr><tr><th scope='row'>Manufacturer</th><td>"+outward.item_manufacturer+"</td></tr></tbody></table>";
 									
 									var markup2 = "<table class='table mb-0 table-bordered'><tbody>";
-									for (var j = 0; j < inward.serial_numbers_count; j++) {
-										markup2 += "<tr><td>"+inward.serial_numbers[j]+"</td></tr>";
+									for (var j = 0; j < outward.serial_numbers_count; j++) {
+										markup2 += "<tr><td>"+outward.serial_numbers[j]+"</td></tr>";
 									}
 									markup2 += "</tbody></table>";
 									
-									var markup3 = "<table class='table mb-0 table-bordered'><tbody><tr><th scope='row'>Rate</th><td>"+inward.rate+"</td></tr><tr><th scope='row'>Mode of Receiving</th><td>"+inward.mode_of_receiving+"</td></tr><tr><th scope='row'>Remarks</th><td>"+inward.remarks+"</td></tr></tbody></table>";
+									var markup3 = "<table class='table mb-0 table-bordered'><tbody><tr><th scope='row'>Mode of Dispatch</th><td>"+outward.mode_of_dispatch+"</td></tr><tr><th scope='row'>Remarks</th><td>"+outward.remarks+"</td></tr></tbody></table>";
 									
-									$('#dt_inwards').DataTable ().row.add ([
-										inward.inward_id,
-										inward.date,
-										inward.station,
+									$('#dt_outwards').DataTable ().row.add ([
+										outward.outward_id,
+										outward.date,
+										outward.station,
 										markup,
-										inward.quantity,
+										outward.quantity,
 										markup2,
 										markup3,
-            							inward.action
+            							outward.action
 									]).draw (false);
-									$('#dt_inwards').DataTable ().order ([0, 'desc']).draw ();
+									$('#dt_outwards').DataTable ().order ([0, 'desc']).draw ();
             					}
             				} else {
             					$("#callout_block_datatable").fadeIn (1000, function () {
