@@ -1,13 +1,15 @@
 -- phpMyAdmin SQL Dump
--- version 4.6.4
+-- version 4.8.5
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: Oct 15, 2019 at 07:38 AM
--- Server version: 5.7.14
--- PHP Version: 7.0.10
+-- Host: 127.0.0.1:3306
+-- Generation Time: Oct 15, 2019 at 10:37 AM
+-- Server version: 5.7.26
+-- PHP Version: 7.2.18
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
+START TRANSACTION;
 SET time_zone = "+00:00";
 
 
@@ -26,8 +28,9 @@ SET time_zone = "+00:00";
 -- Table structure for table `tb_inwards`
 --
 
-CREATE TABLE `tb_inwards` (
-  `fd_inward_id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `tb_inwards`;
+CREATE TABLE IF NOT EXISTS `tb_inwards` (
+  `fd_inward_id` int(11) NOT NULL AUTO_INCREMENT,
   `fd_date` date NOT NULL,
   `fd_station_id` int(11) NOT NULL,
   `fd_item_id` int(11) NOT NULL,
@@ -36,8 +39,9 @@ CREATE TABLE `tb_inwards` (
   `fd_quantity` int(11) NOT NULL,
   `fd_rate` decimal(10,0) NOT NULL,
   `fd_mode_of_receiving` varchar(128) NOT NULL,
-  `fd_remarks` varchar(256) NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+  `fd_remarks` varchar(256) NOT NULL,
+  PRIMARY KEY (`fd_inward_id`)
+) ENGINE=MyISAM AUTO_INCREMENT=101 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `tb_inwards`
@@ -80,7 +84,69 @@ INSERT INTO `tb_inwards` (`fd_inward_id`, `fd_date`, `fd_station_id`, `fd_item_i
 (34, '2017-12-12', 13, 5, 0, 0, 1, '0', 'By Post', 'Defective Instrument'),
 (35, '2017-12-12', 13, 1, 1, 0, 1, '0', 'By Post', 'Defective (with Adapter)'),
 (36, '2017-12-12', 13, 1, 1, 0, 2, '0', 'By Post', 'Defective'),
-(37, '2017-01-05', 78, 6, 2, 0, 2, '0', '', 'From Workshop');
+(37, '2018-01-05', 78, 6, 2, 0, 2, '0', '', 'From Workshop'),
+(38, '2018-01-09', 62, 4, 0, 0, 1, '0', '', 'Given to workshop for repair'),
+(39, '2018-01-09', 12, 5, 0, 0, 2, '0', '', 'Defective'),
+(40, '2018-01-09', 12, 1, 1, 0, 1, '0', '', 'Defective'),
+(41, '2018-01-09', 12, 11, 0, 3, 2, '0', '', 'Defective'),
+(42, '2018-01-09', 5, 4, 0, 0, 3, '0', '', 'Store to workshop for repair'),
+(43, '2018-01-09', 5, 6, 2, 0, 4, '0', '', 'Store to workshop for repair'),
+(44, '2018-01-09', 5, 11, 0, 3, 2, '0', '', ''),
+(45, '2018-01-09', 5, 12, 0, 0, 1, '0', '', ''),
+(46, '2018-01-09', 5, 13, 0, 0, 3, '0', '', ''),
+(47, '2018-01-09', 62, 4, 0, 0, 1, '0', '', 'Store for repair in workshop'),
+(48, '2018-01-09', 62, 3, 0, 0, 1, '0', '', ''),
+(49, '2018-01-18', 5, 1, 0, 0, 1, '0', 'By Post', ''),
+(50, '2018-01-18', 5, 14, 0, 0, 1, '0', '', ''),
+(51, '2018-01-18', 5, 15, 0, 0, 1, '0', '', ''),
+(52, '2018-01-18', 5, 16, 0, 0, 2, '0', '', ''),
+(54, '2018-01-15', 78, 17, 0, 0, 2, '0', '', 'From store'),
+(55, '2018-01-18', 44, 3, 0, 0, 2, '0', 'By Speed Post', ''),
+(56, '2018-01-18', 5, 4, 8, 0, 2, '0', 'By Speed Post', 'defective'),
+(57, '2018-02-01', 80, 5, 0, 0, 1, '0', 'By Hand', 'by Mr. Gajare'),
+(58, '2018-02-01', 80, 3, 0, 0, 2, '0', '', ''),
+(59, '2018-02-01', 80, 3, 11, 0, 15, '0', 'By Hand', 'BY Mr. Gajare'),
+(60, '2018-02-08', 78, 4, 8, 0, 2, '0', 'By Hand', ''),
+(61, '2018-02-08', 63, 12, 0, 0, 2, '0', '', 'receive from Diu airport'),
+(62, '2018-02-09', 78, 19, 0, 9, 3, '0', '', ''),
+(63, '2018-02-14', 78, 6, 12, 0, 3, '0', '', 'From workshop'),
+(64, '2018-02-15', 78, 6, 12, 0, 2, '0', '', 'From workshop'),
+(65, '2018-02-15', 84, 1, 1, 0, 1, '0', '', 'From ICGAS daman'),
+(66, '2018-02-19', 78, 20, 0, 0, 1, '0', '', 'For kolkata'),
+(67, '2018-02-19', 78, 4, 0, 0, 5, '0', '', 'For Agathi port blair'),
+(68, '2018-02-21', 5, 21, 0, 0, 1, '0', '', ''),
+(69, '2018-02-20', 78, 22, 0, 0, 1, '0', '', 'Defective'),
+(70, '2018-02-20', 78, 4, 8, 0, 1, '0', '', 'Defective'),
+(71, '2018-02-27', 78, 23, 0, 0, 11, '0', '', 'CC388 AD'),
+(72, '2018-02-27', 78, 23, 0, 0, 5, '0', '', 'Q 2612 AF'),
+(73, '2018-02-27', 78, 23, 0, 0, 1, '0', '', 'CE360A'),
+(74, '2018-02-27', 78, 23, 0, 0, 1, '0', '', 'CE361A'),
+(75, '2018-02-27', 78, 23, 0, 0, 1, '0', '', 'CE362A'),
+(76, '2018-02-27', 78, 23, 0, 0, 1, '0', '', 'CE363A'),
+(77, '2018-02-27', 78, 23, 0, 0, 2, '0', '', 'CE252A'),
+(78, '2018-02-27', 78, 23, 0, 0, 2, '0', '', 'CE253A'),
+(79, '2018-02-27', 78, 23, 0, 0, 2, '0', '', 'CE250A'),
+(80, '2018-02-27', 78, 23, 0, 0, 2, '0', '', 'CE251A'),
+(81, '2018-02-27', 78, 23, 0, 0, 2, '0', '', 'Q 5949A'),
+(82, '2018-02-27', 78, 23, 0, 0, 1, '0', '', 'CE320A'),
+(83, '2018-02-27', 78, 23, 0, 0, 1, '0', '', 'CE321A'),
+(84, '2018-02-27', 78, 23, 0, 0, 1, '0', '', 'CE322A'),
+(85, '2018-02-27', 78, 23, 0, 0, 1, '0', '', 'CE323A'),
+(86, '2018-02-27', 78, 23, 0, 0, 2, '0', '', 'CE412AC'),
+(87, '2018-02-27', 78, 23, 0, 0, 2, '0', '', 'CE413AC'),
+(88, '2018-02-27', 78, 23, 0, 0, 2, '0', '', 'CE411AC'),
+(89, '2018-02-27', 78, 23, 0, 0, 2, '0', '', 'CE410XC'),
+(90, '2018-02-27', 78, 24, 0, 0, 20, '0', '', 'For ELAB'),
+(91, '2018-02-27', 78, 25, 0, 0, 6, '0', '', ''),
+(92, '2018-03-05', 78, 4, 0, 0, 5, '0', '', 'From Joshi Engineer'),
+(93, '2018-03-12', 78, 26, 13, 0, 1, '0', '', 'Receive from Amit electronics CS & CO'),
+(94, '2018-03-12', 78, 29, 14, 0, 1, '0', '', 'From shilpa electronics'),
+(95, '2018-03-13', 80, 31, 0, 0, 4, '0', '', 'Mr. Gajare'),
+(96, '2018-03-19', 78, 30, 15, 0, 2, '0', '', ''),
+(97, '2018-03-19', 78, 30, 16, 0, 4, '0', '', ''),
+(98, '2018-03-21', 76, 5, 0, 0, 1, '0', 'By Post', ''),
+(99, '2018-03-21', 76, 13, 0, 0, 2, '0', 'By Hand', ''),
+(100, '2018-04-17', 78, 4, 8, 0, 1, '0', '', '');
 
 -- --------------------------------------------------------
 
@@ -88,11 +154,13 @@ INSERT INTO `tb_inwards` (`fd_inward_id`, `fd_date`, `fd_station_id`, `fd_item_i
 -- Table structure for table `tb_items`
 --
 
-CREATE TABLE `tb_items` (
-  `fd_item_id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `tb_items`;
+CREATE TABLE IF NOT EXISTS `tb_items` (
+  `fd_item_id` int(11) NOT NULL AUTO_INCREMENT,
   `fd_name` varchar(128) NOT NULL,
-  `fd_specification` varchar(255) NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1 ROW_FORMAT=DYNAMIC;
+  `fd_specification` varchar(255) NOT NULL,
+  PRIMARY KEY (`fd_item_id`)
+) ENGINE=MyISAM AUTO_INCREMENT=35 DEFAULT CHARSET=latin1 ROW_FORMAT=DYNAMIC;
 
 --
 -- Dumping data for table `tb_items`
@@ -108,7 +176,31 @@ INSERT INTO `tb_items` (`fd_item_id`, `fd_name`, `fd_specification`) VALUES
 (7, 'Travelling Standard Calibration Kit', ''),
 (8, 'Shielded Cable', '100 Mtr'),
 (9, 'Cartridge', ''),
-(10, 'Sensor', '');
+(10, 'Sensor', ''),
+(11, 'Modem', ''),
+(12, 'Cable modem', ''),
+(13, 'Ethernet converter', ''),
+(14, 'Team link DL', ''),
+(15, 'Accel ESR', ''),
+(16, 'Metlog', ''),
+(17, 'Whirling psychrometer', ''),
+(18, 'Opt. Anemometer', ''),
+(19, 'Wind speed sensor', ''),
+(20, 'Stevenson screen', ''),
+(21, 'CGA', ''),
+(22, 'Self recording rainguage', ''),
+(23, 'HP Toner', ''),
+(24, 'Power cord', '230V ,5AMP Indian plug mains'),
+(25, 'Araldite', '180 gms'),
+(26, 'Connector', ''),
+(27, 'Sleeves', '100 mtrs'),
+(28, 'Luggs', ''),
+(29, 'Servo pot', ''),
+(30, 'Core cable', ''),
+(31, 'HWSR Data logger', ''),
+(32, 'CPU', ''),
+(33, 'Monitor', ''),
+(34, 'Wifi modem', '');
 
 -- --------------------------------------------------------
 
@@ -116,12 +208,14 @@ INSERT INTO `tb_items` (`fd_item_id`, `fd_name`, `fd_specification`) VALUES
 -- Table structure for table `tb_item_manufacturers`
 --
 
-CREATE TABLE `tb_item_manufacturers` (
-  `fd_item_manufacturer_id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `tb_item_manufacturers`;
+CREATE TABLE IF NOT EXISTS `tb_item_manufacturers` (
+  `fd_item_manufacturer_id` int(11) NOT NULL AUTO_INCREMENT,
   `fd_item_id` int(11) NOT NULL,
   `fd_manufacturer` varchar(128) NOT NULL,
-  `fd_dirty_bit` tinyint(4) NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+  `fd_dirty_bit` tinyint(4) NOT NULL,
+  PRIMARY KEY (`fd_item_manufacturer_id`)
+) ENGINE=MyISAM AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `tb_item_manufacturers`
@@ -129,7 +223,14 @@ CREATE TABLE `tb_item_manufacturers` (
 
 INSERT INTO `tb_item_manufacturers` (`fd_item_manufacturer_id`, `fd_item_id`, `fd_manufacturer`, `fd_dirty_bit`) VALUES
 (1, 10, 'Gill', 1),
-(2, 3, 'ARKS', 1);
+(2, 3, 'ARKS', 1),
+(3, 11, 'Engenious', 1),
+(4, 12, '', 1),
+(5, 13, '', 1),
+(6, 14, '', 1),
+(7, 15, '', 1),
+(8, 16, '', 1),
+(9, 19, 'Vaisala', 1);
 
 -- --------------------------------------------------------
 
@@ -137,12 +238,14 @@ INSERT INTO `tb_item_manufacturers` (`fd_item_manufacturer_id`, `fd_item_id`, `f
 -- Table structure for table `tb_item_types`
 --
 
-CREATE TABLE `tb_item_types` (
-  `fd_item_type_id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `tb_item_types`;
+CREATE TABLE IF NOT EXISTS `tb_item_types` (
+  `fd_item_type_id` int(11) NOT NULL AUTO_INCREMENT,
   `fd_item_id` int(11) NOT NULL,
   `fd_type` varchar(128) NOT NULL,
-  `fd_dirty_bit` tinyint(4) NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+  `fd_dirty_bit` tinyint(4) NOT NULL,
+  PRIMARY KEY (`fd_item_type_id`)
+) ENGINE=MyISAM AUTO_INCREMENT=22 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `tb_item_types`
@@ -155,7 +258,21 @@ INSERT INTO `tb_item_types` (`fd_item_type_id`, `fd_item_id`, `fd_type`, `fd_dir
 (4, 8, '6 Core', 1),
 (5, 9, '12 A', 1),
 (6, 10, 'Windsonic', 1),
-(7, 10, 'TT/RH', 1);
+(7, 10, 'TT/RH', 1),
+(8, 4, 'New type', 1),
+(9, 18, 'Mini', 1),
+(10, 18, 'New type', 1),
+(11, 3, 'New', 1),
+(12, 6, 'Hall Effect', 1),
+(13, 26, '6 way', 1),
+(14, 29, '10k', 1),
+(15, 30, '2', 1),
+(16, 30, '4', 1),
+(17, 30, '6', 1),
+(18, 32, 'I-3', 1),
+(19, 32, 'I-7', 1),
+(20, 10, 'AT/RH', 1),
+(21, 34, 'ENH202', 1);
 
 -- --------------------------------------------------------
 
@@ -163,8 +280,9 @@ INSERT INTO `tb_item_types` (`fd_item_type_id`, `fd_item_id`, `fd_type`, `fd_dir
 -- Table structure for table `tb_outwards`
 --
 
-CREATE TABLE `tb_outwards` (
-  `fd_outward_id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `tb_outwards`;
+CREATE TABLE IF NOT EXISTS `tb_outwards` (
+  `fd_outward_id` int(11) NOT NULL AUTO_INCREMENT,
   `fd_date` date NOT NULL,
   `fd_station_id` int(11) NOT NULL,
   `fd_item_id` int(11) NOT NULL,
@@ -172,8 +290,34 @@ CREATE TABLE `tb_outwards` (
   `fd_item_manufacturer_id` int(11) NOT NULL,
   `fd_quantity` int(11) NOT NULL,
   `fd_mode_of_dispatch` varchar(128) NOT NULL,
-  `fd_remarks` varchar(256) NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+  `fd_remarks` varchar(256) NOT NULL,
+  PRIMARY KEY (`fd_outward_id`)
+) ENGINE=MyISAM AUTO_INCREMENT=20 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `tb_outwards`
+--
+
+INSERT INTO `tb_outwards` (`fd_outward_id`, `fd_date`, `fd_station_id`, `fd_item_id`, `fd_item_type_id`, `fd_item_manufacturer_id`, `fd_quantity`, `fd_mode_of_dispatch`, `fd_remarks`) VALUES
+(1, '2017-06-09', 55, 32, 18, 0, 1, 'By Speed Post', ''),
+(2, '2017-06-09', 55, 32, 19, 0, 1, 'By Speed Post', ''),
+(3, '2017-06-09', 55, 33, 0, 0, 2, '', ''),
+(4, '2017-06-09', 85, 10, 20, 0, 1, '', 'On tour by sri.PR Mehetre SA'),
+(5, '2017-06-09', 85, 1, 1, 0, 1, '', 'On tour by sri.PR Mehetre SA'),
+(6, '2017-06-09', 85, 29, 14, 0, 1, '', 'On tour by sri.PR Mehetre SA'),
+(7, '2017-06-09', 63, 12, 0, 0, 2, 'By Speed Post', ''),
+(8, '2017-06-12', 68, 4, 0, 0, 1, 'By Speed Post', ''),
+(9, '2017-06-13', 8, 4, 0, 0, 1, 'By Speed Post', ''),
+(10, '2017-06-13', 86, 4, 0, 0, 1, 'By Speed Post', ''),
+(11, '2017-06-13', 23, 4, 0, 0, 1, 'By Speed Post', ''),
+(12, '2017-06-13', 87, 34, 21, 0, 2, 'By Hand', ''),
+(13, '2017-06-13', 87, 12, 0, 0, 2, 'By Hand', ''),
+(14, '2017-06-16', 88, 4, 0, 0, 1, 'By Speed Post', ''),
+(15, '2017-06-15', 85, 5, 0, 0, 1, 'By Hand', ''),
+(16, '2017-06-21', 89, 6, 12, 0, 1, '', 'For testing with  RK Gaikwad'),
+(17, '2017-06-23', 40, 4, 0, 0, 1, 'By Speed Post', ''),
+(18, '2017-06-22', 89, 29, 14, 0, 5, 'By Hand', 'Handed over to Yatin Bhosale'),
+(19, '2017-06-27', 51, 2, 0, 0, 1, 'By Speed Post', '');
 
 -- --------------------------------------------------------
 
@@ -181,12 +325,14 @@ CREATE TABLE `tb_outwards` (
 -- Table structure for table `tb_serial_numbers`
 --
 
-CREATE TABLE `tb_serial_numbers` (
-  `fd_serial_number_id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `tb_serial_numbers`;
+CREATE TABLE IF NOT EXISTS `tb_serial_numbers` (
+  `fd_serial_number_id` int(11) NOT NULL AUTO_INCREMENT,
   `fd_transaction_id` int(11) NOT NULL,
   `fd_transaction_type` char(1) NOT NULL,
-  `fd_serial_number` varchar(128) NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+  `fd_serial_number` varchar(128) NOT NULL,
+  PRIMARY KEY (`fd_serial_number_id`)
+) ENGINE=MyISAM AUTO_INCREMENT=264 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `tb_serial_numbers`
@@ -265,7 +411,195 @@ INSERT INTO `tb_serial_numbers` (`fd_serial_number_id`, `fd_transaction_id`, `fd
 (70, 36, 'I', 'AS/MS/1012/02'),
 (71, 36, 'I', 'AS/MS/06'),
 (72, 37, 'I', '320/17'),
-(73, 37, 'I', '321/17');
+(73, 37, 'I', '321/17'),
+(74, 38, 'I', '335/13'),
+(75, 39, 'I', '0501140009'),
+(76, 39, 'I', 'AS/VW/22'),
+(77, 40, 'I', 'AS/MS/127'),
+(78, 41, 'I', '14B260986'),
+(79, 41, 'I', '14B261074'),
+(80, 42, 'I', 'Nil'),
+(81, 42, 'I', 'Nil'),
+(82, 42, 'I', 'Nil'),
+(83, 43, 'I', 'Nil'),
+(84, 43, 'I', 'Nil'),
+(85, 43, 'I', 'Nil'),
+(86, 43, 'I', 'Nil'),
+(87, 44, 'I', '116237058'),
+(88, 44, 'I', '116237055'),
+(89, 45, 'I', 'DL002/DDL-0025742/2/DD/12'),
+(90, 46, 'I', 'UPG/SE-1000'),
+(91, 46, 'I', 'AS/DD/09'),
+(92, 46, 'I', 'AS/1E/DD/0813/53'),
+(93, 47, 'I', '335/13'),
+(94, 48, 'I', '05D114002'),
+(95, 49, 'I', 'AS/PCD/01/2015'),
+(96, 50, 'I', '04002525'),
+(97, 51, 'I', 'ESR0303'),
+(98, 52, 'I', 'AS/DAS0813/52'),
+(99, 52, 'I', 'AS/DAS0813/53'),
+(103, 54, 'I', '743/09'),
+(102, 54, 'I', '729/09'),
+(104, 55, 'I', 'AS/UWL/04'),
+(105, 55, 'I', 'AS/0712/92'),
+(106, 56, 'I', '010/17'),
+(107, 56, 'I', 'Nil'),
+(108, 57, 'I', 'AS/DD/10'),
+(109, 58, 'I', 'AS/0112/89'),
+(110, 58, 'I', 'AS/0712/81'),
+(111, 59, 'I', 'AS/51'),
+(112, 59, 'I', 'AS/52'),
+(113, 59, 'I', 'AS/53'),
+(114, 59, 'I', 'AS/54'),
+(115, 59, 'I', 'AS/55'),
+(116, 59, 'I', 'AS/56'),
+(117, 59, 'I', 'AS/57'),
+(118, 59, 'I', 'AS/58'),
+(119, 59, 'I', 'AS/59'),
+(120, 59, 'I', 'AS/60'),
+(121, 59, 'I', 'AS/61'),
+(122, 59, 'I', 'AS/62'),
+(123, 59, 'I', 'AS/63'),
+(124, 59, 'I', 'AS/64'),
+(125, 59, 'I', 'AS/65'),
+(126, 60, 'I', '26/17'),
+(127, 60, 'I', '34/17'),
+(128, 61, 'I', ''),
+(129, 61, 'I', ''),
+(130, 62, 'I', 'N4734009'),
+(131, 62, 'I', 'N4734017'),
+(132, 62, 'I', 'N4734010'),
+(133, 63, 'I', '322/17'),
+(134, 63, 'I', '323/17'),
+(135, 63, 'I', '324/17'),
+(136, 64, 'I', '325/17'),
+(137, 64, 'I', '326/17'),
+(138, 65, 'I', 'AS/MS3/200'),
+(139, 66, 'I', 'Nil'),
+(140, 67, 'I', '330/13'),
+(141, 67, 'I', '318/13'),
+(142, 67, 'I', '350/13'),
+(143, 67, 'I', '107/03'),
+(144, 67, 'I', '17/93'),
+(145, 68, 'I', '66-01'),
+(146, 69, 'I', '66-01'),
+(147, 70, 'I', '06/16'),
+(148, 71, 'I', 'Nil'),
+(149, 71, 'I', 'Nil'),
+(150, 71, 'I', 'Nil'),
+(151, 71, 'I', 'Nil'),
+(152, 71, 'I', 'Nil'),
+(153, 71, 'I', 'Nil'),
+(154, 71, 'I', 'Nil'),
+(155, 71, 'I', 'Nil'),
+(156, 71, 'I', 'Nil'),
+(157, 71, 'I', 'Nil'),
+(158, 71, 'I', 'Nil'),
+(159, 72, 'I', 'Nil'),
+(160, 72, 'I', 'Nil'),
+(161, 72, 'I', 'Nil'),
+(162, 72, 'I', 'Nil'),
+(163, 72, 'I', 'Nil'),
+(164, 73, 'I', 'Nil'),
+(165, 74, 'I', 'Nil'),
+(166, 75, 'I', 'Nil'),
+(167, 76, 'I', 'Nil'),
+(168, 77, 'I', 'Nil'),
+(169, 77, 'I', 'Nil'),
+(170, 78, 'I', 'Nil'),
+(171, 78, 'I', 'Nil'),
+(172, 79, 'I', 'Nil'),
+(173, 79, 'I', 'Nil'),
+(174, 80, 'I', 'Nil'),
+(175, 80, 'I', 'Nil'),
+(176, 81, 'I', 'Nil'),
+(177, 81, 'I', 'Nil'),
+(178, 82, 'I', 'Nil'),
+(179, 83, 'I', 'Nil'),
+(180, 84, 'I', 'Nil'),
+(181, 85, 'I', 'Nil'),
+(182, 86, 'I', 'Nil'),
+(183, 86, 'I', 'Nil'),
+(184, 87, 'I', 'Nil'),
+(185, 87, 'I', 'Nil'),
+(186, 88, 'I', 'Nil'),
+(187, 88, 'I', 'Nil'),
+(188, 89, 'I', 'Nil'),
+(189, 89, 'I', 'Nil'),
+(190, 90, 'I', 'Nil'),
+(191, 90, 'I', 'Nil'),
+(192, 90, 'I', 'Nil'),
+(193, 90, 'I', 'Nil'),
+(194, 90, 'I', 'Nil'),
+(195, 90, 'I', 'Nil'),
+(196, 90, 'I', 'Nil'),
+(197, 90, 'I', 'Nil'),
+(198, 90, 'I', 'Nil'),
+(199, 90, 'I', 'Nil'),
+(200, 90, 'I', 'Nil'),
+(201, 90, 'I', 'Nil'),
+(202, 90, 'I', 'Nil'),
+(203, 90, 'I', 'Nil'),
+(204, 90, 'I', 'Nil'),
+(205, 90, 'I', 'Nil'),
+(206, 90, 'I', 'Nil'),
+(207, 90, 'I', 'Nil'),
+(208, 90, 'I', 'Nil'),
+(209, 90, 'I', 'Nil'),
+(210, 91, 'I', 'Nil'),
+(211, 91, 'I', 'Nil'),
+(212, 91, 'I', 'Nil'),
+(213, 91, 'I', 'Nil'),
+(214, 91, 'I', 'Nil'),
+(215, 91, 'I', 'Nil'),
+(216, 92, 'I', '024/17'),
+(217, 92, 'I', '032/17'),
+(218, 92, 'I', '033/17'),
+(219, 92, 'I', '036/17'),
+(220, 92, 'I', '043/17'),
+(221, 93, 'I', ''),
+(222, 94, 'I', ''),
+(223, 95, 'I', 'AS/HWSR/01'),
+(224, 95, 'I', 'AS/HWSR/02'),
+(225, 95, 'I', 'AS/HWSR/03'),
+(226, 95, 'I', 'AS/HWSR/04'),
+(227, 96, 'I', ''),
+(228, 96, 'I', ''),
+(229, 97, 'I', ''),
+(230, 97, 'I', ''),
+(231, 97, 'I', ''),
+(232, 97, 'I', ''),
+(233, 98, 'I', 'AS/DD/08'),
+(234, 99, 'I', 'AS/DD/10'),
+(235, 99, 'I', 'AS/DAS/10'),
+(236, 100, 'I', '04517'),
+(237, 1, 'O', '1NA449XVDX'),
+(238, 2, 'O', '1NA504P32T'),
+(239, 3, 'O', '6CM4511152'),
+(240, 3, 'O', '6CM4511158'),
+(241, 4, 'O', '02-002503'),
+(242, 5, 'O', 'AS/MS/-03/299'),
+(243, 6, 'O', '090916'),
+(244, 7, 'O', 'LDR2239B16'),
+(245, 7, 'O', 'LDR2284B16'),
+(246, 8, 'O', '381/16'),
+(247, 9, 'O', '385/16'),
+(248, 10, 'O', '380/16'),
+(249, 11, 'O', '383/16'),
+(250, 12, 'O', '165207952'),
+(251, 12, 'O', '165201533'),
+(252, 13, 'O', 'LDR2292B16'),
+(253, 13, 'O', 'LDR2253B16'),
+(254, 14, 'O', '386/16'),
+(255, 15, 'O', 'AS/DD/ANT/19'),
+(256, 16, 'O', 'AS/HW/V/12'),
+(257, 17, 'O', '384/17'),
+(258, 18, 'O', '480916'),
+(259, 18, 'O', '931016'),
+(260, 18, 'O', '941016'),
+(261, 18, 'O', '999016'),
+(262, 18, 'O', '1001016'),
+(263, 19, 'O', 'AS/DAS/02');
 
 -- --------------------------------------------------------
 
@@ -273,8 +607,9 @@ INSERT INTO `tb_serial_numbers` (`fd_serial_number_id`, `fd_transaction_id`, `fd
 -- Table structure for table `tb_stations`
 --
 
-CREATE TABLE `tb_stations` (
-  `fd_station_id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `tb_stations`;
+CREATE TABLE IF NOT EXISTS `tb_stations` (
+  `fd_station_id` int(11) NOT NULL AUTO_INCREMENT,
   `fd_rmc` varchar(128) NOT NULL,
   `fd_state` varchar(128) NOT NULL,
   `fd_type` varchar(128) NOT NULL,
@@ -284,8 +619,9 @@ CREATE TABLE `tb_stations` (
   `fd_phone` varchar(10) NOT NULL,
   `fd_address` varchar(256) NOT NULL,
   `fd_incharge_name` varchar(128) NOT NULL,
-  `fd_incharge_mobile` varchar(10) NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1 COMMENT='To store details of stations';
+  `fd_incharge_mobile` varchar(10) NOT NULL,
+  PRIMARY KEY (`fd_station_id`)
+) ENGINE=MyISAM AUTO_INCREMENT=90 DEFAULT CHARSET=latin1 COMMENT='To store details of stations';
 
 --
 -- Dumping data for table `tb_stations`
@@ -374,7 +710,13 @@ INSERT INTO `tb_stations` (`fd_station_id`, `fd_rmc`, `fd_state`, `fd_type`, `fd
 (80, '', '', '', '', 'Accel Systems', '', '', '', '', ''),
 (81, '', '', '', '', 'Tuticorin', '', '', '', '', ''),
 (82, '', '', '', '', 'INS HANSA C TO A', '', '', '', '', ''),
-(83, '', '', '', '', 'R & D E (E) Kalas', '', '', 'Pune - 15', '', '');
+(83, '', '', '', '', 'R & D E (E) Kalas', '', '', 'Pune - 15', '', ''),
+(84, 'Mumbai', 'Diu and Daman', '', '', 'Daman', '', '', '', '', ''),
+(85, 'New Delhi', '', '', '', 'New Delhi', '', '', '', '', ''),
+(86, '', '', '', '', 'Trichi', '', '', '', '', ''),
+(87, '', '', '', '', 'Ahemdabad', '', '', '', '', ''),
+(88, '', '', '', '', 'Port blair', '', '', '', '', ''),
+(89, '', '', '', '', 'Workshop', '', '', '', '', '');
 
 -- --------------------------------------------------------
 
@@ -382,14 +724,16 @@ INSERT INTO `tb_stations` (`fd_station_id`, `fd_rmc`, `fd_state`, `fd_type`, `fd
 -- Table structure for table `tb_users`
 --
 
-CREATE TABLE `tb_users` (
-  `fd_user_id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `tb_users`;
+CREATE TABLE IF NOT EXISTS `tb_users` (
+  `fd_user_id` int(11) NOT NULL AUTO_INCREMENT,
   `fd_first_name` varchar(128) NOT NULL,
   `fd_last_name` varchar(128) NOT NULL,
   `fd_username` varchar(128) NOT NULL,
   `fd_password` char(60) NOT NULL,
-  `fd_role` varchar(128) NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+  `fd_role` varchar(128) NOT NULL,
+  PRIMARY KEY (`fd_user_id`)
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `tb_users`
@@ -397,103 +741,8 @@ CREATE TABLE `tb_users` (
 
 INSERT INTO `tb_users` (`fd_user_id`, `fd_first_name`, `fd_last_name`, `fd_username`, `fd_password`, `fd_role`) VALUES
 (1, 'Admin', 'Admin', 'admin', '$2y$10$YhFDxAv/cZHNrtYHoi2vvuCzmV/1WUmloRIc.H0bG7EKeD2QvnJ.K', 'Administrator');
+COMMIT;
 
---
--- Indexes for dumped tables
---
-
---
--- Indexes for table `tb_inwards`
---
-ALTER TABLE `tb_inwards`
-  ADD PRIMARY KEY (`fd_inward_id`);
-
---
--- Indexes for table `tb_items`
---
-ALTER TABLE `tb_items`
-  ADD PRIMARY KEY (`fd_item_id`);
-
---
--- Indexes for table `tb_item_manufacturers`
---
-ALTER TABLE `tb_item_manufacturers`
-  ADD PRIMARY KEY (`fd_item_manufacturer_id`);
-
---
--- Indexes for table `tb_item_types`
---
-ALTER TABLE `tb_item_types`
-  ADD PRIMARY KEY (`fd_item_type_id`);
-
---
--- Indexes for table `tb_outwards`
---
-ALTER TABLE `tb_outwards`
-  ADD PRIMARY KEY (`fd_outward_id`);
-
---
--- Indexes for table `tb_serial_numbers`
---
-ALTER TABLE `tb_serial_numbers`
-  ADD PRIMARY KEY (`fd_serial_number_id`);
-
---
--- Indexes for table `tb_stations`
---
-ALTER TABLE `tb_stations`
-  ADD PRIMARY KEY (`fd_station_id`);
-
---
--- Indexes for table `tb_users`
---
-ALTER TABLE `tb_users`
-  ADD PRIMARY KEY (`fd_user_id`);
-
---
--- AUTO_INCREMENT for dumped tables
---
-
---
--- AUTO_INCREMENT for table `tb_inwards`
---
-ALTER TABLE `tb_inwards`
-  MODIFY `fd_inward_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
---
--- AUTO_INCREMENT for table `tb_items`
---
-ALTER TABLE `tb_items`
-  MODIFY `fd_item_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
---
--- AUTO_INCREMENT for table `tb_item_manufacturers`
---
-ALTER TABLE `tb_item_manufacturers`
-  MODIFY `fd_item_manufacturer_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
---
--- AUTO_INCREMENT for table `tb_item_types`
---
-ALTER TABLE `tb_item_types`
-  MODIFY `fd_item_type_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
---
--- AUTO_INCREMENT for table `tb_outwards`
---
-ALTER TABLE `tb_outwards`
-  MODIFY `fd_outward_id` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT for table `tb_serial_numbers`
---
-ALTER TABLE `tb_serial_numbers`
-  MODIFY `fd_serial_number_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=74;
---
--- AUTO_INCREMENT for table `tb_stations`
---
-ALTER TABLE `tb_stations`
-  MODIFY `fd_station_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=84;
---
--- AUTO_INCREMENT for table `tb_users`
---
-ALTER TABLE `tb_users`
-  MODIFY `fd_user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
