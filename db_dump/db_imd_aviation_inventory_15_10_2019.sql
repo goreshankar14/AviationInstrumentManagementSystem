@@ -274,7 +274,7 @@ INSERT INTO `tb_item_types` (`fd_item_type_id`, `fd_item_id`, `fd_type`, `fd_dir
 (20, 10, 'AT/RH', 1),
 (21, 34, 'ENH202', 1);
 
--- --------------------------------------------------------
+-- ---------------------------------------------------
 
 --
 -- Table structure for table `tb_outwards`
