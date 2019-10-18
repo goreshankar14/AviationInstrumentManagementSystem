@@ -1,6 +1,6 @@
 $(document).ready(function(){
   $.ajax({
-    url: "http://localhost/Scripts/GitHub/imd-aviation-inventory/assets/php/data-for-inward-graph-itemwise.php",
+    url: "assets/php/data-for-inward-graph-itemwise.php",
     method: "GET",
     success: function(data) {
       console.log(data);

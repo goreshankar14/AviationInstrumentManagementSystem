@@ -20,20 +20,20 @@ if (isset ($_SESSION['session_user_id']) && isset ($_POST['tx_date']) && isset (
 	if ($result) {
 		$serial_numbers = array ();
 		
-		$count_result_row = mysqli_fetch_row (mysqli_query ($conn, "SELECT count(fd_serial_number_id) FROM tb_serial_numbers WHERE fd_transaction_id = ".$lc_inward_id." AND fd_transaction_type = 'I';"));
+		$count_result_row = mysqli_fetch_row (mysqli_query ($conn, "SELECT count(fd_inward_serial_number_id) FROM tb_inward_serial_numbers WHERE fd_inward_id = ".$lc_inward_id.";"));
 		$db_count = $count_result_row[0];
 		$post_count = count ($_POST['tx_serial_number']);
 		
-		$result_set = mysqli_query ($conn, "SELECT fd_serial_number_id FROM tb_serial_numbers WHERE fd_transaction_id = ".$lc_inward_id." AND fd_transaction_type = 'I';");
+		$result_set = mysqli_query ($conn, "SELECT fd_serial_number_id FROM tb_inward_serial_numbers WHERE fd_inward_id = ".$lc_inward_id.";");
 		
 		for ($i = 0; $i < $post_count AND $i < $db_count; $i++) {
 			$result_row = mysqli_fetch_row ($result_set);
 			$lc_serial_number = mysqli_real_escape_string ($conn, trim ($_POST['tx_serial_number'][$i]));
-			mysqli_query ($conn, "UPDATE tb_serial_numbers SET fd_serial_number = '".$lc_serial_number."' WHERE fd_serial_number_id = ".$result_row[0].";");
+			mysqli_query ($conn, "UPDATE tb_inward_serial_numbers SET fd_serial_number = '".$lc_serial_number."' WHERE fd_inward_serial_number_id = ".$result_row[0].";");
 			$serial_numbers[] = $lc_serial_number;
 		}
 		
-		$multi_query = "INSERT INTO tb_serial_numbers (fd_serial_number_id, fd_transaction_id, fd_transaction_type, fd_serial_number) VALUES";
+		$multi_query = "INSERT INTO tb_inward_serial_numbers (fd_inward_serial_number_id, fd_inward_id, fd_serial_number) VALUES";
 		for ($i = $db_count; $i < $post_count; $i++) {
 			$lc_serial_number = mysqli_real_escape_string ($conn, trim ($_POST['tx_serial_number'][$i]));
 			$multi_query .= "(NULL, ".$lc_inward_id.", 'I', '".$lc_serial_number."'),";
@@ -44,7 +44,7 @@ if (isset ($_SESSION['session_user_id']) && isset ($_POST['tx_date']) && isset (
 		
 		for ($i = $post_count; $i < $db_count; $i++) {
 			$result_row = mysqli_fetch_row ($result_set);
-			mysqli_query ($conn, "DELETE FROM tb_serial_numbers WHERE fd_serial_number_id = ".$result_row[0].";");
+			mysqli_query ($conn, "DELETE FROM tb_inward_serial_numbers WHERE fd_inward_serial_number_id = ".$result_row[0].";");
 		}
 		
 		$item_result_row = mysqli_fetch_row (mysqli_query ($conn, "SELECT fd_name FROM tb_items WHERE fd_item_id = ".$lc_item_id.";"));

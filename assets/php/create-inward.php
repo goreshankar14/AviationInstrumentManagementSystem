@@ -20,10 +20,10 @@ if (isset ($_SESSION['session_user_id']) && isset ($_POST['tx_date']) && isset (
 		$lc_inward_id = mysqli_insert_id ($conn); 
 		$serial_numbers = array ();
 		
-		$multi_query = "INSERT INTO tb_serial_numbers (fd_serial_number_id, fd_transaction_id, fd_transaction_type, fd_serial_number) VALUES";
+		$multi_query = "INSERT INTO tb_inward_serial_numbers (fd_inward_serial_number_id, fd_inward_id, fd_serial_number) VALUES";
 		for ($i = 0; $i < count ($_POST['tx_serial_number']); $i++) {
 			$lc_serial_number = mysqli_real_escape_string ($conn, trim ($_POST['tx_serial_number'][$i]));
-			$multi_query .= "(NULL, ".$lc_inward_id.", 'I', '".$lc_serial_number."'),";
+			$multi_query .= "(NULL, ".$lc_inward_id.", '".$lc_serial_number."'),";
 			$serial_numbers [] = $lc_serial_number;
 		}
 		$multi_query = substr_replace ($multi_query, ";", -1);

@@ -2,7 +2,7 @@
 session_start ();
 require_once ("connect-database.php");
 
-if (isset ($_SESSION['session_user_id']) && isset ($_POST['tx_date']) && isset ($_POST['station_id']) && isset ($_POST['item_id']) && isset ($_POST['tx_quantity']) && isset ($_POST['tx_serial_number']) && isset ($_POST['tx_mode_of_dispatch']) && isset ($_POST['tx_remarks']) && isset ($_POST['outward_id'])) {
+if (isset ($_SESSION['session_user_id']) && isset ($_POST['tx_date']) && isset ($_POST['station_id']) && isset ($_POST['item_id']) && isset ($_POST['tx_quantity']) && isset ($_POST['inward_serial_number_id']) && isset ($_POST['tx_mode_of_dispatch']) && isset ($_POST['tx_remarks']) && isset ($_POST['outward_id'])) {
 	$lc_outward_id = mysqli_real_escape_string ($conn, trim ($_POST['outward_id']));
 	$lc_date = date ("Y-m-d", strtotime ($_POST['tx_date']));
 	$lc_station_id = mysqli_real_escape_string ($conn, trim ($_POST['station_id']));
@@ -19,31 +19,33 @@ if (isset ($_SESSION['session_user_id']) && isset ($_POST['tx_date']) && isset (
 	if ($result) {
 		$serial_numbers = array ();
 		
-		$count_result_row = mysqli_fetch_row (mysqli_query ($conn, "SELECT count(fd_serial_number_id) FROM tb_serial_numbers WHERE fd_transaction_id = ".$lc_outward_id." AND fd_transaction_type = 'O';"));
+		$count_result_row = mysqli_fetch_row (mysqli_query ($conn, "SELECT count(fd_outward_serial_number_id) FROM tb_outward_serial_numbers WHERE fd_outward_id = ".$lc_outward_id.";"));
 		$db_count = $count_result_row[0];
-		$post_count = count ($_POST['tx_serial_number']);
+		$post_count = count ($_POST['inward_serial_number_id']);
 		
-		$result_set = mysqli_query ($conn, "SELECT fd_serial_number_id FROM tb_serial_numbers WHERE fd_transaction_id = ".$lc_outward_id." AND fd_transaction_type = 'O';");
+		$result_set = mysqli_query ($conn, "SELECT fd_outward_serial_number_id FROM tb_outward_serial_numbers WHERE fd_outward_id = ".$lc_outward_id.";");
 		
 		for ($i = 0; $i < $post_count AND $i < $db_count; $i++) {
 			$result_row = mysqli_fetch_row ($result_set);
-			$lc_serial_number = mysqli_real_escape_string ($conn, trim ($_POST['tx_serial_number'][$i]));
-			mysqli_query ($conn, "UPDATE tb_serial_numbers SET fd_serial_number = '".$lc_serial_number."' WHERE fd_serial_number_id = ".$result_row[0].";");
-			$serial_numbers[] = $lc_serial_number;
+			$lc_inward_serial_number_id = mysqli_real_escape_string ($conn, trim ($_POST['inward_serial_number_id'][$i]));
+			mysqli_query ($conn, "UPDATE tb_outward_serial_numbers SET fd_inward_serial_number_id = ".$lc_inward_serial_number_id." WHERE fd_outward_serial_number_id = ".$result_row[0].";");
+			$serial_numbers_result_array = mysqli_fetch_array (mysqli_query ($conn, "SELECT fd_serial_number FROM tb_inward_serial_numbers WHERE fd_inward_serial_number_id = ".$lc_inward_serial_number_id.";"));
+			$serial_numbers [] = $serial_numbers_result_array['fd_serial_number'];
 		}
 		
-		$multi_query = "INSERT INTO tb_serial_numbers (fd_serial_number_id, fd_transaction_id, fd_transaction_type, fd_serial_number) VALUES";
+		$multi_query = "INSERT INTO tb_outward_serial_numbers (fd_outward_serial_number_id, fd_outward_id, fd_inward_serial_number_id) VALUES";
 		for ($i = $db_count; $i < $post_count; $i++) {
-			$lc_serial_number = mysqli_real_escape_string ($conn, trim ($_POST['tx_serial_number'][$i]));
-			$multi_query .= "(NULL, ".$lc_outward_id.", 'O', '".$lc_serial_number."'),";
-			$serial_numbers [] = $lc_serial_number;
+			$lc_inward_serial_number_id = mysqli_real_escape_string ($conn, trim ($_POST['inward_serial_number_id'][$i]));
+			$multi_query .= "(NULL, ".$lc_outward_id.", 'O', ".$lc_inward_serial_number_id."),";
+			$serial_numbers_result_array = mysqli_fetch_array (mysqli_query ($conn, "SELECT fd_serial_number FROM tb_inward_serial_numbers WHERE fd_inward_serial_number_id = ".$lc_inward_serial_number_id.";"));
+			$serial_numbers [] = $serial_numbers_result_array['fd_serial_number'];
 		}
 		$multi_query = substr_replace ($multi_query, ";", -1);
 		mysqli_query ($conn, $multi_query);
 		
 		for ($i = $post_count; $i < $db_count; $i++) {
 			$result_row = mysqli_fetch_row ($result_set);
-			mysqli_query ($conn, "DELETE FROM tb_serial_numbers WHERE fd_serial_number_id = ".$result_row[0].";");
+			mysqli_query ($conn, "DELETE FROM tb_outward_serial_numbers WHERE fd_outward_serial_number_id = ".$result_row[0].";");
 		}
 		
 		$item_result_row = mysqli_fetch_row (mysqli_query ($conn, "SELECT fd_name FROM tb_items WHERE fd_item_id = ".$lc_item_id.";"));

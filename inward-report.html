@@ -7,7 +7,7 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>Inwards | IMD Aviation Inventory</title>
+        <title>Inward Report | IMD Aviation Inventory</title>
         <!-- Tell the browser to be responsive to screen width -->
         <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
         <link rel="stylesheet" href="assets/bower_components/bootstrap/dist/css/bootstrap.min.css">
@@ -19,8 +19,8 @@
         <link rel="stylesheet" href="assets/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css">
 		<!-- Select2 -->
   		<link rel="stylesheet" href="assets/bower_components/select2/dist/css/select2.min.css">
-		<!-- bootstrap datepicker -->
-		<link rel="stylesheet" href="assets/bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css">
+        <!-- daterange picker -->
+		<link rel="stylesheet" href="assets/bower_components/bootstrap-daterangepicker/daterangepicker.css">
         <!-- Theme style -->
         <link rel="stylesheet" href="assets/css/AdminLTE.min.css">
         <!-- AdminLTE Skins. We have chosen the skin-blue for this starter
@@ -39,26 +39,6 @@
 		<style>
 			.select2-container { 
 				width: 100% !important; 
-			}
-			.table.mb-0 {
-				margin-bottom: 0 !important;
-			}
-			.table-minimal {
-				margin: 0;
-				width: 100%;
-			}
-			.table-minimal.mb-8 {
-				margin-bottom: 8px;
-			}
-			.table-minimal tbody tr td {
-				padding-bottom: 8px;
-				padding-right: 8px;
-			}			
-			.table-minimal tbody tr td:last-child {
-				padding-right: 0;
-			}			
-			.table-minimal tbody tr:last-child td {
-				padding-bottom: 0;
 			}
 		</style>
     </head>
@@ -113,19 +93,19 @@
                     <ul class="sidebar-menu" data-widget="tree">
                         <li class="header">MENU</li>
                         <!-- Optionally, you can add icons to the links -->
-                        <li><a href="#"><i class="fa fa-bar-chart"></i> <span>Dashboard</span></a></li>
-                        <li ><a href="stations.html"><i class="fa fa-plane"></i> <span>Stations</span></a></li>
+                         <li><a href="#"><i class="fa fa-bar-chart"></i> <span>Dashboard</span></a></li>
+                        <li><a href="stations.html"><i class="fa fa-plane"></i> <span>Stations</span></a></li>
                         <li><a href="items.html"><i class="fa fa-cart-plus"></i> <span>Items</span></a></li>
-                         <li class="active"><a href="inwards.html"><i class="fa fa-cloud-download"></i> <span>Inwards</span></a></li>
+                         <li><a href="inwards.html"><i class="fa fa-cloud-download"></i> <span>Inwards</span></a></li>
                         <li><a href="outwards.html"><i class="fa fa-cloud-upload"></i> <span>Outwards</span></a></li>
-                        <li class="treeview">
-                            <a href="report.html"><i class="fa fa-book"></i> <span>Reports</span>
+                        <li class="treeview active">
+                            <a><i class="fa fa-book"></i> <span>Reports</span>
                             <span class="pull-right-container">
                             <i class="fa fa-angle-left pull-right"></i>
                             </span>
                             </a>
                             <ul class="treeview-menu">
-                                <li><a href="report.html">Inwards</a></li>
+                                <li class="active"><a href="report.html">Inwards</a></li>
                                 <li><a href="#">Outwards</a></li>
                                 <li><a href="#">Stock</a></li>
                             </ul>
@@ -139,12 +119,11 @@
             <div class="content-wrapper">
                 <!-- Content Header (Page header) -->
                 <section class="content-header">
-                    <h1>Inwards
-                        <small>Create, Update, Read and Delete</small>
+                    <h1>Inward Report
                     </h1>
                     <ol class="breadcrumb">
                         <li><a href="#"><i class="fa fa-dashboard"></i> Dashboard</a></li>
-                        <li class="active">Inwards</li>
+                        <li class="active">Report</li>
                     </ol>
                 </section>
                 <!-- Main content -->
@@ -157,30 +136,27 @@
                             <h3 class="box-title">Form</h3>
                         </div>
                         <!-- /.box-header -->
-                        <!-- form start -->
-                        <form role="form" id="fm_inward" method="post" action="">
+						<!-- form start -->
+                        <form role="form" id="fm_inward_report" method="post" action="">
                             <div class="box-body">
 								<div class="col-md-12">
 									<div id="callout_block_form" class="col-md-12"></div>
 									<table class='table table-bordered mb-0'>
 										<thead>
 											<tr>
-												<th>Date</th>
+												<th>Date (MM/DD/YYYY)</th>
 												<th>Station</th>
 												<th>Item</th>
-												<th>Quantity</th>
-												<th>Serial Numbers</th>
-												<th>Notes</th>
 											</tr>
 										</thead>
 										<tbody>
 											<tr>
 												<td class="td-group">
-													<div class="input-group date">
+													<div class="input-group">
 														<div class="input-group-addon">
 															<i class="fa fa-calendar"></i>
 														</div>
-														<input autocomplete="off" type="text" class="form-control pull-right" name="tx_date" id="datepicker"/>
+														<input type="text" class="form-control pull-right" id="datepicker" name="tx_date">
 													</div>
 													<!-- /.input group -->
 												</td>
@@ -191,86 +167,12 @@
 														</select>
 													</div>
 												</td>
-												<td>
-													<table class='table mb-0 table-bordered'>
-														<tbody>
-															<tr>
-																<th scope="row">Name</th>
-																<td class="td-group">
-																	<div class="select2-group">
-																		<select class="form-control select2" id="s2_item" name="item_id">
-																			<option value=""></option>
-																		</select>
-																	</div>
-																</td>
-															</tr>
-															<tr>
-																<th scope="row">Type</th>
-																<td class="td-group">
-																	<div class="select2-group">
-																		<select class="form-control select2" id="s2_item_type"  name="item_type_id">
-																			<option value=""></option>
-																		</select>
-																	</div>
-																</td>
-															</tr>
-															<tr>
-																<th scope="row">Manufacturer</th>
-																<td class="td-group">
-																	<div class="select2-group">
-																		<select class="form-control select2" id="s2_item_manufacturer" name="item_manufacturer_id">
-																			<option value=""></option>
-																		</select>
-																	</div>
-																</td>
-															</tr>
-														</tbody>
-													</table>
-												</td>
 												<td class="td-group">
-													<input type="text" value="1" class="form-control pull-right" name="tx_quantity"/>
-												</td>
-												<td>
-													<table id="tb_inward_serial_numbers" class="table-minimal">
-														<tbody>
-															<tr>
-																<td>
-																	<input type="text" class="form-control pull-right" name="tx_serial_number[]"/>
-																</td>
-															</tr>
-														</tbody>
-													</table>
-												</td>
-												<td>
-													<table class='table mb-0 table-bordered'>
-														<tbody>
-															<tr>
-																<th scope="row">Rate</th>
-																<td class="td-group">
-																	<input type="text" value="0.0" class="form-control pull-right" name="tx_rate"/>
-																</td>
-															</tr>
-															<tr>
-																<th scope="row">Mode of Receiving</th>
-																<td class="td-group">
-																	<div class="select2-group">
-																		<select class="form-control select2" id="s2_mode_of_receiving" name="tx_mode_of_receiving">
-																			<option value=""></option>
-																			<option value="By Hand">By Hand</option>
-																			<option value="By Speed Post">By Speed Post</option>
-																			<option value="By Post">By Post</option>
-																		</select>
-																	</div>
-																</td>
-															</tr>
-															<tr>
-																<th scope="row">Remarks</th>
-																<td class="td-group">
-																	<textarea placeholder="Enter Remarks" class="form-control" name="tx_remarks"></textarea>
-																</td>
-															</tr>
-														</tbody>
-													</table>
+													<div class="select2-group">
+														<select class="form-control select2" id="s2_item" name="item_id">
+															<option value=""></option>
+														</select>
+													</div>
 												</td>
 											</tr>
 										</tbody>
@@ -280,12 +182,13 @@
                             <!-- /.box-body -->
                             <div class="box-footer">
 								<input type="hidden" name="inward_id" value=""/>
-                                <button id="bt_save" type="submit" class="btn btn-primary pull-right">Save</button>
+                                <button id="bt_filter" type="submit" class="btn btn-primary pull-right">Filter</button>
                             </div>
                         </form>
                     </div>
+                    
                     <!-- /.box -->
-                    <div class="box" id="dv_datatable">
+					<div class="box" id="dv_datatable">
                         <div class="box-header">
                             <h3 class="box-title">List</h3>
                         </div>
@@ -349,8 +252,9 @@
 		<!-- DataTables -->
         <script src="assets/bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
         <script src="assets/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
-		<!-- bootstrap datepicker -->
-		<script src="assets/bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
+		<!-- date-range-picker -->
+		<script src="assets/bower_components/moment/min/moment.min.js"></script>
+		<script src="assets/bower_components/bootstrap-daterangepicker/daterangepicker.js"></script>
 		<!-- SlimScroll -->
 		<script src="assets/bower_components/jquery-slimscroll/jquery.slimscroll.min.js"></script>
 		<!-- FastClick -->
@@ -369,138 +273,23 @@
             			var result_object = JSON.parse (result);
             			if (result_object.target === 'login.html')
             				window.location.href = result_object.target;
-            			read_inwards ();
+            			
             		}
-            	});				
+            	});
 				
+                $('#datepicker').daterangepicker();
 				$('#dt_inwards').DataTable ();
-				
-				$('#datepicker').datepicker ({
-					autoclose: true,
-					orientation: 'bottom'
-				});
-				
+				read_inwards ();
 				$('#s2_station').select2 ({
 					placeholder: 'Select Station'
 				});
-				
-				$.ajax ({
-					type: 'POST',
-					url: 'assets/php/read-stations.php',
-					success: function (result) {
-						var result_object = JSON.parse (result);
-						console.log (result_object);
-						$("#s2_station").append (new Option ("", ""));
-						for (var i = 0; i < result_object.count; i++) {
-							var new_station = new Option (result_object.stations[i].name, result_object.stations[i].station_id);
-							$("#s2_station").append (new_station);
-						}
-					}
-				});
-				
-				$('#s2_mode_of_receiving').select2 ({
-					placeholder: 'Select'
-				});
-				
-				$('#s2_item').select2 ({
+				read_stations ();
+                $('#s2_item').select2 ({
 					placeholder: 'Select Item'
 				});
 				read_items ();
 				
-				$('#s2_item_type').select2 ({
-					placeholder: 'Select Type'
-				});	
-				
-				$('#s2_item_manufacturer').select2 ({
-					placeholder: 'Select Manufacturer'
-				});	
-				
-				$('#s2_item').on ('select2:select', function (e) {
-					var data = e.params.data;
-					console.log (data);
-					read_item_details (data.id);					
-				});
-				
-				$('input[name=tx_quantity]').change (function () {
-					var qty = $('input[name=tx_quantity]').val ();
-					var sr = $("#tb_inward_serial_numbers tbody tr").length;
-					if (qty == 0)
-						return false;
-					if (qty > sr) {
-						for (var i = 1; i <= qty - sr; i++) {
-							$("#tb_inward_serial_numbers tbody").append ('<tr><td><input type="text" class="form-control pull-right" name="tx_serial_number[]"/></td></tr>');	
-						}
-					} else if (sr > qty) {
-						for (var i = 1; i <= sr - qty; i++) {
-							$("#tb_inward_serial_numbers tbody tr:last").remove ();
-						}
-					}
-				});
-				
-				$(document).on ("click", ".bt_edit", function (e) {
-					e.preventDefault ();
-					$.ajax ({
-						type: 'POST',
-						url: 'assets/php/read-inwards.php',
-						data: {inward_id: $(this).data ('inward_id')},
-						success: function (result) {
-							var result_object = JSON.parse (result);
-							if (typeof result_object.error === 'undefined') {
-								console.log (result_object.inwards);
-								var inward = result_object.inwards[0];
-								$('#datepicker').datepicker ("update", new Date (inward.date));
-								$("#s2_station").val (inward.station_id).trigger ("change");
-								$("input[name=inward_id]").val (inward.inward_id);
-								$("#s2_item").val (inward.item_id).trigger ("change");
-								read_item_details (inward.item_id, inward.item_type_id, inward.item_manufacturer_id);
-								$("input[name=tx_quantity]").val (inward.quantity);
-								$("input[name=tx_rate]").val (inward.rate);
-								$("#s2_mode_of_receiving").val (inward.mode_of_receiving).trigger ("change");
-								$("textarea[name=tx_remarks]").html (inward.remarks);
-								$("#tb_inward_serial_numbers tbody").empty ();
-								for (var i = 0; i < inward.serial_numbers_count; i++) {
-									var markup = '<tr><td><input type="text" class="form-control pull-right" name="tx_serial_number[]" value="'+inward.serial_numbers[i]+'"/></td></tr>';
-									$("#tb_inward_serial_numbers tbody").append (markup);
-								}						
-								$('html, body').animate ({
-									scrollTop: $("#dv_form").offset ().top
-								}, 500);	
-							} else {
-								$("#callout_block_datatable").fadeIn (1000, function () {
-									$("#callout_block_datatable").html ('<div class="callout callout-danger"><h4>Failed!</h4><p>' + result_object.error + '</p></div>');
-								});
-							}
-						}
-					});
-				});
-				
-				$(document).on ("click", ".bt_delete", function (e) {
-					e.preventDefault ();
-					var lc_inward_id = $(this).data ('inward_id');
-					if (confirm ("Do you really want to delete Inward #" + lc_inward_id + "?")) {
-						$.ajax ({
-							type: 'POST',
-							url: 'assets/php/delete-inward.php',
-							data: {inward_id: lc_inward_id},
-							success: function (result) {
-								var result_object = JSON.parse (result);
-								if (typeof result_object.error === 'undefined') {
-									$("#callout_block_datatable").fadeIn (1000, function () {
-										$("#callout_block_datatable").html ('<div class="callout callout-success"><h4>Success!</h4><p>' + result_object.success + '</p></div>');
-										console.log ($(".bt_delete[data-inward_id=" + lc_inward_id + "]").parents ('tr'));
-										$('#dt_inwards').DataTable ().row ($(".bt_delete[data-inward_id=" + lc_inward_id + "]").parents ('tr')).remove ().draw ();
-									});
-								} else {
-									$("#callout_block_datatable").fadeIn (1000, function () {
-										$("#callout_block_datatable").html ('<div class="callout callout-danger"><h4>Failed!</h4><p>' + result_object.error + '</p></div>');
-									});
-								}
-							}
-						});
-					}
-				});
-				
-				$('#fm_inward').validate ({
+				$('#fm_inward_report').validate ({
             		highlight: function (element) {
 						$(element).closest('.td-group').addClass('has-error');
             		},
@@ -519,67 +308,28 @@
             			}
             		},
             		rules: {
-            			tx_date: {
-            				required: true
-            			},						
-            			station_id: {
-            				required: true
-            			},
-						item_id: {
-							required: true
-						},
-						tx_rate: {
-							required: true,
-							number: true,
-							min: 0.0
-						},
-						tx_quantity: {
-							required: true,
-							min: 1,
-							digits: true
-						}
             		},
             		submitHandler: submit_form
             	});
 				
             	function submit_form () {
-					if ($("input[name=inward_id]").val () == "") {
-						create_inward ();
-					} else {
-						update_inward ();
-					}            		 
-            	}
-				
-				function create_inward () {
-					var data = $('#fm_inward').serialize ();
+					var data = $('#fm_inward_report').serialize ();
 					$.ajax ({
 						type: 'POST',
-						url: 'assets/php/create-inward.php',
 						data: data,
-						beforeSend: function () {
-							$('#bt_save').prop ("disabled", true);
-							$('#bt_save').html ("<i class='fa fa-spinner fa-spin'></i> Processing...");
-							$("#callout_block_form").fadeOut (1000, function () {
-								$("#callout_block_form").html ("");
-							});
-						},
-						success: function (result) {
-							var result_object = JSON.parse (result);
-							if (typeof result_object.success !== 'undefined') {
-								$("#callout_block_datatable").fadeIn (1000, function () {
-									$("#callout_block_datatable").html ('<div class="callout callout-success"><h4>Success!</h4><p>' + result_object.success + '</p></div>');
-									$('#bt_save').prop ("disabled", false);
-									$('#bt_save').html ("Save");
-									$('html, body').animate ({
-										scrollTop: $("#dv_datatable").offset ().top
-									}, 500);									
-									console.log (result_object.inward);
-									var inward = result_object.inward;
+            			url: 'assets/php/filter-inwards.php',
+            			success: function (result) {
+            				var result_object = JSON.parse (result);
+            				if (typeof result_object.error === 'undefined') {
+            					console.log (result_object);
+								$('#dt_inwards').DataTable ().clear ().draw ();
+            					for (var i = 0; i < result_object.count; i++) {
+            						var inward = result_object.inwards[i];
 									var markup = "<table class='table mb-0 table-bordered'><tbody><tr><th scope='row'>Name</th><td>"+inward.item+"</td></tr><tr><th scope='row'>Type</th><td>"+inward.item_type+"</td></tr><tr><th scope='row'>Manufacturer</th><td>"+inward.item_manufacturer+"</td></tr></tbody></table>";
 									
 									var markup2 = "<table class='table mb-0 table-bordered'><tbody>";
-									for (var i = 0; i < inward.serial_numbers_count; i++) {
-										markup2 += "<tr><td>"+inward.serial_numbers[i]+"</td></tr>";
+									for (var j = 0; j < inward.serial_numbers_count; j++) {
+										markup2 += "<tr><td>"+inward.serial_numbers[j]+"</td></tr>";
 									}
 									markup2 += "</tbody></table>";
 									
@@ -595,79 +345,16 @@
 										markup3,
             							inward.action
 									]).draw (false);
-								});
-							} else {
-								$("#callout_block_form").fadeIn (1000, function () {
-									$("#callout_block_form").html ('<div class="callout callout-danger"><h4>Failed!</h4><p>' + result_object.error + '</p></div>');
-									$('#bt_save').prop ("disabled", false);
-									$('#bt_save').html ("Save");
-								});
-							}
-						}
+									$('#dt_inwards').DataTable ().order ([0, 'desc']).draw ();
+            					}
+            				} else {
+            					$("#callout_block_datatable").fadeIn (1000, function () {
+            						$("#callout_block_datatable").html ('<div class="callout callout-danger"><h4>Failed!</h4><p>' + result_object.error + '</p></div>');
+            					});
+            				}
+            			}
 					});
-				}
-				
-				function update_inward () {
-					var data = $('#fm_inward').serialize ();
-					$.ajax ({
-						type: 'POST',
-						url: 'assets/php/update-inward.php',
-						data: data,
-						beforeSend: function () {
-							$('#bt_save').prop ("disabled", true);
-							$('#bt_save').html ("<i class='fa fa-spinner fa-spin'></i> Processing...");
-							$("#callout_block_form").fadeOut (1000, function () {
-								$("#callout_block_form").html ("");
-							});
-						},
-						success: function (result) {
-							var result_object = JSON.parse (result);
-							if (typeof result_object.success !== 'undefined') {
-								$("#callout_block_datatable").fadeIn (1000, function () {
-									$("#callout_block_datatable").html ('<div class="callout callout-success"><h4>Success!</h4><p>' + result_object.success + '</p></div>');
-									$('#bt_save').prop ("disabled", false);
-									$('#bt_save').html ("Save");
-									$('input[name=inward_id]').val ("");
-									$('html, body').animate ({
-										scrollTop: $("#dv_datatable").offset ().top
-									}, 500);									
-									console.log (result_object.inward);
-									var inward = result_object.inward;
-									var markup = "<table class='table mb-0 table-bordered'><tbody><tr><th scope='row'>Name</th><td>"+inward.item+"</td></tr><tr><th scope='row'>Type</th><td>"+inward.item_type+"</td></tr><tr><th scope='row'>Manufacturer</th><td>"+inward.item_manufacturer+"</td></tr></tbody></table>";
-									
-									var markup2 = "<table class='table mb-0 table-bordered'><tbody>";
-									for (var i = 0; i < inward.serial_numbers_count; i++) {
-										markup2 += "<tr><td>"+inward.serial_numbers[i]+"</td></tr>";
-									}
-									markup2 += "</tbody></table>";
-									
-									var markup3 = "<table class='table mb-0 table-bordered'><tbody><tr><th scope='row'>Rate</th><td>"+inward.rate+"</td></tr><tr><th scope='row'>Mode of Receiving</th><td>"+inward.mode_of_receiving+"</td></tr><tr><th scope='row'>Remarks</th><td>"+inward.remarks+"</td></tr></tbody></table>";
-									
-									$('#dt_inwards').DataTable ().row ($(".bt_edit[data-inward_id=" + inward.inward_id + "]").parents ('tr')).data ([
-										inward.inward_id,
-										inward.date,
-										inward.station,
-										markup,
-										inward.quantity,
-										markup2,
-										markup3,
-            							inward.action
-									]).draw (false);
-								});
-							} else {
-								$("#callout_block_datatable").fadeIn (1000, function () {
-									$("#callout_block_datatable").html ('<div class="callout callout-danger"><h4>Failed!</h4><p>' + result_object.error + '</p></div>');
-									$('#bt_save').prop ("disabled", false);
-									$('#bt_save').html ("Save");
-									$('input[name=inward_id]').val ("");
-									$('html, body').animate ({
-										scrollTop: $("#dv_datatable").offset ().top
-									}, 500);									
-								});
-							}
-						}
-					});
-				}
+            	}
 				
 				function read_inwards () {
             		$.ajax ({
@@ -717,7 +404,7 @@
 						success: function (result) {
 							var result_object = JSON.parse (result);
 							console.log (result_object);
-							$("#s2_item").append (new Option ("", ""));
+							$("#s2_item").append (new Option ("All", "0"));
 							for (var i = 0; i < result_object.count; i++) {
 								var new_item = new Option (result_object.items[i].name, result_object.items[i].item_id);
 								$('#s2_item').append (new_item);
@@ -726,40 +413,22 @@
 					});
 				}
 				
-				function read_item_details (item_id, item_type_id = 0, item_manufacturer_id = 0) {
-					$('#s2_item_type').empty ();
-					$("#s2_item_type").append (new Option ("", "", true, true));
-					$('#s2_item_manufacturer').empty ();
-					$("#s2_item_manufacturer").append (new Option ("", "", true, true));
+				function read_stations () {
 					$.ajax ({
 						type: 'POST',
-						url: 'assets/php/read-item-types.php',
-						data:{item_id: item_id},
+						url: 'assets/php/read-stations.php',
 						success: function (result) {
 							var result_object = JSON.parse (result);
 							console.log (result_object);
+							$("#s2_station").append (new Option ("All", "0"));
 							for (var i = 0; i < result_object.count; i++) {
-								var new_item_type = new Option (result_object.types[i].type, result_object.types[i].type_id);
-								$('#s2_item_type').append (new_item_type);
+								var new_station = new Option (result_object.stations[i].name, result_object.stations[i].station_id);
+								$("#s2_station").append (new_station);
 							}
-							$("#s2_item_type").val (item_type_id).trigger ("change");
 						}
-					});
-					$.ajax ({
-						type: 'POST',
-						url: 'assets/php/read-item-manufacturers.php',
-						data:{item_id: item_id},
-						success: function (result) {
-							var result_object = JSON.parse (result);
-							console.log (result_object);
-							for (var i = 0; i < result_object.count; i++) {
-								var new_item_manufacturer = new Option (result_object.manufacturers[i].manufacturer, result_object.manufacturers[i].manufacturer_id);
-								$('#s2_item_manufacturer').append (new_item_manufacturer);
-							}
-							$("#s2_item_manufacturer").val (item_manufacturer_id).trigger ("change");
-						}
-					});
+				});
 				}
+				
 			});
 		</script>
     </body>

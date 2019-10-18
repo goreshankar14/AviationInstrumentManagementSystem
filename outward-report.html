@@ -7,7 +7,7 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>Report | IMD Aviation Inventory</title>
+        <title>Outward Report | IMD Aviation Inventory</title>
         <!-- Tell the browser to be responsive to screen width -->
         <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
         <link rel="stylesheet" href="assets/bower_components/bootstrap/dist/css/bootstrap.min.css">
@@ -20,9 +20,7 @@
 		<!-- Select2 -->
   		<link rel="stylesheet" href="assets/bower_components/select2/dist/css/select2.min.css">
         <!-- daterange picker -->
-  <link rel="stylesheet" href="assets/bower_components/bootstrap-daterangepicker/daterangepicker.css">
-		<!-- bootstrap datepicker -->
-		<link rel="stylesheet" href="assets/bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css">
+		<link rel="stylesheet" href="assets/bower_components/bootstrap-daterangepicker/daterangepicker.css">
         <!-- Theme style -->
         <link rel="stylesheet" href="assets/css/AdminLTE.min.css">
         <!-- AdminLTE Skins. We have chosen the skin-blue for this starter
@@ -38,6 +36,11 @@
         <!-- Google Font -->
         <link rel="stylesheet"
             href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+		<style>
+			.select2-container { 
+				width: 100% !important; 
+			}
+		</style>
     </head>
     <!--
         BODY TAG OPTIONS:
@@ -102,8 +105,8 @@
                             </span>
                             </a>
                             <ul class="treeview-menu">
-                                <li class="active"><a href="report.html">Inwards</a></li>
-                                <li><a href="#">Outwards</a></li>
+                                <li><a href="inward-report.html">Inwards</a></li>
+                                <li class="active"><a href="outward-report.html">Outwards</a></li>
                                 <li><a href="#">Stock</a></li>
                             </ul>
                         </li>
@@ -116,7 +119,7 @@
             <div class="content-wrapper">
                 <!-- Content Header (Page header) -->
                 <section class="content-header">
-                    <h1>Inward Report
+                    <h1>Outward Report
                     </h1>
                     <ol class="breadcrumb">
                         <li><a href="#"><i class="fa fa-dashboard"></i> Dashboard</a></li>
@@ -133,68 +136,92 @@
                             <h3 class="box-title">Form</h3>
                         </div>
                         <!-- /.box-header -->
-						<div id="callout_block_form" class="col-md-12"></div>
-                        <!-- form start -->
-                        <form role="form" id="fm_item" method="post" action="">
+						<!-- form start -->
+                        <form role="form" id="fm_outward_report" method="post" action="">
                             <div class="box-body">
-                                <div class="col-md-4">
-									<div class="form-group">
-										<div class="select2-group">
-											<label>Station</label>
-											<select class="form-control select2" id="s2_station" name="station_id">
-											</select>
-										</div>
-									</div>
+								<div class="col-md-12">
+									<div id="callout_block_form" class="col-md-12"></div>
+									<table class='table table-bordered mb-0'>
+										<thead>
+											<tr>
+												<th>Date (MM/DD/YYYY)</th>
+												<th>Station</th>
+												<th>Item</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr>
+												<td class="td-group">
+													<div class="input-group">
+														<div class="input-group-addon">
+															<i class="fa fa-calendar"></i>
+														</div>
+														<input type="text" class="form-control pull-right" id="datepicker" name="tx_date">
+													</div>
+													<!-- /.input group -->
+												</td>
+												<td class="td-group">
+													<div class="select2-group">
+														<select class="form-control select2" id="s2_station" name="station_id">
+															<option value=""></option>
+														</select>
+													</div>
+												</td>
+												<td class="td-group">
+													<div class="select2-group">
+														<select class="form-control select2" id="s2_item" name="item_id">
+															<option value=""></option>
+														</select>
+													</div>
+												</td>
+											</tr>
+										</tbody>
+									</table>
 								</div>
-                                 <div class="col-md-4">
-									<div class="form-group">
-										<div class="select2-group">
-											<label>Item</label>
-											<select class="form-control select2" id="s2_item" name="item_id">
-											</select>
-										</div>
-									</div>
-								</div>
-                                 <div class="col-md-4">
-                                  <div class="form-group">
-                <label>Date range:</label>
-
-                <div class="input-group">
-                  <div class="input-group-addon">
-                    <i class="fa fa-calendar"></i>
-                  </div>
-                  <input type="text" class="form-control pull-right" id="reservation">
-                </div>
-                <!-- /.input group -->
-              </div>
-                               
-                                </div>
+                            </div>
+                            <!-- /.box-body -->
+                            <div class="box-footer">
+								<input type="hidden" name="outward_id" value=""/>
+                                <button id="bt_filter" type="submit" class="btn btn-primary pull-right">Filter</button>
                             </div>
                         </form>
                     </div>
                     
                     <!-- /.box -->
-					<!-- /.box -->
-                    <div class="box" id="dv_datatable">
+					<div class="box" id="dv_datatable">
                         <div class="box-header">
                             <h3 class="box-title">List</h3>
                         </div>
                         <!-- /.box-header -->
 						<div id="callout_block_datatable" class="col-md-12"></div>
                         <div class="box-body">
-                            <table id="dt_items" class="table table-bordered table-striped">
+                            <table id="dt_outwards" class="table table-bordered">
                                 <thead>
                                     <tr>
                                         <th>#</th>
+										<th>Date</th>
                                         <th>Station</th>
-                                         <th>Items</th>
-                                        
-                
+										<th>Item Dispatched</th>
+										<th>Quantity</th>
+                                        <th>Serial Numbers</th>
+										<th>Notes</th>
+										<th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>					
                                 </tbody>
-                               
+                                <tfoot>
+                                    <tr>
+                                        <th>#</th>
+										<th>Date</th>
+                                        <th>Station</th>
+										<th>Item Dispatched</th>
+										<th>Quantity</th>
+                                        <th>Serial Numbers</th>
+										<th>Notes</th>
+										<th>Action</th>
+                                    </tr>
+                                </tfoot>
                             </table>
                         </div>
                         <!-- /.box-body -->
@@ -226,8 +253,8 @@
         <script src="assets/bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
         <script src="assets/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
 		<!-- date-range-picker -->
-<script src="assets/bower_components/moment/min/moment.min.js"></script>
-<script src="assets/bower_components/bootstrap-daterangepicker/daterangepicker.js"></script>
+		<script src="assets/bower_components/moment/min/moment.min.js"></script>
+		<script src="assets/bower_components/bootstrap-daterangepicker/daterangepicker.js"></script>
 		<!-- SlimScroll -->
 		<script src="assets/bower_components/jquery-slimscroll/jquery.slimscroll.min.js"></script>
 		<!-- FastClick -->
@@ -239,8 +266,6 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.16.0/additional-methods.min.js"></script>
 		<script>
 			$('document').ready (function () {
-                $('#reservation').daterangepicker();
-				$('#dt_items').DataTable ();
             	$.ajax ({
             		type: 'POST',
             		url: 'assets/php/session-user-id.php',
@@ -250,17 +275,160 @@
             				window.location.href = result_object.target;
             			
             		}
-            	}); 
+            	});
 				
-				
-			
+                $('#datepicker').daterangepicker();
+				$('#dt_outwards').DataTable ();
+				read_outwards ();
 				$('#s2_station').select2 ({
 					placeholder: 'Select Station'
 				});
+				read_stations ();
                 $('#s2_item').select2 ({
 					placeholder: 'Select Item'
 				});
-			
+				read_items ();
+				
+				$('#fm_outward_report').validate ({
+            		highlight: function (element) {
+						$(element).closest('.td-group').addClass('has-error');
+            		},
+            		unhighlight: function (element) {
+            			$(element).closest('.td-group').removeClass('has-error');
+            		},
+            		errorElement: 'span',
+            		errorClass: 'help-block',
+            		errorPlacement: function (error, element) {
+            			if (element.parent('.select2-group').length) {
+            				error.insertAfter(element.parent());
+            			} else if (element.parent('.input-group').length) {
+            				error.insertAfter(element.parent());
+            			} else {
+            				error.insertAfter(element);
+            			}
+            		},
+            		rules: {
+            		},
+            		submitHandler: submit_form
+            	});
+				
+            	function submit_form () {
+					var data = $('#fm_outward_report').serialize ();
+					$.ajax ({
+						type: 'POST',
+						data: data,
+            			url: 'assets/php/filter-outwards.php',
+            			success: function (result) {
+            				var result_object = JSON.parse (result);
+            				if (typeof result_object.error === 'undefined') {
+            					console.log (result_object);
+								$('#dt_outwards').DataTable ().clear ().draw ();
+            					for (var i = 0; i < result_object.count; i++) {
+            						var outward = result_object.outwards[i];
+									var markup = "<table class='table mb-0 table-bordered'><tbody><tr><th scope='row'>Name</th><td>"+outward.item+"</td></tr><tr><th scope='row'>Type</th><td>"+outward.item_type+"</td></tr><tr><th scope='row'>Manufacturer</th><td>"+outward.item_manufacturer+"</td></tr></tbody></table>";
+									
+									var markup2 = "<table class='table mb-0 table-bordered'><tbody>";
+									for (var j = 0; j < outward.serial_numbers_count; j++) {
+										markup2 += "<tr><td>"+outward.serial_numbers[j]+"</td></tr>";
+									}
+									markup2 += "</tbody></table>";
+									
+									var markup3 = "<table class='table mb-0 table-bordered'><tbody><tr><th scope='row'>Mode of Dispatch</th><td>"+outward.mode_of_dispatch+"</td></tr><tr><th scope='row'>Remarks</th><td>"+outward.remarks+"</td></tr></tbody></table>";
+									
+									$('#dt_outwards').DataTable ().row.add ([
+										outward.outward_id,
+										outward.date,
+										outward.station,
+										markup,
+										outward.quantity,
+										markup2,
+										markup3,
+            							outward.action
+									]).draw (false);
+									$('#dt_outwards').DataTable ().order ([0, 'desc']).draw ();
+            					}
+            				} else {
+            					$("#callout_block_datatable").fadeIn (1000, function () {
+            						$("#callout_block_datatable").html ('<div class="callout callout-danger"><h4>Failed!</h4><p>' + result_object.error + '</p></div>');
+            					});
+            				}
+            			}
+					});
+            	}
+				
+				function read_outwards () {
+            		$.ajax ({
+            			type: 'POST',
+            			url: 'assets/php/read-outwards.php',
+            			success: function (result) {
+            				var result_object = JSON.parse (result);
+            				if (typeof result_object.error === 'undefined') {
+            					console.log (result_object);
+            					for (var i = 0; i < result_object.count; i++) {
+            						var outward = result_object.outwards[i];
+									var markup = "<table class='table mb-0 table-bordered'><tbody><tr><th scope='row'>Name</th><td>"+outward.item+"</td></tr><tr><th scope='row'>Type</th><td>"+outward.item_type+"</td></tr><tr><th scope='row'>Manufacturer</th><td>"+outward.item_manufacturer+"</td></tr></tbody></table>";
+									
+									var markup2 = "<table class='table mb-0 table-bordered'><tbody>";
+									for (var j = 0; j < outward.serial_numbers_count; j++) {
+										markup2 += "<tr><td>"+outward.serial_numbers[j]+"</td></tr>";
+									}
+									markup2 += "</tbody></table>";
+									
+									var markup3 = "<table class='table mb-0 table-bordered'><tbody><tr><th scope='row'>Mode of Dispatch</th><td>"+outward.mode_of_dispatch+"</td></tr><tr><th scope='row'>Remarks</th><td>"+outward.remarks+"</td></tr></tbody></table>";
+									
+									$('#dt_outwards').DataTable ().row.add ([
+										outward.outward_id,
+										outward.date,
+										outward.station,
+										markup,
+										outward.quantity,
+										markup2,
+										markup3,
+            							outward.action
+									]).draw (false);
+									$('#dt_outwards').DataTable ().order ([0, 'desc']).draw ();
+            					}
+            				} else {
+            					$("#callout_block_datatable").fadeIn (1000, function () {
+            						$("#callout_block_datatable").html ('<div class="callout callout-danger"><h4>Failed!</h4><p>' + result_object.error + '</p></div>');
+            					});
+            				}
+            			}
+            		});
+            	}
+				
+				function read_items () {
+					$.ajax ({
+						type: 'POST',
+						url: 'assets/php/read-items.php',
+						success: function (result) {
+							var result_object = JSON.parse (result);
+							console.log (result_object);
+							$("#s2_item").append (new Option ("All", "0"));
+							for (var i = 0; i < result_object.count; i++) {
+								var new_item = new Option (result_object.items[i].name, result_object.items[i].item_id);
+								$('#s2_item').append (new_item);
+							}
+						}
+					});
+				}
+				
+				function read_stations () {
+					$.ajax ({
+						type: 'POST',
+						url: 'assets/php/read-stations.php',
+						success: function (result) {
+							var result_object = JSON.parse (result);
+							console.log (result_object);
+							$("#s2_station").append (new Option ("All", "0"));
+							for (var i = 0; i < result_object.count; i++) {
+								var new_station = new Option (result_object.stations[i].name, result_object.stations[i].station_id);
+								$("#s2_station").append (new_station);
+							}
+						}
+				});
+				}
+				
 			});
 		</script>
     </body>

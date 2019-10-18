@@ -231,11 +231,15 @@
 													<input type="text" value="1" class="form-control pull-right" name="tx_quantity"/>
 												</td>
 												<td>
-													<table id="tb_serial_numbers" class="table-minimal">
+													<table id="tb_outward_serial_numbers" class="table-minimal">
 														<tbody>
 															<tr>
-																<td>
-																	<input type="text" class="form-control pull-right" name="tx_serial_number[]"/>
+																<td class="td-group">
+																	<div class="select2-group">
+																		<select class="form-control select2" id="s2_outward_serial_number_1" name="inward_serial_number_id[]">
+																			<option value=""></option>
+																		</select>
+																	</div>
 																</td>
 															</tr>
 														</tbody>
@@ -293,7 +297,7 @@
                                         <th>#</th>
 										<th>Date</th>
                                         <th>Station</th>
-										<th>Item Received</th>
+										<th>Item Dispatched</th>
 										<th>Quantity</th>
                                         <th>Serial Numbers</th>
 										<th>Notes</th>
@@ -307,7 +311,7 @@
                                         <th>#</th>
 										<th>Date</th>
                                         <th>Station</th>
-										<th>Item Received</th>
+										<th>Item Dispatched</th>
 										<th>Quantity</th>
                                         <th>Serial Numbers</th>
 										<th>Notes</th>
@@ -410,24 +414,36 @@
 					placeholder: 'Select Manufacturer'
 				});	
 				
+				$('#s2_outward_serial_number_1').select2 ({
+					placeholder: 'Select'
+				});
+				var outward_serial_numbers = 1;
+				
 				$('#s2_item').on ('select2:select', function (e) {
 					var data = e.params.data;
 					console.log (data);
-					read_item_details (data.id);					
+					read_item_details (data.id);
+					for (var i = 1; i <= outward_serial_numbers; i++)
+						read_inward_serial_numbers ('#s2_outward_serial_number_'+i, data.id);
 				});
 				
 				$('input[name=tx_quantity]').change (function () {
 					var qty = $('input[name=tx_quantity]').val ();
-					var sr = $("#tb_serial_numbers tbody tr").length;
+					var sr = $("#tb_outward_serial_numbers tbody tr").length;
 					if (qty == 0)
 						return false;
 					if (qty > sr) {
 						for (var i = 1; i <= qty - sr; i++) {
-							$("#tb_serial_numbers tbody").append ('<tr><td><input type="text" class="form-control pull-right" name="tx_serial_number[]"/></td></tr>');	
+							outward_serial_numbers++;
+							$("#tb_outward_serial_numbers tbody").append ('<tr><td class="td-group"><div class="select2-group"><select class="form-control select2" id="s2_outward_serial_number_'+outward_serial_numbers+'" name="inward_serial_number_id[]"><option value=""></option></select></div></td></tr>');
+							$('#s2_outward_serial_number_'+outward_serial_numbers).select2 ({
+								placeholder: 'Select'
+							});
+							read_inward_serial_numbers ('#s2_outward_serial_number_'+outward_serial_numbers, $('#s2_item').val ());
 						}
 					} else if (sr > qty) {
 						for (var i = 1; i <= sr - qty; i++) {
-							$("#tb_serial_numbers tbody tr:last").remove ();
+							$("#tb_outward_serial_numbers tbody tr:last").remove ();
 						}
 					}
 				});
@@ -451,10 +467,20 @@
 								$("input[name=tx_quantity]").val (outward.quantity);
 								$("#s2_mode_of_dispatch").val (outward.mode_of_dispatch).trigger ("change");
 								$("textarea[name=tx_remarks]").html (outward.remarks);
-								$("#tb_serial_numbers tbody").empty ();
+								$("#tb_outward_serial_numbers tbody").empty ();
 								for (var i = 0; i < outward.serial_numbers_count; i++) {
-									var markup = '<tr><td><input type="text" class="form-control pull-right" name="tx_serial_number[]" value="'+outward.serial_numbers[i]+'"/></td></tr>';
-									$("#tb_serial_numbers tbody").append (markup);
+									outward_serial_numbers++;
+									var markup = '<tr><td class="td-group"><div class="select2-group"><select class="form-control select2" id="s2_outward_serial_number_'+outward_serial_numbers+'" name="inward_serial_number_id[]"><option value=""></option></select></div></td></tr>';
+									$("#tb_outward_serial_numbers tbody").append (markup);
+									$('#s2_outward_serial_number_'+outward_serial_numbers).select2 ({
+										placeholder: 'Select'
+									});
+									read_inward_serial_numbers ('#s2_outward_serial_number_'+outward_serial_numbers, $('#s2_item').val ());
+									for (var j = 0; j < outward.serial_numbers_count; j++) {
+										var new_serial_number = new Option (outward.serial_numbers[j].serial_number, outward.serial_numbers[j].inward_serial_number_id);
+										$('#s2_outward_serial_number_'+outward_serial_numbers).append (new_serial_number);
+									}
+									$('#s2_outward_serial_number_'+outward_serial_numbers).val (outward.serial_numbers[i].inward_serial_number_id).trigger ("change");
 								}						
 								$('html, body').animate ({
 									scrollTop: $("#dv_form").offset ().top
@@ -672,7 +698,7 @@
 									
 									var markup2 = "<table class='table mb-0 table-bordered'><tbody>";
 									for (var j = 0; j < outward.serial_numbers_count; j++) {
-										markup2 += "<tr><td>"+outward.serial_numbers[j]+"</td></tr>";
+										markup2 += "<tr><td>"+outward.serial_numbers[j].serial_number+"</td></tr>";
 									}
 									markup2 += "</tbody></table>";
 									
@@ -710,6 +736,24 @@
 							for (var i = 0; i < result_object.count; i++) {
 								var new_item = new Option (result_object.items[i].name, result_object.items[i].item_id);
 								$('#s2_item').append (new_item);
+							}
+						}
+					});
+				}
+				
+				function read_inward_serial_numbers (e, item_id) {
+					$(e).empty ();
+					$(e).append (new Option ("", "", true, true));
+					$.ajax ({
+						type: 'POST',
+						data: {item_id: item_id},
+						url: 'assets/php/read-inward-serial-numbers.php',
+						success: function (result) {
+							var result_object = JSON.parse (result);
+							console.log (result_object);
+							for (var i = 0; i < result_object.count; i++) {
+								var new_serial_number = new Option (result_object.inward_serial_numbers[i].serial_number, result_object.inward_serial_numbers[i].inward_serial_number_id);
+								$(e).append (new_serial_number);
 							}
 						}
 					});

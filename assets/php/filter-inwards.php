@@ -3,15 +3,24 @@ session_start ();
 require_once ("connect-database.php");
 
 if (isset ($_SESSION['session_user_id'])) {
-	if (isset ($_POST['inward_id'])) {
-		$query = "SELECT * FROM tb_inwards WHERE fd_inward_id = ".$_POST['inward_id'].";";
-	} else {
-		$query = "SELECT * FROM tb_inwards";
-		if (isset ($_POST['limit']))
-			$query .= " ORDER BY fd_inward_id DESC LIMIT ".$_POST['limit'].";";
-		else
-			$query .= ";";
+	if (isset ($_POST['tx_date'])) {
+		$lc_dates = explode ("-", $_POST['tx_date']);
+		$lc_dates[0] = date ("Y-m-d", strtotime ($lc_dates[0]));
+		$lc_dates[1] = date ("Y-m-d", strtotime ($lc_dates[1]));
+		$query = "SELECT * FROM tb_inwards WHERE fd_date BETWEEN '".$lc_dates[0]."' AND '".$lc_dates[1]."'";
+	} 
+	if (isset ($_POST['station_id'])) {
+		$lc_station_id = mysqli_real_escape_string ($conn, trim ($_POST['station_id']));
+		if ($lc_station_id != 0)
+			$query .= " AND fd_station_id = ".$lc_station_id;	
 	}
+	
+	if (isset ($_POST['item_id'])) {
+		$lc_item_id = mysqli_real_escape_string ($conn, trim ($_POST['item_id']));
+		if ($lc_item_id != 0)
+			$query .= " AND fd_item_id = ".$lc_item_id;	
+	}
+	$query .= ";";
 	$result_set = mysqli_query ($conn, $query);
 	$response = array ();
 	while ($result_row = mysqli_fetch_array ($result_set)) {

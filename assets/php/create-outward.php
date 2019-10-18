@@ -2,7 +2,7 @@
 session_start ();
 require_once ("connect-database.php");
 
-if (isset ($_SESSION['session_user_id']) && isset ($_POST['tx_date']) && isset ($_POST['station_id']) && isset ($_POST['item_id']) && isset ($_POST['tx_quantity']) && isset ($_POST['tx_serial_number']) && isset ($_POST['tx_mode_of_dispatch']) && isset ($_POST['tx_remarks'])) {
+if (isset ($_SESSION['session_user_id']) && isset ($_POST['tx_date']) && isset ($_POST['station_id']) && isset ($_POST['item_id']) && isset ($_POST['tx_quantity']) && isset ($_POST['inward_serial_number_id']) && isset ($_POST['tx_mode_of_dispatch']) && isset ($_POST['tx_remarks'])) {
 	$lc_date = date ("Y-m-d", strtotime ($_POST['tx_date']));
 	$lc_station_id = mysqli_real_escape_string ($conn, trim ($_POST['station_id']));
 	$lc_item_id = mysqli_real_escape_string ($conn, trim ($_POST['item_id']));
@@ -19,11 +19,12 @@ if (isset ($_SESSION['session_user_id']) && isset ($_POST['tx_date']) && isset (
 		$lc_outward_id = mysqli_insert_id ($conn); 
 		$serial_numbers = array ();
 		
-		$multi_query = "INSERT INTO tb_serial_numbers (fd_serial_number_id, fd_transaction_id, fd_transaction_type, fd_serial_number) VALUES";
-		for ($i = 0; $i < count ($_POST['tx_serial_number']); $i++) {
-			$lc_serial_number = mysqli_real_escape_string ($conn, trim ($_POST['tx_serial_number'][$i]));
-			$multi_query .= "(NULL, ".$lc_outward_id.", 'O', '".$lc_serial_number."'),";
-			$serial_numbers [] = $lc_serial_number;
+		$multi_query = "INSERT INTO tb_outward_serial_numbers (fd_outward_serial_number_id, fd_outward_id, fd_inward_serial_number_id) VALUES";
+		for ($i = 0; $i < count ($_POST['inward_serial_number_id']); $i++) {
+			$lc_inward_serial_number_id = mysqli_real_escape_string ($conn, trim ($_POST['inward_serial_number_id'][$i]));
+			$multi_query .= "(NULL, ".$lc_outward_id.", ".$lc_inward_serial_number_id."),";
+			$serial_numbers_result_array = mysqli_fetch_array (mysqli_query ($conn, "SELECT fd_serial_number FROM tb_inward_serial_numbers WHERE fd_inward_serial_number_id = ".$lc_inward_serial_number_id.";"));
+			$serial_numbers [] = $serial_numbers_result_array['fd_serial_number'];
 		}
 		$multi_query = substr_replace ($multi_query, ";", -1);
 		mysqli_query ($conn, $multi_query);

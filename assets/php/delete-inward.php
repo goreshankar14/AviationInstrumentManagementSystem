@@ -4,7 +4,7 @@ require_once ("connect-database.php");
 
 if (isset ($_SESSION['session_user_id']) && isset ($_POST['inward_id'])) {
 	$lc_inward_id = mysqli_real_escape_string ($conn, trim ($_POST['inward_id']));
-	$serial_numbers_result = mysqli_query ($conn, "DELETE FROM tb_serial_numbers WHERE fd_transaction_id = ".$lc_inward_id." AND fd_transaction_type = 'I';");
+	$serial_numbers_result = mysqli_query ($conn, "DELETE FROM tb_inward_serial_numbers WHERE fd_inward_id = ".$lc_inward_id.";");
 	if ($serial_numbers_result) {
 		$result = mysqli_query ($conn, "DELETE FROM tb_inwards WHERE fd_inward_id = ".$lc_inward_id.";");
 		if ($result)

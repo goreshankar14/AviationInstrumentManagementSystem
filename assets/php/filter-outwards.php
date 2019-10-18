@@ -3,15 +3,24 @@ session_start ();
 require_once ("connect-database.php");
 
 if (isset ($_SESSION['session_user_id'])) {
-	if (isset ($_POST['outward_id'])) {
-		$query = "SELECT * FROM tb_outwards WHERE fd_outward_id = ".$_POST['outward_id'].";";
-	} else {
-		$query = "SELECT * FROM tb_outwards";
-		if (isset ($_POST['limit']))
-			$query .= " ORDER BY fd_outward_id DESC LIMIT ".$_POST['limit'].";";
-		else
-			$query .= ";";
+	if (isset ($_POST['tx_date'])) {
+		$lc_dates = explode ("-", $_POST['tx_date']);
+		$lc_dates[0] = date ("Y-m-d", strtotime ($lc_dates[0]));
+		$lc_dates[1] = date ("Y-m-d", strtotime ($lc_dates[1]));
+		$query = "SELECT * FROM tb_outwards WHERE fd_date BETWEEN '".$lc_dates[0]."' AND '".$lc_dates[1]."'";
+	} 
+	if (isset ($_POST['station_id'])) {
+		$lc_station_id = mysqli_real_escape_string ($conn, trim ($_POST['station_id']));
+		if ($lc_station_id != 0)
+			$query .= " AND fd_station_id = ".$lc_station_id;	
 	}
+	
+	if (isset ($_POST['item_id'])) {
+		$lc_item_id = mysqli_real_escape_string ($conn, trim ($_POST['item_id']));
+		if ($lc_item_id != 0)
+			$query .= " AND fd_item_id = ".$lc_item_id;	
+	}
+	$query .= ";";
 	$result_set = mysqli_query ($conn, $query);
 	$response = array ();
 	while ($result_row = mysqli_fetch_array ($result_set)) {
@@ -19,7 +28,7 @@ if (isset ($_SESSION['session_user_id'])) {
 		$serial_numbers_result_set = mysqli_query ($conn, $serial_numbers_query);
 		$serial_numbers = array ();
 		while ($serial_numbers_result_row = mysqli_fetch_array ($serial_numbers_result_set)) {
-			$serial_numbers[] = array ('inward_serial_number_id' => $serial_numbers_result_row['fd_inward_serial_number_id'], 'serial_number' => $serial_numbers_result_row['fd_serial_number']);
+			$serial_numbers[] = $serial_numbers_result_row['fd_serial_number'];
 		}
 		$item_result_row = mysqli_fetch_row (mysqli_query ($conn, "SELECT fd_name FROM tb_items WHERE fd_item_id = ".$result_row['fd_item_id'].";"));
 		$lc_item_name = $item_result_row[0];
