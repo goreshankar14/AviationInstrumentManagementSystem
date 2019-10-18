@@ -26,17 +26,11 @@ $(document).ready(function(){
             data: qty
           },
          ]};
-      var ctx = $("#mycanvas2");
+      var ctx = $("#mycanvas4");
 
       var barGraph = new Chart(ctx, {
         type: 'bar',
-        data: chartdata,
-        options: {
-            title: {
-                display: true,
-                text: ' STATIONWISE MOST OUTWARDS '
-            }
-        }
+        data: chartdata
       });
     },
     error: function(data) {

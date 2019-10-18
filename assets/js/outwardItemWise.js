@@ -26,17 +26,11 @@ $(document).ready(function(){
             data: qty
           },
          ]};
-      var ctx = $("#mycanvas1");
+      var ctx = $("#mycanvas3");
 
       var barGraph = new Chart(ctx, {
         type: 'bar',
-        data: chartdata,
-        options: {
-            title: {
-                display: true,
-                text: ' ITEMWISE MOST OUTWARDS '
-            }
-        }
+        data: chartdata
       });
     },
     error: function(data) {

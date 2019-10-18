@@ -30,13 +30,7 @@ $(document).ready(function(){
 
       var barGraph = new Chart(ctx, {
         type: 'bar',
-        data: chartdata,
-        options: {
-            title: {
-                display: true,
-                text: ' ITEMWISE MOST INWARDS '
-            }
-        }
+        data: chartdata
       });
     },
     error: function(data) {
