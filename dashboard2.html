@@ -149,6 +149,7 @@ $result = mysqli_query($db, $query);
 while ($row = mysqli_fetch_array($result)) {
  echo $row['maxitem'];
 }
+$result->close();
 ?>
 </h3>
 
@@ -176,6 +177,7 @@ $result1 = mysqli_query($db, $query);
 while ($row = mysqli_fetch_array($result1)) {
  echo $row['inwthisyear'];
 }
+$result1->close();
 ?>
  </h3>
 
@@ -202,6 +204,7 @@ $result2 = mysqli_query($db, $query);
 while ($row = mysqli_fetch_array($result2)) {
  echo $row['outwthisyear'];
 }
+$result2->close();
 ?></h3>
 
               <p>Outward This Year</p>
@@ -228,6 +231,7 @@ while ($row = mysqli_fetch_array($result3)) {
  echo $row['COUNT(fd_name)'];
 }
 //Step 4
+$result3->close();
 mysqli_close($db);
 ?></h3>
 
