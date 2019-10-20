@@ -129,9 +129,8 @@
         <li class="active">Dashboard</li>
       </ol>
     </section>
-
+<section class="content">
     <!-- Main content -->
-    <section class="content">
       <!-- Small boxes (Stat box) -->
       <div class="row">
         <div class="col-lg-3 col-xs-6">
@@ -245,9 +244,6 @@ mysqli_close($db);
         </div>
         <!-- ./col -->
       </div>
-    </section>
-          <!-- Main content -->
-    <section class="content">
       <div class="row">
         <div class="col-md-6">
           <!-- AREA CHART -->
@@ -322,9 +318,41 @@ mysqli_close($db);
         <!-- /.col (RIGHT) -->
       </div>
       <!-- /.row -->
-
-    </section>
     <!-- /.content -->
+      <div class="row" id="trying">
+        <!-- Left col -->
+        <div class="col-md-6 col-sm-4">
+          <!-- MAP & BOX PANE -->
+          <div class="box box-success" style>
+            <div class="box-header with-border">
+              <h3 class="box-title">RMC's On Map</h3>
+
+              <div class="box-tools pull-right">
+                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                </button>
+                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+              </div>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body no-padding">
+              <div class="row">
+                  <div class="pad">
+                    <!-- Map will be created here -->
+                    <div id="india-map-markers" style="height: 520px; width: 520px;"></div>
+                  </div>
+                </div>
+                <!-- /.col -->
+              <!-- /.row -->
+            </div>
+            <!-- /.box-body -->
+          </div>
+          <!-- /.row -->
+
+          <!-- /.box -->
+        </div>
+        <!-- /.col -->
+      </div>
+      </section>
   </div>
   <!-- /.content-wrapper -->
   <footer class="main-footer">
@@ -543,13 +571,60 @@ mysqli_close($db);
 <script src="assets/bower_components/fastclick/lib/fastclick.js"></script>
         <!-- AdminLTE App -->
 <script src="assets/js/adminlte.min.js"></script>
-		<!-- jQuery Validate 1.16.0 -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.16.0/jquery.validate.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.16.0/additional-methods.min.js"></script>
+<script src="assets/plugins/jvectormap/jquery-jvectormap-1.2.2.min.js"></script>
+<script type="text/javascript" src="assets/plugins/jvectormap/jquery-jvectormap-world-mill-en.js"></script>
 <script type="text/javascript" src="assets/js/Chart.min.js"></script>
 <script type="text/javascript" src="assets/js/InwardItemWise.js"></script>
 <script type="text/javascript" src="assets/js/InwardStationWise.js"></script>
 <script type="text/javascript" src="assets/js/outwardItemWise.js"></script>
 <script type="text/javascript" src="assets/js/outwardStationWise.js"></script>
+<script>
+    $(function () {
+
+  'use strict';
+  $('#india-map-markers').vectorMap({
+    map              : 'world_mill_en',
+    normalizeFunction: 'polynomial',
+    hoverOpacity     : 0.7,
+    hoverColor       : false,
+    backgroundColor  : 'transparent',
+    regionStyle      : {
+      initial      : {
+        fill            : 'rgba(210, 214, 222, 1)',
+        'fill-opacity'  : 1,
+        stroke          : 'none',
+        'stroke-width'  : 0,
+        'stroke-opacity': 1
+      },
+      hover        : {
+        'fill-opacity': 0.7,
+        cursor        : 'pointer'
+      },
+      selected     : {
+        fill: 'yellow'
+      },
+      selectedHover: {}
+    },
+    markerStyle      : {
+      initial: {
+        fill  : '#00a65a',
+        stroke: '#111',
+          r:2
+      }
+    },
+    markers          : [
+      { latLng: [13.082680, 80.270721], name: 'Chennai'},
+      { latLng: [28.704060, 77.102493], name: 'Delhi'},
+      { latLng: [26.144518, 91.736237], name: 'Guwahati'},
+      { latLng: [22.572645, 88.363892], name: 'Kolkata'},
+      { latLng: [19.075983, 72.877655], name: 'Mumbai'},
+      { latLng: [21.145800, 79.088158], name: 'Nagpur'}
+    ]
+  });
+});
+
+</script>
 </body>
 </html>
