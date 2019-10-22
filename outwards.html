@@ -99,7 +99,7 @@
 					<div class="navbar-custom-menu">
 						<ul class="nav navbar-nav">
 							<li>
-								<a href="#"><i class="fa fa-id-badge"></i> Logout</a>
+								<a href="javascript:void(0);" id="a_logout">Logout</a>
 							</li>
 						</ul>
 					</div>
@@ -113,13 +113,15 @@
                     <ul class="sidebar-menu" data-widget="tree">
                         <li class="header">MENU</li>
                         <!-- Optionally, you can add icons to the links -->
-                        <li><a href="dashboard.html"><i class="fa fa-bar-chart"></i> <span>Dashboard</span></a></li>
-                        <li ><a href="stations.html"><i class="fa fa-plane"></i> <span>Stations</span></a></li>
-                        <li><a href="items.html"><i class="fa fa-cart-plus"></i> <span>Items</span></a></li>
-                         <li><a href="inwards.html"><i class="fa fa-cloud-download"></i> <span>Inwards</span></a></li>
-                        <li class="active"><a href="outwards.html"><i class="fa fa-cloud-upload"></i> <span>Outwards</span></a></li>
+                        <li><a href="dashboard.html"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a></li>
+                        <li><a href="stations.html"><i class="fa fa-plane"></i> <span>Stations</span></a></li>
+                        <li><a href="items.html"><i class="fa fa-shopping-cart"></i> <span>Items</span></a></li>
+                        <li><a href="inwards.html"><i class="fa fa-arrow-circle-down"></i> <span>Inwards</span></a></li>
+                        <li class="active"><a href="outwards.html"><i class="fa fa-arrow-circle-up"></i> <span>Outwards</span></a></li>
                         <li class="treeview">
-                            <a href="report.html"><i class="fa fa-book"></i> <span>Reports</span>
+                            <a href="#">
+                            <i class="fa fa-pie-chart"></i>
+                            <span>Reports</span>
                             <span class="pull-right-container">
                             <i class="fa fa-angle-left pull-right"></i>
                             </span>
@@ -331,10 +333,10 @@
             <footer class="main-footer">
                 <!-- To the right -->
                 <div class="pull-right hidden-xs">
-                    Anything you want
+                    <b>Version</b> 1.0
                 </div>
                 <!-- Default to the left -->
-                <strong>Copyright &copy; 2016 <a href="#">Company</a>.</strong> All rights reserved.
+				<strong>Copyright &copy; <script>document.writeln (new Date ().getFullYear ());</script> <a href="index.html">IMD, Pune</a>.</strong> All rights reserved.
             </footer>
         </div>
         <!-- ./wrapper -->
@@ -687,11 +689,24 @@
 				function read_outwards () {
             		$.ajax ({
             			type: 'POST',
+						beforeSend: function () {
+							$('#dt_outwards').DataTable ().row.add ([
+								"<i class='fa fa-spinner fa-spin'></i>",
+								"<i class='fa fa-spinner fa-spin'></i>",
+								"<i class='fa fa-spinner fa-spin'></i>",
+								"<i class='fa fa-spinner fa-spin'></i>",
+								"<i class='fa fa-spinner fa-spin'></i>",
+								"<i class='fa fa-spinner fa-spin'></i>",
+								"<i class='fa fa-spinner fa-spin'></i>",
+								"<i class='fa fa-spinner fa-spin'></i>"
+							]).draw (false);
+						},
             			url: 'assets/php/read-outwards.php',
             			success: function (result) {
             				var result_object = JSON.parse (result);
             				if (typeof result_object.error === 'undefined') {
             					console.log (result_object);
+								$('#dt_outwards').DataTable ().clear ().draw ();
             					for (var i = 0; i < result_object.count; i++) {
             						var outward = result_object.outwards[i];
 									var markup = "<table class='table mb-0 table-bordered'><tbody><tr><th scope='row'>Name</th><td>"+outward.item+"</td></tr><tr><th scope='row'>Type</th><td>"+outward.item_type+"</td></tr><tr><th scope='row'>Manufacturer</th><td>"+outward.item_manufacturer+"</td></tr></tbody></table>";
@@ -793,6 +808,15 @@
 						}
 					});
 				}
+				$(document).on ("click", "#a_logout", function (e) {
+					$.ajax ({
+						url: 'assets/php/session-user-id-unset.php',
+						success: function (result) {
+							var result_object = JSON.parse (result);
+							window.location.href = result_object.target;
+						}
+					});
+				});
 			});
 		</script>
     </body>

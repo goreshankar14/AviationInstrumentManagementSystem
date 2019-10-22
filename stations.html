@@ -69,7 +69,7 @@
         <div class="wrapper">
             <!-- Main Header -->
             <header class="main-header">
-                <a href="frontend1.html" class="logo">
+                <a href="index.html" class="logo">
                 <span class="logo-mini"><img src="assets/img/imd-logo.png" class="float-left" ></span>
                 <span class="logo-lg"><img src="assets/img/imd-logo.png" class="float-left"></span>
                 </a>
@@ -82,7 +82,7 @@
 					<div class="navbar-custom-menu">
 						<ul class="nav navbar-nav">
 							<li>
-								<a href="#"><i class="fa fa-id-badge"></i> Logout</a>
+								<a href="javascript:void(0);" id="a_logout">Logout</a>
 							</li>
 						</ul>
 					</div>
@@ -96,25 +96,25 @@
                     <ul class="sidebar-menu" data-widget="tree">
                         <li class="header">MENU</li>
                         <!-- Optionally, you can add icons to the links -->
-                         <li><a href="dashboard.html"><i class="fa fa-bar-chart"></i> <span>Dashboard</span></a></li>
-                        <li class="active"><a href="#"><i class="fa fa-plane"></i> <span>Stations</span></a></li>
+                        <li><a href="dashboard.html"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a></li>
+                        <li class="active"><a href="stations.html"><i class="fa fa-plane"></i> <span>Stations</span></a></li>
                         <li><a href="items.html"><i class="fa fa-shopping-cart"></i> <span>Items</span></a></li>
-                         <li><a href="inwards.html"><i class="fa fa-arrow-circle-down"></i> <span>Inwards</span></a></li>
+                        <li><a href="inwards.html"><i class="fa fa-arrow-circle-down"></i> <span>Inwards</span></a></li>
                         <li><a href="outwards.html"><i class="fa fa-arrow-circle-up"></i> <span>Outwards</span></a></li>
-						<li class="treeview">
-						  <a href="#">
-							<i class="fa fa-pie-chart"></i>
-							<span>Reports</span>
-							<span class="pull-right-container">
-							  <i class="fa fa-angle-left pull-right"></i>
-							</span>
-						  </a>
-						  <ul class="treeview-menu">
-							<li><a href="inward-report.html"><i class="fa fa-circle-o"></i> Inwards</a></li>
-							<li><a href="outward-report.html"><i class="fa fa-circle-o"></i> Outwards</a></li>
-							<li><a href="stock-report.html"><i class="fa fa-circle-o"></i> Stock</a></li>
-						  </ul>
-						</li>
+                        <li class="treeview">
+                            <a href="#">
+                            <i class="fa fa-pie-chart"></i>
+                            <span>Reports</span>
+                            <span class="pull-right-container">
+                            <i class="fa fa-angle-left pull-right"></i>
+                            </span>
+                            </a>
+                            <ul class="treeview-menu">
+                                <li><a href="inward-report.html"><i class="fa fa-circle-o"></i> Inwards</a></li>
+                                <li><a href="outward-report.html"><i class="fa fa-circle-o"></i> Outwards</a></li>
+                                <li><a href="stock-report.html"><i class="fa fa-circle-o"></i> Stock</a></li>
+                            </ul>
+                        </li>
                     </ul>
                     <!-- /.sidebar-menu -->
                 </section>
@@ -262,8 +262,6 @@
                                         <th>Action</th>
                                     </tr>
                                 </thead>
-                                <tbody>					
-                                </tbody>
                                 <tfoot>
                                     <tr>
                                         <th>#</th>
@@ -289,10 +287,10 @@
             <footer class="main-footer">
                 <!-- To the right -->
                 <div class="pull-right hidden-xs">
-                    Anything you want
+                    <b>Version</b> 1.0
                 </div>
                 <!-- Default to the left -->
-                <strong>Copyright &copy; 2016 <a href="#">Company</a>.</strong> All rights reserved.
+				<strong>Copyright &copy; <script>document.writeln (new Date ().getFullYear ());</script> <a href="index.html">IMD, Pune</a>.</strong> All rights reserved.
             </footer>
         </div>
         <!-- ./wrapper -->
@@ -496,10 +494,23 @@
             		$.ajax ({
             			type: 'POST',
             			url: 'assets/php/read-stations.php',
+						beforeSend: function () {
+							$('#dt_stations').DataTable ().row.add ([
+								"<i class='fa fa-spinner fa-spin'></i>",
+								"<i class='fa fa-spinner fa-spin'></i>",
+								"<i class='fa fa-spinner fa-spin'></i>",
+								"<i class='fa fa-spinner fa-spin'></i>",
+								"<i class='fa fa-spinner fa-spin'></i>",
+								"<i class='fa fa-spinner fa-spin'></i>",
+								"<i class='fa fa-spinner fa-spin'></i>",
+								"<i class='fa fa-spinner fa-spin'></i>"
+							]).draw (false);
+						},
             			success: function (result) {
             				var result_object = JSON.parse (result);
             				if (typeof result_object.error === 'undefined') {
             					console.log (result_object.stations);
+								$('#dt_stations').DataTable ().clear ().draw ();
             					for (var i = 0; i < result_object.count; i++) {
             						var station = result_object.stations[i];
             						$('#dt_stations').DataTable ().row.add ([
@@ -592,6 +603,16 @@
 						}
 					});
 				}
+				
+				$(document).on ("click", "#a_logout", function (e) {
+					$.ajax ({
+						url: 'assets/php/session-user-id-unset.php',
+						success: function (result) {
+							var result_object = JSON.parse (result);
+							window.location.href = result_object.target;
+						}
+					});
+				});
 			});
         </script>
     </body>

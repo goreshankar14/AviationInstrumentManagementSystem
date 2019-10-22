@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Log In - IMD Aviation Inventory</title>
+  <title>Log In | IMD Aviation Inventory</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <!-- Bootstrap 3.3.7 -->
@@ -73,7 +73,7 @@
 			success: function (result) {
 				var result_object = JSON.parse (result);
 				if (result_object.target !== 'login.html')
-					window.location.href = result_object.target;
+					window.location.href = "dashboard.html";
 			}
 		}); 
 		$('#fm_login').validate ({
@@ -128,7 +128,7 @@
 					if (typeof result_object.success !== 'undefined') {
 						$("#callout_block").fadeIn (1000, function () {
 							$("#callout_block").html ('<div class="callout callout-success"><h4>Success!</h4><p>' + result_object.success + '</p></div>');
-							setTimeout ('window.location.href = "dashboard.html";', 5000);
+							setTimeout ('window.location.href = "dashboard.html";', 1000);
 						});
 					} else {
 						$("#callout_block").fadeIn (1000, function () {

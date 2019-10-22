@@ -209,7 +209,7 @@ $(function () {
       { latLng: [21.4598, 80.1950], name: 'Gondia' },
       { latLng: [17.4447, 78.4664], name: 'Hyderabad (Begumpet): 21'},
       { latLng: [17.2603, 78.3969], name: 'Hyderabad (Shamshabad)' },
-      { latLng: [9.9700, 76.2800], name: 'Kochi' },
+      { latLng: [9.9700, 76.2800],  name: 'Kochi' },
       { latLng: [22.5667, 88.3667], name: 'Kolkata' },
       { latLng: [11.2500, 75.7700], name: 'Kozhikode' },
       { latLng: [26.8000, 80.9000], name: 'Lucknow' },
