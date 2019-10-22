@@ -1,41 +1,36 @@
 $(document).ready(function(){
   $.ajax({
-    url: "assets/php/data-for-inward-graph-datewise.php",
+    url: "assets/php/data-for-outward-graph-stationwise.php",
     method: "GET",
     success: function(data) {
       console.log(data);
-      var dates = [];
-      var score = [];
+      var itemid = [];
+      var itemname = [];
+      var qty = [];
 
       for(var i in data) {
-        dates.push(data[i].d);
-        score.push(data[i].Q);
+        itemid.push(data[i].id);
+        itemname.push(data[i].name)
+        qty.push(data[i].Qty);
       }
 
       var chartdata = {
-        labels: dates,
+        labels: itemname,
         datasets : [
           {
-            label: 'Import Quantity',
+            label: 'Export Quantity',
             backgroundColor: 'rgba(200, 200, 200, 0.75)',
             borderColor: 'rgba(200, 200, 200, 0.75)',
             hoverBackgroundColor: 'rgba(200, 200, 200, 1)',
             hoverBorderColor: 'rgba(200, 200, 200, 1)',
-            data: score
+            data: qty
           },
-        
          ]};
-      var ctx = $("#mycanvas");
+      var ctx = $("#mycanvas4");
 
       var barGraph = new Chart(ctx, {
         type: 'bar',
-        data: chartdata,
-        options: {
-            title: {
-                display: true,
-                text: ' DATEWISE MOST INWARDS '
-            }
-        }
+        data: chartdata
       });
     },
     error: function(data) {

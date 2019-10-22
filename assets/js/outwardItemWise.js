@@ -1,6 +1,6 @@
 $(document).ready(function(){
   $.ajax({
-    url: "assets/php/data-for-inward-graph-itemwise.php",
+    url: "assets/php/data-for-outward-graph-itemwise.php",
     method: "GET",
     success: function(data) {
       console.log(data);
@@ -18,7 +18,7 @@ $(document).ready(function(){
         labels: itemname,
         datasets : [
           {
-            label: 'Import Quantity',
+            label: 'Export Quantity',
             backgroundColor: 'rgba(200, 200, 200, 0.75)',
             borderColor: 'rgba(200, 200, 200, 0.75)',
             hoverBackgroundColor: 'rgba(200, 200, 200, 1)',
@@ -26,7 +26,7 @@ $(document).ready(function(){
             data: qty
           },
          ]};
-      var ctx = $("#mycanvas1");
+      var ctx = $("#mycanvas3");
 
       var barGraph = new Chart(ctx, {
         type: 'bar',
