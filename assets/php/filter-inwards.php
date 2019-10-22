@@ -3,11 +3,12 @@ session_start ();
 require_once ("connect-database.php");
 
 if (isset ($_SESSION['session_user_id'])) {
+	$query = "SELECT * FROM tb_inwards WHERE 1";
 	if (isset ($_POST['tx_date'])) {
 		$lc_dates = explode ("-", $_POST['tx_date']);
 		$lc_dates[0] = date ("Y-m-d", strtotime ($lc_dates[0]));
 		$lc_dates[1] = date ("Y-m-d", strtotime ($lc_dates[1]));
-		$query = "SELECT * FROM tb_inwards WHERE fd_date BETWEEN '".$lc_dates[0]."' AND '".$lc_dates[1]."'";
+		$query .= " AND fd_date BETWEEN '".$lc_dates[0]."' AND '".$lc_dates[1]."'";
 	} 
 	if (isset ($_POST['station_id'])) {
 		$lc_station_id = mysqli_real_escape_string ($conn, trim ($_POST['station_id']));
@@ -19,6 +20,11 @@ if (isset ($_SESSION['session_user_id'])) {
 		$lc_item_id = mysqli_real_escape_string ($conn, trim ($_POST['item_id']));
 		if ($lc_item_id != 0)
 			$query .= " AND fd_item_id = ".$lc_item_id;	
+	}
+	
+	if (isset ($_POST['tx_mode_of_receiving'])) {
+		$lc_mode = mysqli_real_escape_string ($conn, trim ($_POST['tx_mode_of_receiving']));
+		$query .= " AND fd_mode_of_receiving = '".$lc_mode."'";	
 	}
 	$query .= ";";
 	$result_set = mysqli_query ($conn, $query);

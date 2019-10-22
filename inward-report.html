@@ -79,7 +79,7 @@
 					<div class="navbar-custom-menu">
 						<ul class="nav navbar-nav">
 							<li>
-								<a href="#"><i class="fa fa-id-badge"></i> Logout</a>
+								<a href="javascript:void(0);" id="a_logout">Logout</a>
 							</li>
 						</ul>
 					</div>
@@ -93,21 +93,23 @@
                     <ul class="sidebar-menu" data-widget="tree">
                         <li class="header">MENU</li>
                         <!-- Optionally, you can add icons to the links -->
-                         <li><a href="#"><i class="fa fa-bar-chart"></i> <span>Dashboard</span></a></li>
+                        <li><a href="dashboard.html"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a></li>
                         <li><a href="stations.html"><i class="fa fa-plane"></i> <span>Stations</span></a></li>
-                        <li><a href="items.html"><i class="fa fa-cart-plus"></i> <span>Items</span></a></li>
-                         <li><a href="inwards.html"><i class="fa fa-cloud-download"></i> <span>Inwards</span></a></li>
-                        <li><a href="outwards.html"><i class="fa fa-cloud-upload"></i> <span>Outwards</span></a></li>
+                        <li><a href="items.html"><i class="fa fa-shopping-cart"></i> <span>Items</span></a></li>
+                        <li><a href="inwards.html"><i class="fa fa-arrow-circle-down"></i> <span>Inwards</span></a></li>
+                        <li><a href="outwards.html"><i class="fa fa-arrow-circle-up"></i> <span>Outwards</span></a></li>
                         <li class="treeview active">
-                            <a><i class="fa fa-book"></i> <span>Reports</span>
+                            <a href="#">
+                            <i class="fa fa-pie-chart"></i>
+                            <span>Reports</span>
                             <span class="pull-right-container">
                             <i class="fa fa-angle-left pull-right"></i>
                             </span>
                             </a>
                             <ul class="treeview-menu">
-                                <li class="active"><a href="report.html">Inwards</a></li>
-                                <li><a href="#">Outwards</a></li>
-                                <li><a href="#">Stock</a></li>
+                                <li class="active"><a href="inward-report.html"><i class="fa fa-circle-o"></i> Inwards</a></li>
+                                <li><a href="outward-report.html"><i class="fa fa-circle-o"></i> Outwards</a></li>
+                                <li><a href="stock-report.html"><i class="fa fa-circle-o"></i> Stock</a></li>
                             </ul>
                         </li>
                     </ul>
@@ -147,6 +149,7 @@
 												<th>Date (MM/DD/YYYY)</th>
 												<th>Station</th>
 												<th>Item</th>
+												<th>Mode of Receiving</th>
 											</tr>
 										</thead>
 										<tbody>
@@ -174,6 +177,16 @@
 														</select>
 													</div>
 												</td>
+												<td class="td-group">
+													<div class="select2-group">
+														<select class="form-control select2" id="s2_mode_of_receiving" name="tx_mode_of_receiving">
+															<option value=""></option>
+															<option value="By Hand">By Hand</option>
+															<option value="By Speed Post">By Speed Post</option>
+															<option value="By Post">By Post</option>
+														</select>
+													</div>
+												</td>
 											</tr>
 										</tbody>
 									</table>
@@ -181,7 +194,6 @@
                             </div>
                             <!-- /.box-body -->
                             <div class="box-footer">
-								<input type="hidden" name="inward_id" value=""/>
                                 <button id="bt_filter" type="submit" class="btn btn-primary pull-right">Filter</button>
                             </div>
                         </form>
@@ -208,8 +220,6 @@
 										<th>Action</th>
                                     </tr>
                                 </thead>
-                                <tbody>					
-                                </tbody>
                                 <tfoot>
                                     <tr>
                                         <th>#</th>
@@ -235,10 +245,10 @@
             <footer class="main-footer">
                 <!-- To the right -->
                 <div class="pull-right hidden-xs">
-                    Anything you want
+                    <b>Version</b> 1.0
                 </div>
                 <!-- Default to the left -->
-                <strong>Copyright &copy; 2016 <a href="#">Company</a>.</strong> All rights reserved.
+				<strong>Copyright &copy; <script>document.writeln (new Date ().getFullYear ());</script> <a href="index.html">IMD, Pune</a>.</strong> All rights reserved.
             </footer>
         </div>
         <!-- ./wrapper -->
@@ -275,9 +285,23 @@
             				window.location.href = result_object.target;
             			
             		}
-            	});
+            	});				
+                $('#datepicker').daterangepicker ({
+					ranges: {
+						'Today'       : [moment(), moment()],
+						'Yesterday'   : [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+						'Last 7 Days' : [moment().subtract(6, 'days'), moment()],
+						'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+						'This Month'  : [moment().startOf('month'), moment().endOf('month')],
+						'Last Month'  : [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+					},
+					startDate: moment().subtract(29, 'days'),
+					endDate  : moment()
+				},
+					function (start, end) {
+						$('#datepicker span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'))
+				});
 				
-                $('#datepicker').daterangepicker();
 				$('#dt_inwards').DataTable ();
 				read_inwards ();
 				$('#s2_station').select2 ({
@@ -288,6 +312,9 @@
 					placeholder: 'Select Item'
 				});
 				read_items ();
+				$('#s2_mode_of_receiving').select2 ({
+					placeholder: 'Select'
+				});
 				
 				$('#fm_inward_report').validate ({
             		highlight: function (element) {
@@ -316,6 +343,24 @@
 					var data = $('#fm_inward_report').serialize ();
 					$.ajax ({
 						type: 'POST',
+						beforeSend: function () {
+							$('#dt_inwards').DataTable ().clear ().draw ();
+							$('#dt_inwards').DataTable ().row.add ([
+								"<i class='fa fa-spinner fa-spin'></i>",
+								"<i class='fa fa-spinner fa-spin'></i>",
+								"<i class='fa fa-spinner fa-spin'></i>",
+								"<i class='fa fa-spinner fa-spin'></i>",
+								"<i class='fa fa-spinner fa-spin'></i>",
+								"<i class='fa fa-spinner fa-spin'></i>",
+								"<i class='fa fa-spinner fa-spin'></i>",
+								"<i class='fa fa-spinner fa-spin'></i>"
+							]).draw (false);
+							$('#bt_filter').prop ("disabled", true);
+							$('#bt_filter').html ("<i class='fa fa-spinner fa-spin'></i> Processing...");
+							$("#callout_block_form").fadeOut (1000, function () {
+								$("#callout_block_form").html ("");
+							});
+						},
 						data: data,
             			url: 'assets/php/filter-inwards.php',
             			success: function (result) {
@@ -352,6 +397,8 @@
             						$("#callout_block_datatable").html ('<div class="callout callout-danger"><h4>Failed!</h4><p>' + result_object.error + '</p></div>');
             					});
             				}
+							$('#bt_filter').prop ("disabled", false);
+							$('#bt_filter').html ("Filter");
             			}
 					});
             	}
@@ -359,11 +406,24 @@
 				function read_inwards () {
             		$.ajax ({
             			type: 'POST',
+						beforeSend: function () {
+							$('#dt_inwards').DataTable ().row.add ([
+								"<i class='fa fa-spinner fa-spin'></i>",
+								"<i class='fa fa-spinner fa-spin'></i>",
+								"<i class='fa fa-spinner fa-spin'></i>",
+								"<i class='fa fa-spinner fa-spin'></i>",
+								"<i class='fa fa-spinner fa-spin'></i>",
+								"<i class='fa fa-spinner fa-spin'></i>",
+								"<i class='fa fa-spinner fa-spin'></i>",
+								"<i class='fa fa-spinner fa-spin'></i>"
+							]).draw (false);
+						},
             			url: 'assets/php/read-inwards.php',
             			success: function (result) {
             				var result_object = JSON.parse (result);
             				if (typeof result_object.error === 'undefined') {
             					console.log (result_object);
+								$('#dt_inwards').DataTable ().clear ().draw ();
             					for (var i = 0; i < result_object.count; i++) {
             						var inward = result_object.inwards[i];
 									var markup = "<table class='table mb-0 table-bordered'><tbody><tr><th scope='row'>Name</th><td>"+inward.item+"</td></tr><tr><th scope='row'>Type</th><td>"+inward.item_type+"</td></tr><tr><th scope='row'>Manufacturer</th><td>"+inward.item_manufacturer+"</td></tr></tbody></table>";
@@ -426,9 +486,17 @@
 								$("#s2_station").append (new_station);
 							}
 						}
-				});
+					});
 				}
-				
+				$(document).on ("click", "#a_logout", function (e) {
+					$.ajax ({
+						url: 'assets/php/session-user-id-unset.php',
+						success: function (result) {
+							var result_object = JSON.parse (result);
+							window.location.href = result_object.target;
+						}
+					});
+				});
 			});
 		</script>
     </body>
