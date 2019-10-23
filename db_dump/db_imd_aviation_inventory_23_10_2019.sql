@@ -1,15 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.5
+-- version 4.6.4
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1:3306
--- Generation Time: Oct 18, 2019 at 10:35 AM
--- Server version: 5.7.26
--- PHP Version: 7.2.18
+-- Host: 127.0.0.1
+-- Generation Time: Oct 23, 2019 at 07:38 AM
+-- Server version: 5.7.14
+-- PHP Version: 7.0.10
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
-START TRANSACTION;
 SET time_zone = "+00:00";
 
 
@@ -28,9 +26,8 @@ SET time_zone = "+00:00";
 -- Table structure for table `tb_inwards`
 --
 
-DROP TABLE IF EXISTS `tb_inwards`;
-CREATE TABLE IF NOT EXISTS `tb_inwards` (
-  `fd_inward_id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `tb_inwards` (
+  `fd_inward_id` int(11) NOT NULL,
   `fd_date` date NOT NULL,
   `fd_station_id` int(11) NOT NULL,
   `fd_item_id` int(11) NOT NULL,
@@ -39,9 +36,8 @@ CREATE TABLE IF NOT EXISTS `tb_inwards` (
   `fd_quantity` int(11) NOT NULL,
   `fd_rate` decimal(10,0) NOT NULL,
   `fd_mode_of_receiving` varchar(128) NOT NULL,
-  `fd_remarks` varchar(256) NOT NULL,
-  PRIMARY KEY (`fd_inward_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=351 DEFAULT CHARSET=latin1;
+  `fd_remarks` varchar(256) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `tb_inwards`
@@ -398,13 +394,11 @@ INSERT INTO `tb_inwards` (`fd_inward_id`, `fd_date`, `fd_station_id`, `fd_item_i
 -- Table structure for table `tb_inward_serial_numbers`
 --
 
-DROP TABLE IF EXISTS `tb_inward_serial_numbers`;
-CREATE TABLE IF NOT EXISTS `tb_inward_serial_numbers` (
-  `fd_inward_serial_number_id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `tb_inward_serial_numbers` (
+  `fd_inward_serial_number_id` int(11) NOT NULL,
   `fd_inward_id` int(11) NOT NULL,
-  `fd_serial_number` varchar(128) NOT NULL,
-  PRIMARY KEY (`fd_inward_serial_number_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=977 DEFAULT CHARSET=latin1;
+  `fd_serial_number` varchar(128) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `tb_inward_serial_numbers`
@@ -1311,13 +1305,11 @@ INSERT INTO `tb_inward_serial_numbers` (`fd_inward_serial_number_id`, `fd_inward
 -- Table structure for table `tb_items`
 --
 
-DROP TABLE IF EXISTS `tb_items`;
-CREATE TABLE IF NOT EXISTS `tb_items` (
-  `fd_item_id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `tb_items` (
+  `fd_item_id` int(11) NOT NULL,
   `fd_name` varchar(128) NOT NULL,
-  `fd_specification` varchar(255) NOT NULL,
-  PRIMARY KEY (`fd_item_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=69 DEFAULT CHARSET=latin1 ROW_FORMAT=DYNAMIC;
+  `fd_specification` varchar(255) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 ROW_FORMAT=DYNAMIC;
 
 --
 -- Dumping data for table `tb_items`
@@ -1398,14 +1390,12 @@ INSERT INTO `tb_items` (`fd_item_id`, `fd_name`, `fd_specification`) VALUES
 -- Table structure for table `tb_item_manufacturers`
 --
 
-DROP TABLE IF EXISTS `tb_item_manufacturers`;
-CREATE TABLE IF NOT EXISTS `tb_item_manufacturers` (
-  `fd_item_manufacturer_id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `tb_item_manufacturers` (
+  `fd_item_manufacturer_id` int(11) NOT NULL,
   `fd_item_id` int(11) NOT NULL,
   `fd_manufacturer` varchar(128) NOT NULL,
-  `fd_dirty_bit` tinyint(4) NOT NULL,
-  PRIMARY KEY (`fd_item_manufacturer_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=15 DEFAULT CHARSET=latin1;
+  `fd_dirty_bit` tinyint(4) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `tb_item_manufacturers`
@@ -1431,14 +1421,12 @@ INSERT INTO `tb_item_manufacturers` (`fd_item_manufacturer_id`, `fd_item_id`, `f
 -- Table structure for table `tb_item_types`
 --
 
-DROP TABLE IF EXISTS `tb_item_types`;
-CREATE TABLE IF NOT EXISTS `tb_item_types` (
-  `fd_item_type_id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `tb_item_types` (
+  `fd_item_type_id` int(11) NOT NULL,
   `fd_item_id` int(11) NOT NULL,
   `fd_type` varchar(128) NOT NULL,
-  `fd_dirty_bit` tinyint(4) NOT NULL,
-  PRIMARY KEY (`fd_item_type_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=42 DEFAULT CHARSET=latin1;
+  `fd_dirty_bit` tinyint(4) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `tb_item_types`
@@ -1493,9 +1481,8 @@ INSERT INTO `tb_item_types` (`fd_item_type_id`, `fd_item_id`, `fd_type`, `fd_dir
 -- Table structure for table `tb_outwards`
 --
 
-DROP TABLE IF EXISTS `tb_outwards`;
-CREATE TABLE IF NOT EXISTS `tb_outwards` (
-  `fd_outward_id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `tb_outwards` (
+  `fd_outward_id` int(11) NOT NULL,
   `fd_date` date NOT NULL,
   `fd_station_id` int(11) NOT NULL,
   `fd_item_id` int(11) NOT NULL,
@@ -1503,9 +1490,8 @@ CREATE TABLE IF NOT EXISTS `tb_outwards` (
   `fd_item_manufacturer_id` int(11) NOT NULL,
   `fd_quantity` int(11) NOT NULL,
   `fd_mode_of_dispatch` varchar(128) NOT NULL,
-  `fd_remarks` varchar(256) NOT NULL,
-  PRIMARY KEY (`fd_outward_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=36 DEFAULT CHARSET=latin1;
+  `fd_remarks` varchar(256) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `tb_outwards`
@@ -1554,13 +1540,11 @@ INSERT INTO `tb_outwards` (`fd_outward_id`, `fd_date`, `fd_station_id`, `fd_item
 -- Table structure for table `tb_outward_serial_numbers`
 --
 
-DROP TABLE IF EXISTS `tb_outward_serial_numbers`;
-CREATE TABLE IF NOT EXISTS `tb_outward_serial_numbers` (
-  `fd_outward_serial_number_id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `tb_outward_serial_numbers` (
+  `fd_outward_serial_number_id` int(11) NOT NULL,
   `fd_outward_id` int(11) NOT NULL,
-  `fd_inward_serial_number_id` int(11) NOT NULL,
-  PRIMARY KEY (`fd_outward_serial_number_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=44 DEFAULT CHARSET=latin1;
+  `fd_inward_serial_number_id` int(11) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `tb_outward_serial_numbers`
@@ -1617,9 +1601,8 @@ INSERT INTO `tb_outward_serial_numbers` (`fd_outward_serial_number_id`, `fd_outw
 -- Table structure for table `tb_stations`
 --
 
-DROP TABLE IF EXISTS `tb_stations`;
-CREATE TABLE IF NOT EXISTS `tb_stations` (
-  `fd_station_id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `tb_stations` (
+  `fd_station_id` int(11) NOT NULL,
   `fd_rmc` varchar(128) NOT NULL,
   `fd_state` varchar(128) NOT NULL,
   `fd_type` varchar(128) NOT NULL,
@@ -1629,9 +1612,8 @@ CREATE TABLE IF NOT EXISTS `tb_stations` (
   `fd_phone` varchar(10) NOT NULL,
   `fd_address` varchar(256) NOT NULL,
   `fd_incharge_name` varchar(128) NOT NULL,
-  `fd_incharge_mobile` varchar(10) NOT NULL,
-  PRIMARY KEY (`fd_station_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=99 DEFAULT CHARSET=latin1 COMMENT='To store details of stations';
+  `fd_incharge_mobile` varchar(10) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 COMMENT='To store details of stations';
 
 --
 -- Dumping data for table `tb_stations`
@@ -1743,25 +1725,131 @@ INSERT INTO `tb_stations` (`fd_station_id`, `fd_rmc`, `fd_state`, `fd_type`, `fd
 -- Table structure for table `tb_users`
 --
 
-DROP TABLE IF EXISTS `tb_users`;
-CREATE TABLE IF NOT EXISTS `tb_users` (
-  `fd_user_id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `tb_users` (
+  `fd_user_id` int(11) NOT NULL,
   `fd_first_name` varchar(128) NOT NULL,
   `fd_last_name` varchar(128) NOT NULL,
   `fd_username` varchar(128) NOT NULL,
   `fd_password` char(60) NOT NULL,
-  `fd_role` varchar(128) NOT NULL,
-  PRIMARY KEY (`fd_user_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+  `fd_role` varchar(128) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `tb_users`
 --
 
 INSERT INTO `tb_users` (`fd_user_id`, `fd_first_name`, `fd_last_name`, `fd_username`, `fd_password`, `fd_role`) VALUES
-(1, 'Admin', 'Admin', 'admin', '$2y$10$YhFDxAv/cZHNrtYHoi2vvuCzmV/1WUmloRIc.H0bG7EKeD2QvnJ.K', 'Administrator');
-COMMIT;
+(1, 'Admin', 'Admin', 'admin', '$2y$10$YhFDxAv/cZHNrtYHoi2vvuCzmV/1WUmloRIc.H0bG7EKeD2QvnJ.K', 'Administrator'),
+(2, 'Inward', 'Inward', 'inward', '$2y$10$MsibifgEq0hlSPuqFAOTp.7RDfvus72rhPvNqPJH.DQiv3kSHN1oe', 'Inward'),
+(3, 'Outward', 'Outward', 'outward', '$2y$10$mFdO4B./agYfPfJc6WI4P.tG4KiGLIfs0/.AB.Lm4ZakdPv7rQKs2', 'Outward');
 
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `tb_inwards`
+--
+ALTER TABLE `tb_inwards`
+  ADD PRIMARY KEY (`fd_inward_id`);
+
+--
+-- Indexes for table `tb_inward_serial_numbers`
+--
+ALTER TABLE `tb_inward_serial_numbers`
+  ADD PRIMARY KEY (`fd_inward_serial_number_id`);
+
+--
+-- Indexes for table `tb_items`
+--
+ALTER TABLE `tb_items`
+  ADD PRIMARY KEY (`fd_item_id`);
+
+--
+-- Indexes for table `tb_item_manufacturers`
+--
+ALTER TABLE `tb_item_manufacturers`
+  ADD PRIMARY KEY (`fd_item_manufacturer_id`);
+
+--
+-- Indexes for table `tb_item_types`
+--
+ALTER TABLE `tb_item_types`
+  ADD PRIMARY KEY (`fd_item_type_id`);
+
+--
+-- Indexes for table `tb_outwards`
+--
+ALTER TABLE `tb_outwards`
+  ADD PRIMARY KEY (`fd_outward_id`);
+
+--
+-- Indexes for table `tb_outward_serial_numbers`
+--
+ALTER TABLE `tb_outward_serial_numbers`
+  ADD PRIMARY KEY (`fd_outward_serial_number_id`);
+
+--
+-- Indexes for table `tb_stations`
+--
+ALTER TABLE `tb_stations`
+  ADD PRIMARY KEY (`fd_station_id`);
+
+--
+-- Indexes for table `tb_users`
+--
+ALTER TABLE `tb_users`
+  ADD PRIMARY KEY (`fd_user_id`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `tb_inwards`
+--
+ALTER TABLE `tb_inwards`
+  MODIFY `fd_inward_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=351;
+--
+-- AUTO_INCREMENT for table `tb_inward_serial_numbers`
+--
+ALTER TABLE `tb_inward_serial_numbers`
+  MODIFY `fd_inward_serial_number_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=977;
+--
+-- AUTO_INCREMENT for table `tb_items`
+--
+ALTER TABLE `tb_items`
+  MODIFY `fd_item_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=69;
+--
+-- AUTO_INCREMENT for table `tb_item_manufacturers`
+--
+ALTER TABLE `tb_item_manufacturers`
+  MODIFY `fd_item_manufacturer_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+--
+-- AUTO_INCREMENT for table `tb_item_types`
+--
+ALTER TABLE `tb_item_types`
+  MODIFY `fd_item_type_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
+--
+-- AUTO_INCREMENT for table `tb_outwards`
+--
+ALTER TABLE `tb_outwards`
+  MODIFY `fd_outward_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
+--
+-- AUTO_INCREMENT for table `tb_outward_serial_numbers`
+--
+ALTER TABLE `tb_outward_serial_numbers`
+  MODIFY `fd_outward_serial_number_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
+--
+-- AUTO_INCREMENT for table `tb_stations`
+--
+ALTER TABLE `tb_stations`
+  MODIFY `fd_station_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=99;
+--
+-- AUTO_INCREMENT for table `tb_users`
+--
+ALTER TABLE `tb_users`
+  MODIFY `fd_user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
