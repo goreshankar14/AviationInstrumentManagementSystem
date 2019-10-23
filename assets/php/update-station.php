@@ -22,5 +22,5 @@ if (isset ($_SESSION['session_user_id']) && isset ($_POST['tx_rmc']) && isset ($
 	else
 		echo (json_encode (array ('error' => "Something went wrong. Please, try again in a little bit.")));
 } else
-	echo (json_encode (array ('error' => "Something went wrong. Please, try again in a little bit.")));
+	echo (json_encode (array ('error' => "Something went wrong. Please, try again in a little bit.1")));
 ?>

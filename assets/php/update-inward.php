@@ -25,7 +25,7 @@ if (isset ($_SESSION['session_user_id']) && isset ($_POST['tx_date']) && isset (
 			$db_count = $count_result_row[0];
 			$post_count = count ($_POST['tx_serial_number']);
 
-			$result_set = mysqli_query ($conn, "SELECT fd_serial_number_id FROM tb_inward_serial_numbers WHERE fd_inward_id = ".$lc_inward_id.";");
+			$result_set = mysqli_query ($conn, "SELECT fd_inward_serial_number_id FROM tb_inward_serial_numbers WHERE fd_inward_id = ".$lc_inward_id.";");
 
 			for ($i = 0; $i < $post_count AND $i < $db_count; $i++) {
 				$result_row = mysqli_fetch_row ($result_set);

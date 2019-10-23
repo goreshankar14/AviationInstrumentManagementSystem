@@ -237,7 +237,7 @@
 														<tbody>
 															<tr>
 																<td>
-																	<input type="text" class="form-control pull-right" name="tx_serial_number[]"/>
+																	<input autocomplete="off" type="text" class="form-control pull-right" name="tx_serial_number[]"/>
 																</td>
 															</tr>
 														</tbody>
@@ -430,7 +430,7 @@
 						return false;
 					if (qty > sr) {
 						for (var i = 1; i <= qty - sr; i++) {
-							$("#tb_inward_serial_numbers tbody").append ('<tr><td><input type="text" class="form-control pull-right" name="tx_serial_number[]"/></td></tr>');	
+							$("#tb_inward_serial_numbers tbody").append ('<tr><td><input autocomplete="off" type="text" class="form-control pull-right" name="tx_serial_number[]"/></td></tr>');	
 						}
 					} else if (sr > qty) {
 						for (var i = 1; i <= sr - qty; i++) {
@@ -461,7 +461,7 @@
 								$("textarea[name=tx_remarks]").html (inward.remarks);
 								$("#tb_inward_serial_numbers tbody").empty ();
 								for (var i = 0; i < inward.serial_numbers_count; i++) {
-									var markup = '<tr><td><input type="text" class="form-control pull-right" name="tx_serial_number[]" value="'+inward.serial_numbers[i]+'"/></td></tr>';
+									var markup = '<tr><td><input autocomplete="off" type="text" class="form-control pull-right" name="tx_serial_number[]" value="'+inward.serial_numbers[i]+'"/></td></tr>';
 									$("#tb_inward_serial_numbers tbody").append (markup);
 								}						
 								$('html, body').animate ({

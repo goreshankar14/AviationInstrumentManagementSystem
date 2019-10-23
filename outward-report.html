@@ -93,7 +93,7 @@
                     <ul class="sidebar-menu" data-widget="tree">
                         <li class="header">MENU</li>
                         <!-- Optionally, you can add icons to the links -->
-                        <li class="active"><a href="dashboard.html"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a></li>
+                        <li><a href="dashboard.html"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a></li>
                         <li><a href="stations.html"><i class="fa fa-plane"></i> <span>Stations</span></a></li>
                         <li><a href="items.html"><i class="fa fa-shopping-cart"></i> <span>Items</span></a></li>
                         <li><a href="inwards.html"><i class="fa fa-arrow-circle-down"></i> <span>Inwards</span></a></li>
@@ -206,7 +206,6 @@
 										<th>Quantity</th>
                                         <th>Serial Numbers</th>
 										<th>Notes</th>
-										<th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>					
@@ -220,7 +219,6 @@
 										<th>Quantity</th>
                                         <th>Serial Numbers</th>
 										<th>Notes</th>
-										<th>Action</th>
                                     </tr>
                                 </tfoot>
                             </table>
@@ -371,8 +369,7 @@
 										markup,
 										outward.quantity,
 										markup2,
-										markup3,
-            							outward.action
+										markup3
 									]).draw (false);
 									$('#dt_outwards').DataTable ().order ([0, 'desc']).draw ();
             					}
@@ -412,7 +409,7 @@
 									
 									var markup2 = "<table class='table mb-0 table-bordered'><tbody>";
 									for (var j = 0; j < outward.serial_numbers_count; j++) {
-										markup2 += "<tr><td>"+outward.serial_numbers[j]+"</td></tr>";
+										markup2 += "<tr><td>"+outward.serial_numbers[j].serial_number+"</td></tr>";
 									}
 									markup2 += "</tbody></table>";
 									
@@ -425,8 +422,7 @@
 										markup,
 										outward.quantity,
 										markup2,
-										markup3,
-            							outward.action
+										markup3
 									]).draw (false);
 									$('#dt_outwards').DataTable ().order ([0, 'desc']).draw ();
             					}
