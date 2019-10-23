@@ -171,7 +171,7 @@
 								<div class="inner">
 									<h3>
 										<?php
-											$query = "SELECT SUM(fd_quantity) as outwthisyear FROM tb_outwards WHERE YEAR(fd_date)=YEAR(CURRENT_DATE())";
+											$query = "SELECT SUM(fd_quantity) FROM tb_outwards WHERE YEAR(fd_date)=YEAR(CURRENT_DATE())";
 											mysqli_query ($db, $query) or die ('Error querying database.');
 											$result2 = mysqli_query ($db, $query);
 											$row = mysqli_fetch_array($result2);
@@ -358,13 +358,24 @@
         <!-- ChartJS -->
 		<script src="assets/bower_components/chart.js/Chart.min.js"></script>
 		
-		<script src="assets/js/InwardItemWise.js"></script>
-		<script src="assets/js/InwardStationWise.js"></script>
-		<script src="assets/js/outwardItemWise.js"></script>
-		<script src="assets/js/outwardStationWise.js"></script>
+		<script src="assets/js/item-wise-inward-chart.js"></script>
+		<script src="assets/js/station-wise-inward-chart.js"></script>
+		<script src="assets/js/item-wise-outward-chart.js"></script>
+		<script src="assets/js/station-wise-outward-chart.js"></script>
 		<script>
 			$(function () {
 				'use strict';
+				
+				$.ajax ({
+            		type: 'POST',
+            		url: 'assets/php/session-user-id.php',
+            		success: function (result) {
+            			var result_object = JSON.parse (result);
+            			if (result_object.target === 'login.html')
+            				window.location.href = result_object.target;
+            		}
+            	});
+				
 				$('#world-map-markers').vectorMap({
 					map              : 'in_mill',
 					normalizeFunction: 'polynomial',
@@ -420,6 +431,15 @@
 					  { latLng: [25.2800, 82.9600], name: 'Varanasi' },
 					  { latLng: [11.2500, 75.7700], name: 'Calicut' }
 					]
+				});
+				$(document).on ("click", "#a_logout", function (e) {
+					$.ajax ({
+						url: 'assets/php/session-user-id-unset.php',
+						success: function (result) {
+							var result_object = JSON.parse (result);
+							window.location.href = result_object.target;
+						}
+					});
 				});
 			});
 		</script>

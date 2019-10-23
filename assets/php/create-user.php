@@ -1,6 +1,7 @@
 <?php
 session_start ();
 require_once ("connect-database.php");
+
 if (isset ($_POST['tx_first_name']) && isset ($_POST['tx_last_name']) && isset ($_POST['tx_username']) && isset ($_POST['tx_password']) && isset ($_POST['tx_role']) ) {
 	$lc_first_name = mysqli_real_escape_string ($conn, trim ($_POST['tx_first_name']));
 	$lc_last_name = mysqli_real_escape_string ($conn, trim ($_POST['tx_last_name']));

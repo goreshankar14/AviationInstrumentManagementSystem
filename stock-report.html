@@ -96,7 +96,7 @@
                     <ul class="sidebar-menu" data-widget="tree">
                         <li class="header">MENU</li>
                         <!-- Optionally, you can add icons to the links -->
-                        <li class="active"><a href="dashboard.html"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a></li>
+                        <li><a href="dashboard.html"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a></li>
                         <li><a href="stations.html"><i class="fa fa-plane"></i> <span>Stations</span></a></li>
                         <li><a href="items.html"><i class="fa fa-shopping-cart"></i> <span>Items</span></a></li>
                         <li><a href="inwards.html"><i class="fa fa-arrow-circle-down"></i> <span>Inwards</span></a></li>
@@ -149,7 +149,7 @@
                                     <tr>
 										<th>#</th>
 										<th>Item</th>
-										<th>Quantity</th>
+										<th>Quantity Remaining</th>
 										<th>Serial Numbers</th>
                                     </tr>
                                 </thead>
@@ -159,7 +159,7 @@
                                     <tr>
 										<th>#</th>
                                         <th>Item</th>
-										<th>Quantity</th>
+										<th>Quantity Remaining</th>
 										<th>Serial Numbers</th>
                                     </tr>
                                 </tfoot>
@@ -207,6 +207,15 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.16.0/additional-methods.min.js"></script>
 		<script>
 			$('document').ready (function () {
+				$.ajax ({
+            		type: 'POST',
+            		url: 'assets/php/session-user-id.php',
+            		success: function (result) {
+            			var result_object = JSON.parse (result);
+            			if (result_object.target === 'login.html')
+            				window.location.href = result_object.target;
+            		}
+            	});
 				$.ajax ({
 					type: 'POST',
 					beforeSend: function () {
