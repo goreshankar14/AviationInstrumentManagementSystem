@@ -1,4 +1,5 @@
 <?php
+ session_start();
  $db = mysqli_connect('localhost', 'root', '', 'db_imd_aviation_inventory') or die('Error connecting to MySQL server.');
 ?>
 <!DOCTYPE html>
@@ -83,8 +84,14 @@
                         <li class="active"><a href="dashboard.html"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a></li>
                         <li><a href="stations.html"><i class="fa fa-plane"></i> <span>Stations</span></a></li>
                         <li><a href="items.html"><i class="fa fa-shopping-cart"></i> <span>Items</span></a></li>
+                        <?php
+                            if($_SESSION['session_user_type']==="Administrator"||$_SESSION['session_user_type']==="Inward"){ ?>
                         <li><a href="inwards.html"><i class="fa fa-arrow-circle-down"></i> <span>Inwards</span></a></li>
+                        <?php } ?>
+                        <?php
+                            if($_SESSION['session_user_type']==="Administrator"||$_SESSION['session_user_type']==="Outward"){ ?>
                         <li><a href="outwards.html"><i class="fa fa-arrow-circle-up"></i> <span>Outwards</span></a></li>
+                        <?php } ?>
                         <li class="treeview">
                             <a href="#">
                             <i class="fa fa-pie-chart"></i>
@@ -94,9 +101,18 @@
                             </span>
                             </a>
                             <ul class="treeview-menu">
+                                <?php
+                                    if($_SESSION['session_user_type']==="Administrator"||$_SESSION['session_user_type']==="Inward"){ ?>
                                 <li><a href="inward-report.html"><i class="fa fa-circle-o"></i> Inwards</a></li>
+                                <?php } ?>
+                                <?php
+                                    if($_SESSION['session_user_type']==="Administrator"||$_SESSION['session_user_type']==="Outward"){ ?>
                                 <li><a href="outward-report.html"><i class="fa fa-circle-o"></i> Outwards</a></li>
+                                <?php } ?>
+                                <?php
+                                    if($_SESSION['session_user_type']==="Administrator"){ ?>
                                 <li><a href="stock-report.html"><i class="fa fa-circle-o"></i> Stock</a></li>
+                                <?php } ?>
                             </ul>
                         </li>
                     </ul>
