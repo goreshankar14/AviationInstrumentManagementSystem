@@ -7,7 +7,7 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>Stock Report | IMD Aviation Inventory</title>
+        <title>Dispatch Report | IMD Aviation Inventory</title>
         <!-- Tell the browser to be responsive to screen width -->
         <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
         <link rel="stylesheet" href="assets/bower_components/bootstrap/dist/css/bootstrap.min.css">
@@ -112,8 +112,8 @@
                             <ul class="treeview-menu">
                                 <li><a href="inward-report.html"><i class="fa fa-circle-o"></i> Inwards</a></li>
                                 <li><a href="outward-report.html"><i class="fa fa-circle-o"></i> Outwards</a></li>
-                                <li class="active"><a href="stock-report.html"><i class="fa fa-circle-o"></i> Stock</a></li>
-								<li><a href="dispatch-report.html"><i class="fa fa-circle-o"></i> Dispatch</a></li>
+                                <li><a href="stock-report.html"><i class="fa fa-circle-o"></i> Stock</a></li>
+								<li class="active"><a href="dispatch-report.html"><i class="fa fa-circle-o"></i> Dispatch</a></li>
                             </ul>
                         </li>
                     </ul>
@@ -145,13 +145,12 @@
                         <!-- /.box-header -->
 						<div id="callout_block_datatable" class="col-md-12"></div>
                         <div class="box-body">
-                            <table id="dt_items" class="table table-bordered">
+                            <table id="dt_dispatch_reports" class="table table-bordered">
                                 <thead>
                                     <tr>
 										<th>#</th>
-										<th>Item</th>
-										<th>Quantity Remaining</th>
-										<th>Serial Numbers</th>
+										<th>Dispatch ID</th>
+										<th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>					
@@ -159,9 +158,8 @@
                                 <tfoot>
                                     <tr>
 										<th>#</th>
-                                        <th>Item</th>
-										<th>Quantity Remaining</th>
-										<th>Serial Numbers</th>
+										<th>Dispatch ID</th>
+										<th>Action</th>
                                     </tr>
                                 </tfoot>
                             </table>
@@ -220,35 +218,26 @@
 				$.ajax ({
 					type: 'POST',
 					beforeSend: function () {
-						$('#dt_items').DataTable ().row.add ([
-							"<i class='fa fa-spinner fa-spin'></i>",
+						$('#dt_dispatch_reports').DataTable ().row.add ([
 							"<i class='fa fa-spinner fa-spin'></i>",
 							"<i class='fa fa-spinner fa-spin'></i>",
 							"<i class='fa fa-spinner fa-spin'></i>"
 						]).draw (false);
 					},
-					url: 'assets/php/generate-stock.php',
+					url: 'assets/php/read-dispatch-reports.php',
 					success: function (result) {
 						var result_object = JSON.parse (result);
 						if (typeof result_object.error === 'undefined') {
 							console.log (result_object);
-							$('#dt_items').DataTable ().clear ().draw ();
+							$('#dt_dispatch_reports').DataTable ().clear ().draw ();
 							for (var i = 0; i < result_object.count; i++) {
-								var item = result_object.items[i];
-								
-								var markup = "<div style='overflow-y: scroll;max-height:128px;'><table class='table mb-0 table-bordered'><tbody>";
-								for (var j = 0; j < item.serial_numbers_count; j++) {
-									markup += "<tr><td>"+item.serial_numbers[j]+"</td></tr>";
-								}
-								markup += "</tbody></table></div>";
-								
-								$('#dt_items').DataTable ().row.add ([
-									item.item_id,
-									item.name,
-									item.quantity,
-									markup
+								var dispatch_report = result_object.dispatch_reports[i];
+								$('#dt_dispatch_reports').DataTable ().row.add ([
+									dispatch_report.dispatch_report_id,
+									dispatch_report.dispatch_id,
+									dispatch_report.action
 								]).draw (false);
-								$('#dt_items').DataTable ().order ([0, 'asc']).draw ();
+								$('#dt_dispatch_reports').DataTable ().order ([0, 'asc']).draw ();
 							}
 						} else {
 							$("#callout_block_datatable").fadeIn (1000, function () {

@@ -9,6 +9,8 @@ if (isset ($_SESSION['session_user_id'])) {
 		$query = "SELECT * FROM tb_outwards";
 		if (isset ($_POST['limit']))
 			$query .= " ORDER BY fd_outward_id DESC LIMIT ".$_POST['limit'].";";
+		else if (isset ($_POST['mode']))
+			$query .= " WHERE fd_is_dispatched = 0;";
 		else
 			$query .= ";";
 	}
@@ -29,7 +31,7 @@ if (isset ($_SESSION['session_user_id'])) {
 		$lc_item_manufacturer = $item_manufacturer_result_row[0];
 		$station_result_array = mysqli_fetch_array (mysqli_query ($conn, "SELECT fd_station_id, fd_name FROM tb_stations WHERE fd_station_id = ".$result_row['fd_station_id'].";"));
 		
-		$response[] = array ('outward_id' => $result_row['fd_outward_id'], 'date' => date ('m/d/Y', strtotime ($result_row['fd_date'])), 'station_id' => $result_row['fd_station_id'], 'station' => $station_result_array['fd_name'], 'item' => $lc_item_name, 'item_id' => $result_row['fd_item_id'], 'item_type' => $lc_item_type, 'item_type_id' => $result_row['fd_item_type_id'], 'item_manufacturer' => $lc_item_manufacturer, 'item_manufacturer_id' => $result_row['fd_item_manufacturer_id'], 'quantity' => $result_row['fd_quantity'], 'serial_numbers' => $serial_numbers, 'serial_numbers_count' => count ($serial_numbers), 'mode_of_dispatch' => $result_row['fd_mode_of_dispatch'], 'remarks' =>  $result_row['fd_remarks'], 'action' => '<input type="checkbox" data-outward_id="'.$result_row['fd_outward_id'].'" class="ch_outward_id"/> Select for Dispatch Report<button class="btn btn-warning bt_edit btn-xs" data-outward_id="'.$result_row['fd_outward_id'].'">Edit</button> <button class="btn btn-danger bt_delete btn-xs" data-outward_id="'.$result_row['fd_outward_id'].'">Delete</button>');	
+		$response[] = array ('outward_id' => $result_row['fd_outward_id'], 'date' => date ('m/d/Y', strtotime ($result_row['fd_date'])), 'station_id' => $result_row['fd_station_id'], 'station' => $station_result_array['fd_name'], 'item' => $lc_item_name, 'item_id' => $result_row['fd_item_id'], 'item_type' => $lc_item_type, 'item_type_id' => $result_row['fd_item_type_id'], 'item_manufacturer' => $lc_item_manufacturer, 'item_manufacturer_id' => $result_row['fd_item_manufacturer_id'], 'quantity' => $result_row['fd_quantity'], 'serial_numbers' => $serial_numbers, 'serial_numbers_count' => count ($serial_numbers), 'mode_of_dispatch' => $result_row['fd_mode_of_dispatch'], 'remarks' =>  $result_row['fd_remarks'], 'action' => '<input type="checkbox" data-outward_id="'.$result_row['fd_outward_id'].'" class="ch_outward_id"/> Select for Dispatch Report<br><button class="btn btn-warning bt_edit btn-xs" data-outward_id="'.$result_row['fd_outward_id'].'">Edit</button> <button class="btn btn-danger bt_delete btn-xs" data-outward_id="'.$result_row['fd_outward_id'].'">Delete</button>');	
 	}
 	echo (json_encode (array ('outwards' => $response, 'count' => count ($response))));	
 } else

@@ -110,6 +110,7 @@
                                 <li class="active"><a href="inward-report.html"><i class="fa fa-circle-o"></i> Inwards</a></li>
                                 <li><a href="outward-report.html"><i class="fa fa-circle-o"></i> Outwards</a></li>
                                 <li><a href="stock-report.html"><i class="fa fa-circle-o"></i> Stock</a></li>
+								<li><a href="dispatch-report.html"><i class="fa fa-circle-o"></i> Dispatch</a></li>
                             </ul>
                         </li>
                     </ul>
@@ -149,7 +150,10 @@
 												<th>Date (MM/DD/YYYY)</th>
 												<th>Station</th>
 												<th>Item</th>
+												<th>Type</th>
+												<th>Manufacturer</th>
 												<th>Mode of Receiving</th>
+												<th>Remarks</th>
 											</tr>
 										</thead>
 										<tbody>
@@ -179,6 +183,20 @@
 												</td>
 												<td class="td-group">
 													<div class="select2-group">
+														<select class="form-control select2" id="s2_item_type"  name="item_type_id">
+															<option value=""></option>
+														</select>
+													</div>
+												</td>
+												<td class="td-group">
+													<div class="select2-group">
+														<select class="form-control select2" id="s2_item_manufacturer" name="item_manufacturer_id">
+															<option value=""></option>
+														</select>
+													</div>
+												</td>
+												<td class="td-group">
+													<div class="select2-group">
 														<select class="form-control select2" id="s2_mode_of_receiving" name="tx_mode_of_receiving">
 															<option value=""></option>
 															<option value="By Hand">By Hand</option>
@@ -186,6 +204,9 @@
 															<option value="By Post">By Post</option>
 														</select>
 													</div>
+												</td>
+												<td class="td-group">
+													<textarea placeholder="Enter Remarks" class="form-control" name="tx_remarks"></textarea>
 												</td>
 											</tr>
 										</tbody>
@@ -310,6 +331,20 @@
 					placeholder: 'Select Item'
 				});
 				read_items ();
+				$('#s2_item_type').select2 ({
+					placeholder: 'Select Type'
+				});	
+				
+				$('#s2_item_manufacturer').select2 ({
+					placeholder: 'Select Manufacturer'
+				});	
+				
+				$('#s2_item').on ('select2:select', function (e) {
+					var data = e.params.data;
+					console.log (data);
+					read_item_details (data.id);					
+				});
+				
 				$('#s2_mode_of_receiving').select2 ({
 					placeholder: 'Select'
 				});
@@ -465,6 +500,41 @@
 								var new_item = new Option (result_object.items[i].name, result_object.items[i].item_id);
 								$('#s2_item').append (new_item);
 							}
+						}
+					});
+				}
+				
+				function read_item_details (item_id, item_type_id = 0, item_manufacturer_id = 0) {
+					$('#s2_item_type').empty ();
+					$("#s2_item_type").append (new Option ("", "", true, true));
+					$('#s2_item_manufacturer').empty ();
+					$("#s2_item_manufacturer").append (new Option ("", "", true, true));
+					$.ajax ({
+						type: 'POST',
+						url: 'assets/php/read-item-types.php',
+						data:{item_id: item_id},
+						success: function (result) {
+							var result_object = JSON.parse (result);
+							console.log (result_object);
+							for (var i = 0; i < result_object.count; i++) {
+								var new_item_type = new Option (result_object.types[i].type, result_object.types[i].type_id);
+								$('#s2_item_type').append (new_item_type);
+							}
+							$("#s2_item_type").val (item_type_id).trigger ("change");
+						}
+					});
+					$.ajax ({
+						type: 'POST',
+						url: 'assets/php/read-item-manufacturers.php',
+						data:{item_id: item_id},
+						success: function (result) {
+							var result_object = JSON.parse (result);
+							console.log (result_object);
+							for (var i = 0; i < result_object.count; i++) {
+								var new_item_manufacturer = new Option (result_object.manufacturers[i].manufacturer, result_object.manufacturers[i].manufacturer_id);
+								$('#s2_item_manufacturer').append (new_item_manufacturer);
+							}
+							$("#s2_item_manufacturer").val (item_manufacturer_id).trigger ("change");
 						}
 					});
 				}

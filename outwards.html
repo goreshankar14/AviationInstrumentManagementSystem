@@ -130,6 +130,7 @@
                                 <li><a href="inward-report.html"><i class="fa fa-circle-o"></i> Inwards</a></li>
                                 <li><a href="outward-report.html"><i class="fa fa-circle-o"></i> Outwards</a></li>
                                 <li><a href="stock-report.html"><i class="fa fa-circle-o"></i> Stock</a></li>
+								<li><a href="dispatch-report.html"><i class="fa fa-circle-o"></i> Dispatch</a></li>
                             </ul>
                         </li>
                     </ul>
@@ -340,9 +341,7 @@
 							</div>
 							<form role="form" id="fm_dispatch_report" method="post" action="">
 								<div class="modal-body">
-									<div class="col-md-12">
-										<div id="callout_block_modal"></div>
-									</div>
+									<div id="callout_block_modal"></div>
 									<div class="row">
 										<div class="col-md-6">
 											<div class="form-group">
@@ -362,6 +361,7 @@
 												<!-- /.input group -->
 											</div>
 										</div>
+										<div class="clearfix"></div>
 										<div class="col-md-6">
 											<div class="form-group">
 												<label>Our Ref. No.</label>
@@ -380,6 +380,7 @@
 												<!-- /.input group -->
 											</div>
 										</div>
+										<div class="clearfix"></div>
 										<div class="col-md-6">
 											<div class="form-group">
 												<label>Sent By</label>
@@ -392,6 +393,7 @@
 												<input type="text" class="form-control" placeholder="Enter Name Of Orderer" name="tx_o">
 											</div>
 										</div>
+										<div class="clearfix"></div>
 										<div class="col-md-6">
 											<div class="form-group">
 												<label>Passed By</label>
@@ -404,6 +406,7 @@
 												<input type="text" class="form-control" placeholder="Enter Name Of Checker" name="tx_c">
 											</div>
 										</div>
+										<div class="clearfix"></div>
 										<div class="col-md-6">
 											<div class="form-group">
 												<label>Packed By</label>
@@ -416,6 +419,7 @@
 												<input type="text" class="form-control" placeholder="Enter Name Of Dealer" name="tx_d">
 											</div>
 										</div>
+										<div class="clearfix"></div>
 										<div class="col-md-6">
 											<div class="form-group">
 												<label>Date</label>
@@ -433,6 +437,7 @@
 												<input type="text" class="form-control" placeholder="Enter Name Of Dealer" name="tx_s_name">
 											</div>
 										</div>
+										<div class="clearfix"></div>
 										<div class="col-md-6">
 											<div class="form-group">
 												<label>Designation</label>
@@ -732,10 +737,6 @@
 						beforeSend: function () {
 							$('#bt_generate_pdf').prop ("disabled", true);
 							$('#bt_generate_pdf').html ("<i class='fa fa-spinner fa-spin'></i> Processing...");
-							setTimeout (function () {
-								$('#bt_generate_pdf').prop ("disabled", false);
-								$('#bt_generate_pdf').html ("Generate PDF");
-							}, 10000);
 							$("#callout_block_modal").fadeOut (1000, function () {
 								$("#callout_block_modal").html ("");
 							});
@@ -745,8 +746,13 @@
 							if (typeof result_object.success !== 'undefined') {
 								$("#callout_block_modal").fadeIn (1000, function () {
 									$("#callout_block_modal").html ('<div class="callout callout-success"><h4>Success!</h4><p>' + result_object.success + '</p></div>');
-									$('#bt_generate_pdf').prop ("disabled", false);
 									$('#bt_generate_pdf').html ("Generate PDF");
+								});
+								$("#callout_block_modal").fadeOut (2000, function () {
+									$("#callout_block_modal").html ("");
+									$('#modal-default').modal ('toggle');
+									document.getElementById ("fm_dispatch_report").reset();
+									$('#bt_generate_pdf').prop ("disabled", false);
 								});
 							} else {
 								$("#callout_block_modal").fadeIn (1000, function () {
@@ -938,6 +944,7 @@
 								"<i class='fa fa-spinner fa-spin'></i>"
 							]).draw (false);
 						},
+						data: {mode: "1"},
             			url: 'assets/php/read-outwards.php',
             			success: function (result) {
             				var result_object = JSON.parse (result);

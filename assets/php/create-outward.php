@@ -14,7 +14,7 @@ if (isset ($_SESSION['session_user_id']) && isset ($_SESSION['session_user_type'
 		$lc_item_type_id = (isset ($_POST['item_type_id'])) ? mysqli_real_escape_string ($conn, trim ($_POST['item_type_id'])) : 0;
 		$lc_item_manufacturer_id = (isset ($_POST['item_manufacturer_id'])) ? mysqli_real_escape_string ($conn, trim ($_POST['item_manufacturer_id'])) : 0;
 
-		$result = mysqli_query ($conn, "INSERT INTO tb_outwards VALUES (NULL, '".$lc_date."', ".$lc_station_id.", ".$lc_item_id.", ".$lc_item_type_id.", ".$lc_item_manufacturer_id.", ".$lc_quantity.", '".$lc_mode_of_dispatch."', '".$lc_remarks."');");	
+		$result = mysqli_query ($conn, "INSERT INTO tb_outwards VALUES (NULL, '".$lc_date."', ".$lc_station_id.", ".$lc_item_id.", ".$lc_item_type_id.", ".$lc_item_manufacturer_id.", ".$lc_quantity.", '".$lc_mode_of_dispatch."', '".$lc_remarks."', 0);");	
 
 		if ($result) {
 			$lc_outward_id = mysqli_insert_id ($conn); 
@@ -38,7 +38,7 @@ if (isset ($_SESSION['session_user_id']) && isset ($_SESSION['session_user_type'
 			$lc_item_manufacturer = $item_manufacturer_result_row[0];
 			$station_result_array = mysqli_fetch_array (mysqli_query ($conn, "SELECT fd_station_id, fd_name FROM tb_stations WHERE fd_station_id = ".$lc_station_id.";"));
 
-			echo (json_encode (array ('success' => "New Outward Created Successfully.", 'outward' => array ('outward_id' => $lc_outward_id, 'date' => $_POST['tx_date'], 'station_id' => $lc_station_id, 'station' => $station_result_array['fd_name'], 'item' => $lc_item_name, 'item_type' => $lc_item_type, 'item_manufacturer' => $lc_item_manufacturer, 'quantity' => $lc_quantity, 'serial_numbers' => $serial_numbers, 'serial_numbers_count' => count ($serial_numbers), 'mode_of_dispatch' => $lc_mode_of_dispatch, 'remarks' => $lc_remarks, 'action' => '<input type="checkbox" data-outward_id="'.$lc_outward_id.'" class="ch_outward_id"/> Select for Dispatch Report<button class="btn btn-warning bt_edit btn-xs" data-outward_id="'.$lc_outward_id.'">Edit</button> <button class="btn btn-danger bt_delete btn-xs" data-outward_id="'.$lc_outward_id.'">Delete</button>'))));	
+			echo (json_encode (array ('success' => "New Outward Created Successfully.", 'outward' => array ('outward_id' => $lc_outward_id, 'date' => $_POST['tx_date'], 'station_id' => $lc_station_id, 'station' => $station_result_array['fd_name'], 'item' => $lc_item_name, 'item_type' => $lc_item_type, 'item_manufacturer' => $lc_item_manufacturer, 'quantity' => $lc_quantity, 'serial_numbers' => $serial_numbers, 'serial_numbers_count' => count ($serial_numbers), 'mode_of_dispatch' => $lc_mode_of_dispatch, 'remarks' => $lc_remarks, 'action' => '<input type="checkbox" data-outward_id="'.$lc_outward_id.'" class="ch_outward_id"/> Select for Dispatch Report<br><button class="btn btn-warning bt_edit btn-xs" data-outward_id="'.$lc_outward_id.'">Edit</button> <button class="btn btn-danger bt_delete btn-xs" data-outward_id="'.$lc_outward_id.'">Delete</button>'))));	
 		} else
 			echo (json_encode (array ('error' => "Something went wrong. Please, try again in a little bit.")));
 	} else
