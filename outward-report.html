@@ -256,6 +256,9 @@
                             </table>
                         </div>
                         <!-- /.box-body -->
+                        <div class="box-footer">
+							<button style="margin-bottom: 8px;" type="button" class="btn btn-success pull-right" data-toggle="modal" data-target="#modal-default" onclick="myfun();">Print Outward Report</button>
+						</div>
                     </div>
                     <!-- /.box -->
                 </section>
@@ -558,8 +561,10 @@
 						}
 					});
 				});
-				
 			});
+            function myfun(){
+                window.print();
+            }
 		</script>
     </body>
 </html>
