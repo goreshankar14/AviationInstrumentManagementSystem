@@ -147,6 +147,10 @@
                                     if($_SESSION['session_user_type']==="Administrator"){ ?>
                                 <li><a href="stock-report.html"><i class="fa fa-circle-o"></i> Stock</a></li>
                                 <?php } ?>
+																<?php
+                                    if($_SESSION['session_user_type']==="Administrator"||$_SESSION['session_user_type']==="Outward"){ ?>
+																<li><a href="dispatch-report.html"><i class="fa fa-circle-o"></i> Dispatch</a></li>
+																<?php } ?>
                             </ul>
                         </li>
                     </ul>

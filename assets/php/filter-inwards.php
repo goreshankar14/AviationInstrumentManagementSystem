@@ -20,11 +20,34 @@ if (isset ($_SESSION['session_user_id'])) {
 		$lc_item_id = mysqli_real_escape_string ($conn, trim ($_POST['item_id']));
 		if ($lc_item_id != 0)
 			$query .= " AND fd_item_id = ".$lc_item_id;	
+	}	
+	
+	if (isset ($_POST['item_type_id'])) {
+		if ($_POST['item_type_id'] !== "") {
+			$lc_item_type_id = mysqli_real_escape_string ($conn, trim ($_POST['item_type_id']));
+			$query .= " AND fd_item_type_id = ".$lc_item_type_id;
+		}
+	}
+	
+	if (isset ($_POST['item_manufacturer_id'])) {
+		if ($_POST['item_manufacturer_id'] !== "") {
+			$lc_item_manufacturer_id = mysqli_real_escape_string ($conn, trim ($_POST['item_manufacturer_id']));
+			$query .= " AND fd_item_manufacturer_id = ".$lc_item_manufacturer_id;	
+		}
 	}
 	
 	if (isset ($_POST['tx_mode_of_receiving'])) {
-		$lc_mode = mysqli_real_escape_string ($conn, trim ($_POST['tx_mode_of_receiving']));
-		$query .= " AND fd_mode_of_receiving = '".$lc_mode."'";	
+		if ($_POST['tx_mode_of_receiving']!==""){
+			$lc_mode = mysqli_real_escape_string ($conn, trim ($_POST['tx_mode_of_receiving']));
+			$query .= " AND fd_mode_of_receiving = '".$lc_mode."'";	
+		}
+	}
+	
+	if (isset ($_POST['tx_remarks'])) {
+		if ($_POST['tx_remarks']!==""){
+			$lc_remarks = mysqli_real_escape_string ($conn, trim ($_POST['tx_remarks']));
+			$query .= " AND fd_remarks LIKE '%".$lc_remarks."%'";
+		}
 	}
 	$query .= ";";
 	$result_set = mysqli_query ($conn, $query);

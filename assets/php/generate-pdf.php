@@ -21,7 +21,7 @@ $html = '<h3><strong><u>Office of the C R S (Surface Instruments Division), Mete
 
 <p>Your Ref No: '.$_POST['tx_y_ref'].'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Dated: '.$_POST['tx_y_date'].'</p>
 
-<p>Our Ref No: CRS/SI/EL/'.$_POST['tx_o_ref'].'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Station: '.$station_result_array['fd_name'].'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Dated: '.$_POST['tx_o_date'].'</p>
+<p>Our Ref No: CRS/SI/EL/'.$_POST['tx_o_ref'].'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Station: '.$station_result_array['fd_name'].'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Dated: '.$_POST['tx_o_date'].'</p>
 
 <p>The article shown overleaf are sent by: '.$_POST['tx_s'].'</p>
 <p>&nbsp;</p>
@@ -83,10 +83,9 @@ $dompdf->render();
 $output = $dompdf->output();
 file_put_contents("../../uploads/".time()."-".$file_name.".pdf", $output);
 
-$result = mysqli_query ($conn, "INSERT INTO tb_dispatch_reports VALUES (NULL, '".$html."', '".$dispatch_id."');");	
-$dompdf->stream(time()."-".$file_name,array("Attachment"=>0));
-/*if ($result) {
+$result = mysqli_query ($conn, "INSERT INTO tb_dispatch_reports VALUES (NULL, '".$html."', '".$dispatch_id."', '".time()."-".$file_name."');");
+if ($result) {
 	echo (json_encode (array ('success' => "PDF Generated Successfully")));
 } else
-	echo (json_encode (array ('error' => "Something went wrong. Please, try again in a little bit.")));*/
+	echo (json_encode (array ('error' => "Something went wrong. Please, try again in a little bit.")));
 ?>
