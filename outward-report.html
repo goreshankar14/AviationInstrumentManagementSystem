@@ -149,6 +149,7 @@
 												<th>Date (MM/DD/YYYY)</th>
 												<th>Station</th>
 												<th>Item</th>
+                                                <th>Mode Of Dispatch</th>
 											</tr>
 										</thead>
 										<tbody>
@@ -173,6 +174,16 @@
 													<div class="select2-group">
 														<select class="form-control select2" id="s2_item" name="item_id">
 															<option value=""></option>
+														</select>
+													</div>
+												</td>
+                                                <td class="td-group">
+													<div class="select2-group">
+														<select class="form-control select2" id="s2_mode_of_dispatch" name="tx_mode_of_dispatch">
+															<option value=""></option>
+															<option value="By Hand">By Hand</option>
+															<option value="By Speed Post">By Speed Post</option>
+															<option value="By Post">By Post</option>
 														</select>
 													</div>
 												</td>
@@ -301,8 +312,10 @@
                 $('#s2_item').select2 ({
 					placeholder: 'Select Item'
 				});
-				read_items ();
-				
+                read_items ();
+				$('#s2_mode_of_dispatch').select2 ({
+					placeholder: 'Select'
+				});
 				$('#fm_outward_report').validate ({
             		highlight: function (element) {
 						$(element).closest('.td-group').addClass('has-error');

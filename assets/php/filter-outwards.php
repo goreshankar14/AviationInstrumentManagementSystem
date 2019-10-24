@@ -20,6 +20,11 @@ if (isset ($_SESSION['session_user_id'])) {
 		if ($lc_item_id != 0)
 			$query .= " AND fd_item_id = ".$lc_item_id;	
 	}
+    
+    if (isset ($_POST['tx_mode_of_dispatch'])) {
+		$lc_mode = mysqli_real_escape_string ($conn, trim ($_POST['tx_mode_of_dispatch']));
+		$query .= " AND fd_mode_of_dispatch = '".$lc_mode."'";	
+	}
 	$query .= ";";
 	$result_set = mysqli_query ($conn, $query);
 	$response = array ();

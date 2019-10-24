@@ -150,7 +150,6 @@
 										<th>#</th>
 										<th>Item</th>
 										<th>Quantity Remaining</th>
-										<th>Serial Numbers</th>
                                     </tr>
                                 </thead>
                                 <tbody>					
@@ -160,7 +159,6 @@
 										<th>#</th>
                                         <th>Item</th>
 										<th>Quantity Remaining</th>
-										<th>Serial Numbers</th>
                                     </tr>
                                 </tfoot>
                             </table>
@@ -245,7 +243,7 @@
 									item.item_id,
 									item.name,
 									item.quantity,
-									markup
+									//markup
 								]).draw (false);
 								$('#dt_items').DataTable ().order ([0, 'asc']).draw ();
 							}
