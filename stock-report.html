@@ -1,5 +1,12 @@
 <?php
     session_start();
+    if ($_SESSION['session_user_type']==="Inward" || $_SESSION['session_user_type']==="Outward") {
+        $host = $_SERVER['HTTP_HOST'];
+        $uri = rtrim(dirname($_SERVER['PHP_SELF']), '/\\');
+        $extra = 'dashboard.html';
+        header("Location: http://$host$uri/$extra");
+        exit; 
+    }
 ?>
 <!DOCTYPE html>
 <!--
@@ -160,40 +167,12 @@
             <!-- Main content -->
             <section class="content container-fluid">
                 <!--------------------------
-                        | Your Page Content Here |
-                        -------------------------->                    
-                    <!-- /.box -->
-					<div class="box" id="dv_datatable">
-                        <div class="box-header">
-                            <h3 class="box-title">List</h3>
-                        </div>
-                        <!-- /.box-header -->
-						<div id="callout_block_datatable" class="col-md-12"></div>
-                        <div class="box-body">
-                            <table id="dt_items" class="table table-bordered">
-                                <thead>
-                                    <tr>
-										<th>#</th>
-										<th>Item</th>
-										<th>Inward</th>
-										<th>Outward</th>
-										<th>Quantity Remaining</th>
-                                    </tr>
-                                </thead>
-                                <tbody>					
-                                </tbody>
-                                <tfoot>
-                                    <tr>
-										<th>#</th>
-										<th>Item</th>
-										<th>Inward</th>
-										<th>Outward</th>
-										<th>Quantity Remaining</th>
-                                    </tr>
-                                </tfoot>
-                            </table>
-                        </div>
-                        <!-- /.box-body -->
+                    | Your Page Content Here |
+                    -------------------------->                    
+                <!-- /.box -->
+                <div class="box" id="dv_datatable">
+                    <div class="box-header">
+                        <h3 class="box-title">List</h3>
                     </div>
                     <!-- /.box-header -->
                     <div id="callout_block_datatable" class="col-md-12"></div>
@@ -203,15 +182,19 @@
                                 <tr>
                                     <th>#</th>
                                     <th>Item</th>
+                                    <th>Inward</th>
+                                    <th>Outward</th>
                                     <th>Quantity Remaining</th>
                                 </tr>
                             </thead>
-                            <tbody>
+                            <tbody>					
                             </tbody>
                             <tfoot>
                                 <tr>
                                     <th>#</th>
                                     <th>Item</th>
+                                    <th>Inward</th>
+                                    <th>Outward</th>
                                     <th>Quantity Remaining</th>
                                 </tr>
                             </tfoot>
@@ -219,9 +202,9 @@
                     </div>
                     <!-- /.box-body -->
                 </div>
-                <!-- /.box -->
             </section>
             <!-- /.content -->
+      </div>
         </div>
         <!-- ./wrapper -->
         <!-- REQUIRED JS SCRIPTS -->
