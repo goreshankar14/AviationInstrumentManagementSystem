@@ -150,6 +150,8 @@
                                     <tr>
 										<th>#</th>
 										<th>Item</th>
+										<th>Inward</th>
+										<th>Outward</th>
 										<th>Quantity Remaining</th>
                                     </tr>
                                 </thead>
@@ -158,7 +160,9 @@
                                 <tfoot>
                                     <tr>
 										<th>#</th>
-                                        <th>Item</th>
+										<th>Item</th>
+										<th>Inward</th>
+										<th>Outward</th>
 										<th>Quantity Remaining</th>
                                     </tr>
                                 </tfoot>
@@ -222,6 +226,7 @@
 							"<i class='fa fa-spinner fa-spin'></i>",
 							"<i class='fa fa-spinner fa-spin'></i>",
 							"<i class='fa fa-spinner fa-spin'></i>",
+							"<i class='fa fa-spinner fa-spin'></i>",
 							"<i class='fa fa-spinner fa-spin'></i>"
 						]).draw (false);
 					},
@@ -234,17 +239,18 @@
 							for (var i = 0; i < result_object.count; i++) {
 								var item = result_object.items[i];
 								
-								var markup = "<div style='overflow-y: scroll;max-height:128px;'><table class='table mb-0 table-bordered'><tbody>";
+								/*var markup = "<div style='overflow-y: scroll;max-height:128px;'><table class='table mb-0 table-bordered'><tbody>";
 								for (var j = 0; j < item.serial_numbers_count; j++) {
 									markup += "<tr><td>"+item.serial_numbers[j]+"</td></tr>";
 								}
-								markup += "</tbody></table></div>";
+								markup += "</tbody></table></div>";*/
 								
 								$('#dt_items').DataTable ().row.add ([
 									item.item_id,
 									item.name,
-									item.quantity,
-									//markup
+									item.inward,
+									item.outward,
+									item.quantity
 								]).draw (false);
 								$('#dt_items').DataTable ().order ([0, 'asc']).draw ();
 							}
