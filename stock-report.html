@@ -1,5 +1,12 @@
 <?php
     session_start();
+    if ($_SESSION['session_user_type']==="Inward" || $_SESSION['session_user_type']==="Outward") {
+        $host = $_SERVER['HTTP_HOST'];
+        $uri = rtrim(dirname($_SERVER['PHP_SELF']), '/\\');
+        $extra = 'dashboard.html';
+        header("Location: http://$host$uri/$extra");
+        exit; 
+    }
 ?>
 <!DOCTYPE html>
 <!--
@@ -160,8 +167,8 @@
             <!-- Main content -->
             <section class="content container-fluid">
                 <!--------------------------
-                        | Your Page Content Here |
-                        -------------------------->
+                    | Your Page Content Here |
+                    -------------------------->                    
                 <!-- /.box -->
                 <div class="box" id="dv_datatable">
                     <div class="box-header">
@@ -175,15 +182,19 @@
                                 <tr>
                                     <th>#</th>
                                     <th>Item</th>
+                                    <th>Inward</th>
+                                    <th>Outward</th>
                                     <th>Quantity Remaining</th>
                                 </tr>
                             </thead>
-                            <tbody>
+                            <tbody>					
                             </tbody>
                             <tfoot>
                                 <tr>
                                     <th>#</th>
                                     <th>Item</th>
+                                    <th>Inward</th>
+                                    <th>Outward</th>
                                     <th>Quantity Remaining</th>
                                 </tr>
                             </tfoot>
@@ -191,111 +202,96 @@
                     </div>
                     <!-- /.box-body -->
                 </div>
-                <!-- /.box -->
             </section>
             <!-- /.content -->
+      </div>
         </div>
-        <!-- /.content-wrapper -->
-        <!-- Main Footer -->
-        <footer class="main-footer">
-            <!-- To the right -->
-            <div class="pull-right hidden-xs">
-                <b>Version</b> 1.0
-            </div>
-            <!-- Default to the left -->
-            <strong>Copyright &copy; <script>
-                    document.writeln(new Date().getFullYear());
-                </script> <a href="index.html">IMD, Pune</a>.</strong> All rights reserved.
-        </footer>
-    </div>
-    <!-- ./wrapper -->
-    <!-- REQUIRED JS SCRIPTS -->
-    <!-- jQuery 3 -->
-    <script src="assets/bower_components/jquery/dist/jquery.min.js"></script>
-    <!-- Bootstrap 3.3.7 -->
-    <script src="assets/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
-    <!-- Select2 -->
-    <script src="assets/bower_components/select2/dist/js/select2.full.min.js"></script>
-    <!-- DataTables -->
-    <script src="assets/bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
-    <script src="assets/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
-    <!-- date-range-picker -->
-    <script src="assets/bower_components/moment/min/moment.min.js"></script>
-    <script src="assets/bower_components/bootstrap-daterangepicker/daterangepicker.js"></script>
-    <!-- SlimScroll -->
-    <script src="assets/bower_components/jquery-slimscroll/jquery.slimscroll.min.js"></script>
-    <!-- FastClick -->
-    <script src="assets/bower_components/fastclick/lib/fastclick.js"></script>
-    <!-- AdminLTE App -->
-    <script src="assets/js/adminlte.min.js"></script>
-    <!-- jQuery Validate 1.16.0 -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.16.0/jquery.validate.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.16.0/additional-methods.min.js"></script>
-    <script>
-        $('document').ready(function () {
-            $.ajax({
-                type: 'POST',
-                url: 'assets/php/session-user-id.php',
-                success: function (result) {
-                    var result_object = JSON.parse(result);
-                    if (result_object.target === 'login.html')
-                        window.location.href = result_object.target;
-                }
-            });
-            $.ajax({
-                type: 'POST',
-                beforeSend: function () {
-                    $('#dt_items').DataTable().row.add([
-                        "<i class='fa fa-spinner fa-spin'></i>",
-                        "<i class='fa fa-spinner fa-spin'></i>",
-                        "<i class='fa fa-spinner fa-spin'></i>",
-                        "<i class='fa fa-spinner fa-spin'></i>"
-                    ]).draw(false);
-                },
-                url: 'assets/php/generate-stock.php',
-                success: function (result) {
-                    var result_object = JSON.parse(result);
-                    if (typeof result_object.error === 'undefined') {
-                        console.log(result_object);
-                        $('#dt_items').DataTable().clear().draw();
-                        for (var i = 0; i < result_object.count; i++) {
-                            var item = result_object.items[i];
-
-                            var markup =
-                                "<div style='overflow-y: scroll;max-height:128px;'><table class='table mb-0 table-bordered'><tbody>";
-                            for (var j = 0; j < item.serial_numbers_count; j++) {
-                                markup += "<tr><td>" + item.serial_numbers[j] + "</td></tr>";
-                            }
-                            markup += "</tbody></table></div>";
-
-                            $('#dt_items').DataTable().row.add([
-                                item.item_id,
-                                item.name,
-                                item.quantity,
-                                //markup
-                            ]).draw(false);
-                            $('#dt_items').DataTable().order([0, 'asc']).draw();
-                        }
-                    } else {
-                        $("#callout_block_datatable").fadeIn(1000, function () {
-                            $("#callout_block_datatable").html(
-                                '<div class="callout callout-danger"><h4>Failed!</h4><p>' +
-                                result_object.error + '</p></div>');
-                        });
-                    }
-                }
-            });
-            $(document).on("click", "#a_logout", function (e) {
-                $.ajax({
-                    url: 'assets/php/session-user-id-unset.php',
-                    success: function (result) {
-                        var result_object = JSON.parse(result);
-                        window.location.href = result_object.target;
-                    }
-                });
-            });
-        });
-    </script>
-</body>
-
+        <!-- ./wrapper -->
+        <!-- REQUIRED JS SCRIPTS -->
+        <!-- jQuery 3 -->
+        <script src="assets/bower_components/jquery/dist/jquery.min.js"></script>
+        <!-- Bootstrap 3.3.7 -->
+        <script src="assets/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+		<!-- Select2 -->
+		<script src="assets/bower_components/select2/dist/js/select2.full.min.js"></script>
+		<!-- DataTables -->
+        <script src="assets/bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
+        <script src="assets/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+		<!-- date-range-picker -->
+		<script src="assets/bower_components/moment/min/moment.min.js"></script>
+		<script src="assets/bower_components/bootstrap-daterangepicker/daterangepicker.js"></script>
+		<!-- SlimScroll -->
+		<script src="assets/bower_components/jquery-slimscroll/jquery.slimscroll.min.js"></script>
+		<!-- FastClick -->
+		<script src="assets/bower_components/fastclick/lib/fastclick.js"></script>
+        <!-- AdminLTE App -->
+        <script src="assets/js/adminlte.min.js"></script>
+		<!-- jQuery Validate 1.16.0 -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.16.0/jquery.validate.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.16.0/additional-methods.min.js"></script>
+		<script>
+			$('document').ready (function () {
+				$.ajax ({
+            		type: 'POST',
+            		url: 'assets/php/session-user-id.php',
+            		success: function (result) {
+            			var result_object = JSON.parse (result);
+            			if (result_object.target === 'login.html')
+            				window.location.href = result_object.target;
+            		}
+            	});
+				$.ajax ({
+					type: 'POST',
+					beforeSend: function () {
+						$('#dt_items').DataTable ().row.add ([
+							"<i class='fa fa-spinner fa-spin'></i>",
+							"<i class='fa fa-spinner fa-spin'></i>",
+							"<i class='fa fa-spinner fa-spin'></i>",
+							"<i class='fa fa-spinner fa-spin'></i>",
+							"<i class='fa fa-spinner fa-spin'></i>"
+						]).draw (false);
+					},
+					url: 'assets/php/generate-stock.php',
+					success: function (result) {
+						var result_object = JSON.parse (result);
+						if (typeof result_object.error === 'undefined') {
+							console.log (result_object);
+							$('#dt_items').DataTable ().clear ().draw ();
+							for (var i = 0; i < result_object.count; i++) {
+								var item = result_object.items[i];
+								
+								/*var markup = "<div style='overflow-y: scroll;max-height:128px;'><table class='table mb-0 table-bordered'><tbody>";
+								for (var j = 0; j < item.serial_numbers_count; j++) {
+									markup += "<tr><td>"+item.serial_numbers[j]+"</td></tr>";
+								}
+								markup += "</tbody></table></div>";*/
+								
+								$('#dt_items').DataTable ().row.add ([
+									item.item_id,
+									item.name,
+									item.inward,
+									item.outward,
+									item.quantity
+								]).draw (false);
+								$('#dt_items').DataTable ().order ([0, 'asc']).draw ();
+							}
+						} else {
+							$("#callout_block_datatable").fadeIn (1000, function () {
+								$("#callout_block_datatable").html ('<div class="callout callout-danger"><h4>Failed!</h4><p>' + result_object.error + '</p></div>');
+							});
+						}
+					}
+				});	
+				$(document).on ("click", "#a_logout", function (e) {
+					$.ajax ({
+						url: 'assets/php/session-user-id-unset.php',
+						success: function (result) {
+							var result_object = JSON.parse (result);
+							window.location.href = result_object.target;
+						}
+					});
+				});
+			});
+		</script>
+    </body>
 </html>
